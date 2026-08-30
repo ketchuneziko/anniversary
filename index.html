@@ -3,178 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Для моей Марии — Танжар</title>
+  <title>Наше Особенное Место</title>
   <style>
     :root {
-      --bg-color: #fff0f5;
+      --bg-color: #fff5f7;
       --card-bg: #ffffff;
-      --accent-pink: #ff69b4;
-      --deep-pink: #d63384;
-      --soft-pink: #ffe4e1;
-      --text-color: #4a2e35;
-      --text-muted: #8c6b73;
-      --border-color: #f8c8dc;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
+      --accent: #ff4b72;
+      --accent-hover: #e03e61;
+      --text: #4a3e3d;
+      --border-radius: 16px;
     }
 
     body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.8;
-      padding: 30px 15px 80px;
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    .header {
-      text-align: center;
-      padding: 35px 20px;
-      background: var(--card-bg);
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(214, 51, 132, 0.08);
-      margin-bottom: 35px;
-      border: 1px solid var(--border-color);
-    }
-
-    .header h1 {
-      color: var(--deep-pink);
-      font-size: 26px;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-
-    /* Таймер времени */
-    .timer-box {
-      background: var(--soft-pink);
-      border: 1px solid var(--border-color);
-      border-radius: 15px;
-      padding: 15px;
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .timer-title {
-      font-size: 13px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-
-    .timer-values {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--deep-pink);
-    }
-
-    .timer-values span {
-      background: var(--card-bg);
-      padding: 4px 8px;
-      border-radius: 6px;
-      margin: 0 2px;
-      border: 1px solid var(--border-color);
+      width: 100%;
+      max-width: 650px;
     }
 
     .game-card {
       background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 30px 20px;
-      margin-bottom: 35px;
-      box-shadow: 0 8px 20px rgba(214, 51, 132, 0.05);
-      text-align: center;
+      border-radius: var(--border-radius);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(255, 75, 114, 0.15);
       display: none;
+      animation: fadeIn 0.5s ease-in-out forwards;
     }
 
     .game-card.active {
       display: block;
-      animation: fadeIn 0.8s ease forwards;
-    }
-
-    .game-title {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--accent-pink);
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .question {
-      font-size: 17px;
-      color: var(--text-color);
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    input[type="text"] {
-      padding: 12px 18px;
-      border: 2px solid var(--border-color);
-      border-radius: 25px;
-      font-size: 15px;
-      outline: none;
-      text-align: center;
-      color: var(--text-color);
-      background-color: var(--bg-color);
-      transition: border-color 0.3s;
-      width: 100%;
-    }
-
-    input[type="text"]:focus {
-      border-color: var(--accent-pink);
-    }
-
-    button {
-      background-color: var(--accent-pink);
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 25px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: var(--deep-pink);
-    }
-
-    .error-msg {
-      color: #dc3545;
-      font-size: 13px;
-      margin-top: 10px;
-      display: none;
-    }
-
-    .letter-block {
-      display: none;
-      background: #fff6f8;
-      border-left: 4px solid var(--accent-pink);
-      padding: 25px;
-      border-radius: 12px;
-      margin-top: 25px;
-      text-align: left;
-      animation: fadeIn 0.8s ease forwards;
     }
 
     @keyframes fadeIn {
@@ -182,1146 +50,320 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .letter-block p {
-      margin-bottom: 15px;
-      font-size: 15px;
-      color: var(--text-color);
+    .game-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 12px;
+      text-align: center;
     }
 
-    .letter-block p:last-child {
-      margin-bottom: 0;
+    .question {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      text-align: center;
     }
 
-    /* Этап 1: Даты */
-    .dates-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      text-align: left;
-      max-width: 450px;
-      margin: 0 auto 20px;
+    input[type="text"], input[type="date"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ffd1dc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+      font-size: 1rem;
+      outline: none;
     }
 
-    .date-row {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .date-row label {
-      font-size: 14px;
-      color: var(--text-color);
-      font-weight: 600;
-    }
-
-    /* Этап 2: Анаграмма */
-    .tiles-container {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-    }
-
-    .tile-btn {
-      background: var(--soft-pink);
-      color: var(--deep-pink);
-      border: 1px solid var(--border-color);
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 18px;
+    button {
+      width: 100%;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
+      transition: background 0.2s;
     }
 
-    .tile-btn:disabled {
-      opacity: 0.3;
-      cursor: default;
+    button:hover {
+      background-color: var(--accent-hover);
     }
 
-    .anagram-display {
-      min-height: 45px;
-      border-bottom: 2px dashed var(--accent-pink);
-      margin-bottom: 15px;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--deep-pink);
-      letter-spacing: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .error-msg {
+      color: #d9534f;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      display: none;
+      text-align: center;
     }
 
-    /* Этап 4: Рамка */
-    .dzin-frame {
-      border: 2px dashed var(--accent-pink);
-      border-radius: 15px;
-      padding: 20px;
-      background: var(--soft-pink);
-      margin-bottom: 20px;
+    .letter-block {
+      display: none;
+      background: #fff0f3;
+      padding: 16px;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+      margin-top: 16px;
+      line-height: 1.5;
     }
 
-    .dzin-top {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--deep-pink);
-      margin-bottom: 10px;
-      letter-spacing: 2px;
-    }
-
-    .dzin-img-box {
-      width: 100%;
-      max-height: 250px;
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 10px 0;
-      background: #f8c8dc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .dzin-img-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .dzin-bottom {
-      font-size: 15px;
-      color: var(--text-color);
-      margin-top: 10px;
-      font-style: italic;
-    }
-
-    /* Этап 5: Шифратор */
-    .cipher-box {
-      background: var(--soft-pink);
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-      border: 1px solid var(--border-color);
-    }
-
-    .cipher-code {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: var(--deep-pink);
-      margin-bottom: 15px;
-    }
-
-    input[type="range"] {
-      width: 80%;
-      accent-color: var(--deep-pink);
-    }
-
-    /* Этап 6: Сетка карточек только с номерами */
+    /* Этап 6: Сетка карточек */
     .cartoons-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
     .cartoon-card {
-      background: var(--bg-color);
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      padding: 8px;
-      font-size: 16px;
-      font-weight: 700;
+      position: relative;
+      border: 3px solid transparent;
+      border-radius: 10px;
+      overflow: hidden;
       cursor: pointer;
-      user-select: none;
-      transition: all 0.2s;
+      background: #f8f8f8;
+      aspect-ratio: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      min-height: 110px;
+      justify-content: center;
+      transition: all 0.2s;
     }
 
     .cartoon-card img {
       width: 100%;
-      height: 75px;
+      height: 100%;
       object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 6px;
-      background-color: var(--soft-pink);
     }
 
     .cartoon-card.selected {
-      border-color: var(--deep-pink);
-      background: var(--soft-pink);
-      color: var(--deep-pink);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(255, 75, 114, 0.5);
     }
 
-    /* Этап 7: Чек-лист */
-    .checklist-controls {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 15px;
-    }
-
-    .checklist-container {
-      text-align: left;
-      background: var(--bg-color);
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-      border: 1px solid var(--border-color);
-      max-height: 450px;
-      overflow-y: auto;
-    }
-
-    .check-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-      font-size: 13.5px;
-      cursor: pointer;
-      line-height: 1.4;
-    }
-
-    .check-item input[type="checkbox"] {
-      accent-color: var(--deep-pink);
-      width: 18px;
-      height: 18px;
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
-
-    /* Этап 8: Замок и ключ */
-    .heart-lock-area {
-      position: relative;
-      padding: 40px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      min-height: 280px;
-      user-select: none;
-    }
-
-    .heart-wrapper {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.4s ease;
-    }
-
-    .heart-icon {
-      width: 100%;
-      height: 100%;
-      fill: var(--accent-pink);
-      transition: fill 0.5s, transform 0.5s;
-    }
-
-    .lock-icon {
+    .cartoon-card span {
       position: absolute;
-      width: 40px;
-      height: 40px;
-      fill: #ffffff;
-      transition: opacity 0.4s, transform 0.4s;
-      pointer-events: none;
-    }
-
-    .heart-wrapper.unlocked .heart-icon {
-      fill: var(--deep-pink);
-      transform: scale(1.2);
-    }
-
-    .heart-wrapper.unlocked .lock-icon {
-      opacity: 0;
-      transform: scale(0.4);
-    }
-
-    .draggable-key {
-      background: var(--soft-pink);
-      border: 2px solid var(--deep-pink);
-      color: var(--deep-pink);
-      padding: 12px 24px;
-      border-radius: 25px;
-      font-weight: 700;
-      cursor: grab;
-      touch-action: none;
-      box-shadow: 0 4px 12px rgba(214, 51, 132, 0.2);
-      transition: box-shadow 0.2s ease;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .draggable-key:active {
-      cursor: grabbing;
-      box-shadow: 0 8px 20px rgba(214, 51, 132, 0.4);
-    }
-
-    .footer {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 14px;
-      color: var(--text-muted);
+      bottom: 4px;
+      right: 4px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="header">
-      <h1>История нашей любви — Мария и Танжар</h1>
-      <p>Каждый шаг здесь открывает следующую страницу наших чувств.</p>
+  <!-- ЭТАП 1 -->
+  <div class="game-card active" id="stage1">
+    <div class="game-title">Этап 1: Наше начало</div>
+    <div class="question">Введи дату, когда мы официально начали встречаться:</div>
+    <input type="date" id="input1">
+    <button onclick="checkStage1()">Ответить</button>
+    <div class="error-msg" id="err1">Неа, вспомни тот самый день!</div>
 
-      <div class="timer-box">
-        <div class="timer-title">Мы официально вместе уже:</div>
-        <div class="timer-values">
-          <span id="t-days">0</span> дн.
-          <span id="t-hours">0</span> ч.
-          <span id="t-mins">0</span> мин.
-          <span id="t-secs">0</span> сек.
-        </div>
-      </div>
+    <div class="letter-block" id="block1">
+      <p>31 июля 2026 года — день, когда мы стали парой. С этого момента каждый день наполнен особым смыслом!</p>
+      <button onclick="unlockNext(2)">Перейти к этапy 2</button>
     </div>
-
-    <!-- ЭТАП 1: КАЛЕНДАРЬ НАШИХ ДАТ -->
-    <div class="game-card active" id="stage1">
-      <div class="game-title">Этап 1: Календарь памяти</div>
-      <div class="question">Вспомни самые важные дни нашей истории:</div>
-
-      <div class="dates-grid">
-        <div class="date-row">
-          <label>1. День, когда мы начали общаться:</label>
-          <input type="text" id="date1" placeholder="например: 1 августа">
-        </div>
-        <div class="date-row">
-          <label>2. День, когда ты сказала, что я тебе нравлюсь:</label>
-          <input type="text" id="date2" placeholder="например: 1 августа">
-        </div>
-        <div class="date-row">
-          <label>3. День, когда я впервые сказал тебе "люблю":</label>
-          <input type="text" id="date3" placeholder="например: 1 августа">
-        </div>
-        <div class="date-row">
-          <label>4. День, когда ты сказала мне, что любишь меня:</label>
-          <input type="text" id="date4" placeholder="например: 1 августа">
-        </div>
-        <div class="date-row">
-          <label>5. День, когда мы официально начали встречаться:</label>
-          <input type="text" id="date5" placeholder="например: 1 августа">
-        </div>
-      </div>
-
-      <button onclick="checkStage1()">Проверить даты</button>
-      <div class="error-msg" id="err1">Проверь число и месяц в полях</div>
-
-      <div class="letter-block" id="block1">
-        <p><strong>Память о каждом мгновении:</strong></p>
-        <p>22 июня произошел случайный клик в Дайвинчике, который перевернул всю мою жизнь. Ты искала архитекторов, а я написал: "Извини, я не архитектор". Но этот разговор затянул нас с первой же секунды.</p>
-        <p>Затем были волшебные июльские дни: 9 июля твои слова признания, 13 июля моё "люблю", 19 июля твоё взаимное "люблю", и 31 июля, когда мы стали парой. Каждая из этих дат навсегда высечена в моём сердце.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(2)">Перейти к следующему этапу</button>
-      </div>
-    </div>
-
-    <!-- ЭТАП 2: АНАГРАММА -->
-    <div class="game-card" id="stage2">
-      <div class="game-title">Этап 2: Собери главное слово</div>
-      <div class="question">А как я называю свою самую сладкую девочку?</div>
-      
-      <div class="anagram-display" id="anagramText">_ _ _ _ _ _ _</div>
-      
-      <div class="tiles-container" id="tilesBox">
-        <button class="tile-btn" onclick="addTile(this, 'К')">К</button>
-        <button class="tile-btn" onclick="addTile(this, 'А')">А</button>
-        <button class="tile-btn" onclick="addTile(this, 'О')">О</button>
-        <button class="tile-btn" onclick="addTile(this, 'С')">С</button>
-        <button class="tile-btn" onclick="addTile(this, 'А')">А</button>
-        <button class="tile-btn" onclick="addTile(this, 'Д')">Д</button>
-        <button class="tile-btn" onclick="addTile(this, 'Л')">Л</button>
-      </div>
-      
-      <div style="display: flex; gap: 10px; justify-content: center; max-width: 300px; margin: 0 auto;">
-        <button style="background: var(--text-muted); font-size: 13px; padding: 8px 15px;" onclick="resetAnagram()">Сбросить</button>
-        <button onclick="checkStage2()">Проверить</button>
-      </div>
-      <div class="error-msg" id="err2">Слово составлено неверно, попробуй еще раз</div>
-
-      <div class="letter-block" id="block2">
-        <p><strong>Моя сладока, Масоня, Мюлю:</strong></p>
-        <p>Я обожаю называть тебя этими именами. Для меня ты — куным, айым, моя хорошая девочка, моя жена, невестка и аманатым.</p>
-        <p>Ты даришь мне ту нежность и тепло, которые я не испытывал никогда в жизни.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(3)">Перейти к следующему этапу</button>
-      </div>
-    </div>
-
-    <!-- ЭТАП 3: КОГДА НЕ РЯДОМ -->
-    <div class="game-card" id="stage3">
-      <div class="game-title">Этап 3: Когда между нами километры</div>
-      <div class="question">Что я пишу тебе в сообщениях, когда очень сильно соскучился?</div>
-      <div class="input-group">
-        <input type="text" id="ans3" placeholder="Введи искаженное слово...">
-        <button onclick="checkStage3()">Разблокировать</button>
-      </div>
-      <div class="error-msg" id="err3">Вспомни то самое милое искаженное слово</div>
-
-      <div class="letter-block" id="block3">
-        <p><strong>Океан чувств на расстоянии:</strong></p>
-        <p>Когда я пишу тебе это слово, за ним стоит огромное тоскующее сердце. Мне не хватает твоего голоса, смеха и прикосновений.</p>
-        <p>Расстояние лишь доказывает мне каждый день, насколько сильно ты мне необходима.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(4)">Перейти к следующему этапу</button>
-      </div>
-    </div>
-
-    <!-- ЭТАП 4: ЧТО БЫВАЕТ ЛИШЬ РАЗ -->
-    <div class="game-card" id="stage4">
-      <div class="game-title">Этап 4: Наша особенная вспышка</div>
-      
-      <div class="dzin-frame">
-        <div class="dzin-top">МЫЫЫЫЫЫ</div>
-        <div class="dzin-img-box">
-          <img src="dzin.jpg" alt="Дзинь" onerror="this.parentElement.innerHTML='<span>[ Добавь dzin.jpg ]</span>'">
-        </div>
-        <div class="dzin-bottom">Чувство, которое приходит единожды...</div>
-      </div>
-
-      <div class="question">Что бывает лишь раз?</div>
-      <div class="input-group">
-        <input type="text" id="ans4" placeholder="Введи ответ...">
-        <button onclick="checkStage4()">Ответить</button>
-      </div>
-      <div class="error-msg" id="err4">Подсказка: дзинь / дзинь случился</div>
-
-      <div class="letter-block" id="block4">
-        <p><strong>И мой дзинь случился именно с тобой:</strong></p>
-        <p>Это не просто совпадение из мультика. Это то самое волшебное чувство, когда понимаешь: вот он, мой единственный человек на всю жизнь.</p>
-        <p>Я обожаю наши внутренние шутки, когда мы угараем с "мы шымкентские детка" или фразочек вроде "ампылда, жерге жатып ынкылла". С тобой я могу быть собой на 100%.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(5)">Перейти к следующему этапу</button>
-      </div>
-    </div>
-
-    <!-- ЭТАП 5: ШИФРАТОР -->
-    <div class="game-card" id="stage5">
-      <div class="game-title">Этап 5: Расшифруй главное фразовое послание</div>
-      <div class="question">Используй слайдер сдвига ключа, чтобы разгадать код:</div>
-      
-      <div class="cipher-box">
-        <div class="cipher-code" id="cipherDisplay">Я ЛЮБЛЮ ТЕБЯ</div>
-        <div class="cipher-controls">
-          <input type="range" id="cipherSlider" min="0" max="5" value="3" oninput="updateCipher()">
-        </div>
-      </div>
-
-      <button onclick="checkStage5()">Подтвердить расшифровку</button>
-      <div class="error-msg" id="err5">Двигай ползунок, пока текст не станет понятным</div>
-
-      <div class="letter-block" id="block5">
-        <p><strong>Моя благодарность тебе:</strong></p>
-        <p>Я ценил и ценю в тебе абсолютно всё. Ты показала мне, что такое настоящая любовь, верность и счастье. Ты подарила мне надежду и искреннее желание развиваться и строить наше общее будущее.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(6)">Перейти к следующему этапу</button>
-      </div>
-    </div>
-
-    <!-- ЭТАП 6: СЕТКА ИЗ 15 КАРТОЧЕК С НОМЕРАМИ -->
-    <div class="game-card" id="stage6">
-      <div class="game-title">Этап 6: Наша галерея ассоциаций</div>
-      <div class="question">Выбери ровно 11 вариантов, с которыми мы себя ассоциируем:</div>
-      
-      <div class="cartoons-grid">
-        <div class="cartoon-card" onclick="toggleCartoon(this, 1)">
-          <img src="morticia_gomez.jpg" alt="1" onerror="this.style.display='none'">
-          <span>1</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 2)">
-          <img src="tom_jerry.jpg" alt="2" onerror="this.style.display='none'">
-          <span>2</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 3)">
-          <img src="toothless_fury.jpg" alt="3" onerror="this.style.display='none'">
-          <span>3</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 4)">
-          <img src="shrek_fiona.jpg" alt="4" onerror="this.style.display='none'">
-          <span>4</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 5)">
-          <img src="dracula_erika.jpg" alt="5" onerror="this.style.display='none'">
-          <span>5</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 6)">
-          <img src="simba_nala.jpg" alt="6" onerror="this.style.display='none'">
-          <span>6</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 7)">
-          <img src="romeo_juliet.jpg" alt="7" onerror="this.style.display='none'">
-          <span>7</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 8)">
-          <img src="aladdin_jasmine.jpg" alt="8" onerror="this.style.display='none'">
-          <span>8</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 9)">
-          <img src="rapunzel_eugene.jpg" alt="9" onerror="this.style.display='none'">
-          <span>9</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 10)">
-          <img src="beauty_beast.jpg" alt="10" onerror="this.style.display='none'">
-          <span>10</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 11)">
-          <img src="naruto_hinata.jpg" alt="11" onerror="this.style.display='none'">
-          <span>11</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 12)">
-          <img src="walle_eve.jpg" alt="12" onerror="this.style.display='none'">
-          <span>12</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 13)">
-          <img src="tarzan_jane.jpg" alt="13" onerror="this.style.display='none'">
-          <span>13</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 14)">
-          <img src="hercules_megara.jpg" alt="14" onerror="this.style.display='none'">
-          <span>14</span>
-        </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 15)">
-          <img src="peter_wendy.jpg" alt="15" onerror="this.style.display='none'">
-          <span>15</span>
-        </div>
-      </div>
-
-      <button onclick="checkStage6()">Принять выбор</button>
-      <div class="error-msg" id="err6">Выбери правильно 11 верных вариантов!</div>
-
-      <div class="letter-block" id="block6">
-        <p><strong>Наши особенные пары:</strong></p>
-        <p>Мы как Мортиша и Гомез Адамс — безумно, страстно и навсегда преданные друг другу. Мы как Беззубик и Белая Фурия, которые нашли свою пару среди всего мира.</p>
-        <p>Мне невероятно греют душу все ласковые слова, которыми ты меня называешь: малыш, жаным, любимый, алтыным, котеночек, солнышко, папочка, хозяин, любовь, асыл жарым, жалгызым, суйыктым.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(7)">Перейти к следующему этапу</button>
-      </div>
-    </div>
-
-    <!-- ЭТАП 7: СПИСОК ПРИЧИН -->
-    <div class="game-card" id="stage7">
-      <div class="game-title">Этап 7: Почему я тебя люблю</div>
-      <div class="question">Отметишь ли ты каждую из наших причин?</div>
-
-      <div class="checklist-controls">
-        <button style="background: var(--text-muted); font-size: 13px; padding: 6px 15px;" onclick="selectAllCheckboxes()">Отметить все</button>
-      </div>
-      
-      <div class="checklist-container" id="checklist">
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты просто есть в моей жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты появилась в моей жизни совершенно неожиданно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно ты стала человеком который настолько сильно запал мне в сердце.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно к тебе у меня появились такие сильные чувства.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала моей первой настоящей любовью.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя именно такой какая ты есть.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя внешность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоё лицо.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои глаза.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их цвет.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их форма.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как они выглядят на фотографиях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой взгляд.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои брови.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их форма.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится как они подходят к твоему лицу.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои ресницы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что они делают твой взгляд ещё красивее.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой нос.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что он подходит к твоему лицу.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои губы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их форма.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как они выглядят.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя улыбка на фотографиях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя улыбка именно потому что она твоя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится форма твоего лица.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои черты лица.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как все твои черты сочетаются между собой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя кожа.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как ты выглядишь на фотографиях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой профиль.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоё лицо с разных ракурсов.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя внешность даже в самых обычных фотографиях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что тебе не нужно специально стараться чтобы я считал тебя красивой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что для меня ты красивая просто потому что ты ты.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои волосы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их цвет.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их длина.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится как они лежат.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится как они обрамляют твоё лицо.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя причёска.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится когда ты меняешь причёску.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится каждая фотография где я вижу твои волосы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя фигура.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя сексуальная горячая фигура.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя талия.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя грудь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои бёдра.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои ноги.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как выглядит твоя фигура целиком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя внешность не только в отдельных деталях а полностью.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что все твои черты вместе создают именно тот образ который я люблю.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня невероятно привлекательная.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня очень красивая.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится смотреть на твои фотографии.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я могу пересматривать твои фотографии и каждый раз замечать что-то красивое.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится видеть тебя даже через экран.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя естественная красота.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что тебе не нужно быть идеальной чтобы я считал тебя самой красивой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что для меня твоя красота особенная.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что для меня стала единственной красивой на всем белом свете.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится каждая маленькая особенность твого лица.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся даже те черты которые ты сама можешь считать недостатками.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно эти маленькие особенности делают тебя тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твоё лицо целиком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои глаза.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои брови.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои ресницы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твой нос.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои губы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою улыбку.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю форму твоего лица.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои волосы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою фигуру.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю каждую видимую мне часть твоей внешности.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится смотреть на тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне никогда не кажется что ты недостаточно красивая.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что в моих глазах ты невероятная.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой характер.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя доброта.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь быть заботливой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь сопереживать.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь чувствовать глубоко.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты искренняя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты настоящая.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты не пытаешься быть кем-то другим.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя есть собственное мнение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя есть собственные взгляды.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь говорить о своих чувствах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты не боишься показывать мне когда тебе что-то не нравится.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть честной со мной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь говорить мне о своих переживаниях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты позволяешь мне узнавать тебя настоящую.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно узнавать тебя всё глубже.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно слушать твои мысли.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно знать твоё мнение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно что тебе нравится.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно что тебе не нравится.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно что тебя радует.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно что тебя огорчает.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно о чём ты мечтаешь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно чего ты хочешь от жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется знать тебя полностью.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя индивидуальность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты не похожа на других.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя свой характер.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя свой взгляд на многие вещи.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь быть сильной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь быть нежной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что в тебе сочетается сила и мягкость.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя уверенность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя целеустремлённость.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя самостоятельность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя способность принимать решения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя эмоциональность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя глубина.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой ум.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя доброта.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоё большое сердце.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как ты относишься к людям.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что тебе не всё равно на чувства других.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь переживать за близких.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь заботиться о тех кто тебе дорог.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь показывать свою любовь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь говорить о своих чувствах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть очень нежной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть очень сильной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть серьёзной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть смешной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя есть чувство юмора.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой юмор.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя способность превращать обычный разговор во что-то интересное.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что с тобой мне не скучно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится наше общение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится разговаривать с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется узнавать о тебе больше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется рассказывать тебе о себе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делиться с тобой своим днём.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно как проходит твой день.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё настроение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё самочувствие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно то что происходит в твоей жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется поддерживать тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется заботиться о тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делать тебя счастливее.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется радовать тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть человеком который может поддержать тебя в трудный момент.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть твоей опорой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть человеком которому ты можешь доверять.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что твоё доверие для меня очень дорого.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу заслуживать твоё доверие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу быть честным с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу быть открытым с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу быть внимательнее к тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу лучше понимать тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты заставляешь меня задумываться над собой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты заставляешь меня хотеть становиться лучше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что рядом с мыслями о тебе мне хочется расти.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется становиться человеком которого ты заслуживаешь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется исправлять свои ошибки.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется учиться любить тебя правильно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется показывать тебе любовь не только словами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется доказывать свои чувства поступками.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть для тебя надёжным человеком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты чувствовала себя спокойно со мной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты чувствовала себя любимой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты знала насколько ты для меня ценна.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты никогда не сомневалась в моих чувствах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала частью моих мыслей.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я думаю о тебе каждый день.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь появиться в моих мыслях совершенно неожиданно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делиться с тобой даже самыми маленькими вещами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется рассказывать тебе обо всём.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется знать обо всём что происходит у тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится видеть твоё имя на экране.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что твоё сообщение может сделать мой день лучше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне приятно получать от тебя сообщения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится читать твои слова.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится узнавать тебя через твои сообщения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что твои слова позволяют мне чувствовать тебя ближе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что даже находясь далеко ты стала мне очень близкой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я могу скучать по тебе несмотря на то что мы ещё не виделись вживую.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала мне настолько родной через наше общение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я могу чувствовать такую сильную привязанность к человеку который находится далеко.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты доказала мне насколько сильными могут быть чувства.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала человеком о котором я думаю перед сном.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала человеком о котором я могу думать после пробуждения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала частью моего обычного дня.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала частью моих планов.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты была частью моего будущего.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется строить планы в которых есть ты.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы наша история продолжалась.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я верю в нас.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я верю в наши чувства.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу сохранить то что между нами есть.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу бороться за наши отношения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я не хочу сдаваться из-за трудностей.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется проходить сложные моменты вместе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется становиться лучше ради нас.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды преодолеть расстояние между нами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды встретиться с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется когда-нибудь увидеть тебя вживую.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды услышать твой голос рядом с собой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды посмотреть тебе в глаза вживую.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды провести с тобой время.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды создать с тобой воспоминания которые сейчас существуют только в моих мечтах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что впереди у нас ещё столько всего чего мы никогда не переживали вместе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды узнать тебя ещё глубже уже в реальной жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды узнать твои маленькие привычки которые невозможно узнать через переписку.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды узнать тебя с ещё одной стороны.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится думать что впереди у нас ещё много первого.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы эти первые моменты были именно с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды увидеть твою настоящую реакцию на мои слова не через текст.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды услышать твой смех рядом.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды просто находиться с тобой рядом.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что пока этого ещё не было но мне нравится мечтать об этом.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты даёшь мне повод мечтать о будущем.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется увидеть как ты достигаешь своих целей.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется поддерживать тебя в твоих мечтах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется радоваться твоим успехам.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется поддерживать тебя после неудач.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется говорить тебе что ты справишься.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется напоминать тебе насколько ты сильная.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть человеком который верит в тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть на твоей стороне.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть рядом с тобой в важных моментах твоей жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется видеть как ты развиваешься.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется развиваться вместе с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы мы оба становились лучше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится мысль о нашем будущем.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится представлять что однажды расстояние останется позади.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится думать что когда-нибудь всё это будет не через экран.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы у нас было много совместных воспоминаний.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды смотреть назад и понимать сколько всего мы прошли вместе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы наши отношения становились крепче.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется беречь тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется беречь твоё сердце.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется относиться к тебе бережно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть внимательнее к твоим чувствам.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется никогда не воспринимать тебя как что-то само собой разумеющееся.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты слишком ценна для меня чтобы относиться к тебе небрежно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё спокойствие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё счастье.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё доверие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно чтобы ты чувствовала себя любимой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно чтобы ты знала что я выбираю тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу выбирать тебя каждый день.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя не только когда всё идеально.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу оставаться рядом когда сложно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу решать проблемы а не убегать от них.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу становиться лучше после каждой своей ошибки.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть человеком которому ты сможешь доверить своё сердце.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть твоей поддержкой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть твоей опорой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется защищать тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется заботиться о тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делать тебя счастливой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется радовать тебя маленькими вещами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делать для тебя что-то просто потому что люблю тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется видеть тебя счастливой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется знать что ты улыбаешься благодаря мне.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть причиной твоего хорошего настроения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется давать тебе любовь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется давать тебе тепло.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется давать тебе спокойствие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы рядом со мной ты чувствовала себя важной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты никогда не сомневалась в том что ты нужна мне.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня не временное увлечение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня не просто красивая девушка.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня намного больше чем внешность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я сначала могу любоваться твоей красотой но ещё сильнее я люблю человека которого узнаю за этой внешностью.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою личность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твой характер.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои мысли.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою доброту.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою нежность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою силу.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою искренность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою эмоциональность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою индивидуальность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою способность любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твоё отношение ко мне.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю то что ты позволяешь мне быть частью твоей жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала для меня особенным человеком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала для меня самым дорогим человеком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала для меня самым ценным человеком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется знать о тебе всё больше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется узнавать тебя годами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется каждый год находить в тебе новые причины для любви.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы список причин никогда не закончился.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я уверен что чем больше буду тебя узнавать тем больше буду тебя любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что впереди у нас ещё тысячи вещей которые я смогу полюбить в тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что впереди у нас ещё тысячи моментов которые мы можем пережить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что впереди у нас ещё тысячи воспоминаний которые мы можем создать.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу прожить их именно с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды добавить к этому списку ещё больше причин.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя дальше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу выбирать тебя дальше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу поддерживать тебя дальше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу быть рядом с тобой дальше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы наше «мы» продолжалось.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы Всевышний направлял нас друг к другу.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы Всевышний хранил нашу любовь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы наша любовь становилась только сильнее.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу пройти с тобой через всё что нам приготовит жизнь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу однажды посмотреть на всё это спустя много лет и понять что мы смогли.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу однажды сказать тебе что любил тебя тогда и люблю тебя сейчас.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя несмотря на расстояние.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя несмотря на трудности.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя независимо от обстоятельств.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя не только за то что в тебе легко любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя целиком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю каждую твою особенность которую уже знаю.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу узнать каждую твою особенность которую пока ещё не знаю.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя за тысячи маленьких причин.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя за всё что уже знаю о тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу полюбить ещё больше всего того что узнаю о тебе в будущем.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что невозможно уместить мою любовь к тебе в один список.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что сколько бы причин я ни написал мне всё равно будет мало.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что каждый новый день может стать ещё одной причиной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что каждая новая вещь которую я узнаю о тебе может стать ещё одной причиной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что каждый новый момент нашей истории может стать ещё одной причиной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя не за одну конкретную вещь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя за всё то из чего складывается именно ты.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты Мария.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно ты стала моей любимой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу выбирать.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу беречь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу видеть в своём будущем.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу любить до последнего вздоха.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты просто ты.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> И за это я люблю тебя больше чем способен объяснить словами.</label>
-      </div>
-
-      <button onclick="checkStage7()">Подтвердить всё</button>
-      <div class="error-msg" id="err7">Пожалуйста, отметь все пункты списка!</div>
-
-      <div class="letter-block" id="block7">
-        <p><strong>Я люблю тебя за абсолютно всё:</strong></p>
-        <p>Каждая из этих причин — лишь малая часть того, что я к тебе чувствую. Ты уникальный, глубокий и абсолютно никем не заменимый человек.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(8)">Перейти к финальному замочку</button>
-      </div>
-    </div>
-
-    <!-- ЭТАП 8: ЗАМОК В СЕРДЦЕ И ИНТЕРАКТИВНЫЙ КЛЮЧ -->
-    <div class="game-card" id="stage8">
-      <div class="game-title">Финальный этап: Ключ от моего сердца</div>
-      <div class="question">Перетащи ключ прямо в замок внутри сердца, чтобы открыть его:</div>
-
-      <div class="heart-lock-area">
-        <div class="heart-wrapper" id="heartWrapper">
-          <svg class="heart-icon" id="heartSvg" viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-          </svg>
-          <svg class="lock-icon" id="lockSvg" viewBox="0 0 24 24">
-            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
-          </svg>
-        </div>
-
-        <div class="draggable-key" id="dragKey">
-          🔑 Перетащи меня в замок
-        </div>
-      </div>
-
-      <div class="letter-block" id="block8">
-        <p><strong>Мои самые главные обещания тебе, моя Мария:</strong></p>
-        <p>Самым счастливым моментом в моей жизни был день, когда я предложил тебе встречаться, и те моменты, когда мы радовали друг друга подарками и вниманием.</p>
-        <p>Я хочу пообещать тебе, что буду любить тебя всегда. Меня интересует далеко не только твоё тело — я обожаю тебя всю целиком, каждую твою клеточку, твою душу, мысли и твой характер.</p>
-        <p>Я сделаю всё, чтобы осчастливить тебя, уберечь от любых бед и сделать нас настоящей, крепкой и счастливой семьёй.</p>
-        <p>Ты — самая важная, незаменимая, самая любимая и ценная девочка в моей жизни.</p>
-      </div>
-    </div>
-
-    <div class="footer">
-      Твой Танжар • Навсегда вместе
-    </div>
-
   </div>
 
-  <script>
-    function updateTimer() {
-      const startDate = new Date(2026, 6, 31, 0, 0, 0);
-      const now = new Date();
-      const diff = now - startDate;
+  <!-- ЭТАП 2 -->
+  <div class="game-card" id="stage2">
+    <div class="game-title">Этап 2: Первое признание</div>
+    <div class="question">Введи дату, когда я впервые признался тебе в чувствах:</div>
+    <input type="date" id="input2">
+    <button onclick="checkStage2()">Ответить</button>
+    <div class="error-msg" id="err2">Почти... Попробуй вспомнить получше!</div>
 
-      if (diff > 0) {
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const mins = Math.floor((diff / 1000 / 60) % 60);
-        const secs = Math.floor((diff / 1000) % 60);
+    <div class="letter-block" id="block2">
+      <p>13 июля 2026 года — день, когда я больше не мог скрывать свои чувства. И это было лучшее решение!</p>
+      <button onclick="unlockNext(3)">Перейти к этапy 3</button>
+    </div>
+  </div>
 
-        document.getElementById('t-days').textContent = days;
-        document.getElementById('t-hours').textContent = hours;
-        document.getElementById('t-mins').textContent = mins;
-        document.getElementById('t-secs').textContent = secs;
-      }
+  <!-- ЭТАП 3 -->
+  <div class="game-card" id="stage3">
+    <div class="game-title">Этап 3: Самый первый шаг</div>
+    <div class="question">Введи дату нашего самого первого знакомства:</div>
+    <input type="date" id="input3">
+    <button onclick="checkStage3()">Ответить</button>
+    <div class="error-msg" id="err3">Не-а, это было чуть в другой день!</div>
+
+    <div class="letter-block" id="block3">
+      <p>22 июня 2026 года — день, когда случайность переросла в самую большую любовь.</p>
+      <button onclick="unlockNext(4)">Перейти к этапy 4</button>
+    </div>
+  </div>
+
+  <!-- ЭТАП 4 -->
+  <div class="game-card" id="stage4">
+    <div class="game-title">Этап 4: Ласковые имена</div>
+    <div class="question">Напиши то ласковое слово, которым я называю тебя чаще всего (или то самое сладостное имя):</div>
+    <input type="text" id="input4" placeholder="Твой ответ...">
+    <button onclick="checkStage4()">Проверить</button>
+    <div class="error-msg" id="err4">Попробуй другое ласковое имя!</div>
+
+    <div class="letter-block" id="block4">
+      <p>Ты мое самое любимое солнышко, жаным и сладока!</p>
+      <button onclick="unlockNext(5)">Перейти к этапy 5</button>
+    </div>
+  </div>
+
+  <!-- ЭТАП 5 -->
+  <div class="game-card" id="stage5">
+    <div class="game-title">Этап 5: Наш секретный шифр</div>
+    <div class="question">Введи главное слово наших чувств:</div>
+    <input type="text" id="input5" placeholder="Введи слово...">
+    <button onclick="checkStage5()">Проверить</button>
+    <div class="error-msg" id="err5">Не совсем то слово...</div>
+
+    <div class="letter-block" id="block5">
+      <p>Ты делаешь меня самым счастливым человеком на свете!</p>
+      <button onclick="unlockNext(6)">Перейти к этапy 6</button>
+    </div>
+  </div>
+
+  <!-- ЭТАП 6: СЕТКА ИЗ 15 КАРТОЧЕК С НОМЕРАМИ -->
+  <div class="game-card" id="stage6">
+    <div class="game-title">Этап 6: Наша галерея ассоциаций</div>
+    <div class="question">Выбери ровно 11 вариантов, с которыми мы себя ассоциируем:</div>
+    
+    <div class="cartoons-grid">
+      <div class="cartoon-card" onclick="toggleCartoon(this, 1)"><img src="1.jpg" alt="1"><span>1</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 2)"><img src="2.jpg" alt="2"><span>2</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 3)"><img src="3.jpg" alt="3"><span>3</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 4)"><img src="4.jpg" alt="4"><span>4</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 5)"><img src="5.jpg" alt="5"><span>5</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 6)"><img src="6.jpg" alt="6"><span>6</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 7)"><img src="7.jpg" alt="7"><span>7</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 8)"><img src="8.jpg" alt="8"><span>8</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 9)"><img src="9.jpg" alt="9"><span>9</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 10)"><img src="10.jpg" alt="10"><span>10</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 11)"><img src="11.jpg" alt="11"><span>11</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 12)"><img src="12.jpg" alt="12"><span>12</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 13)"><img src="13.jpg" alt="13"><span>13</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 14)"><img src="14.jpg" alt="14"><span>14</span></div>
+      <div class="cartoon-card" onclick="toggleCartoon(this, 15)"><img src="15.jpg" alt="15"><span>15</span></div>
+    </div>
+
+    <button onclick="checkStage6()">Принять выбор</button>
+    <div class="error-msg" id="err6">Выбери правильно 11 верных вариантов!</div>
+
+    <div class="letter-block" id="block6">
+      <p><strong>Наши особенные пары:</strong></p>
+      <p>Мы как Мортиша и Гомез Адамс — безумно, страстно и навсегда преданные друг другу. Мы как Беззубик и Белая Фурия, которые нашли свою пару среди всего мира.</p>
+      <p>Мне невероятно греют душу все ласковые слова, которыми ты меня называешь: малыш, жаным, любимый, алтыным, котеночек, солнышко, папочка, хозяин, любовь, асыл жарым, жалгызым, суйыктым.</p>
+      <button style="margin-top: 15px;" onclick="unlockNext(7)">Перейти к следующему этапу</button>
+    </div>
+  </div>
+
+  <!-- ЭТАП 7 -->
+  <div class="game-card" id="stage7">
+    <div class="game-title">Этап 7: Мои обещания тебе</div>
+    <div class="question">Готова узнать, что меня ждет впереди?</div>
+    <button onclick="document.getElementById('block7').style.display='block'">Открыть письмо</button>
+
+    <div class="letter-block" id="block7">
+      <p>Я обещаю беречь тебя, всегда слушать и слышать, обнимать крепко-крепко и делать каждый наш день полным тепла и улыбок!</p>
+      <button onclick="unlockNext(8)">Перейти к финальному этапу</button>
+    </div>
+  </div>
+
+  <!-- ЭТАП 8 -->
+  <div class="game-card" id="stage8">
+    <div class="game-title">Финальный этап: Я тебя люблю! ❤️</div>
+    <div class="letter-block" style="display:block; text-align: center;">
+      <p style="font-size: 1.2rem;">Спасибо, что ты есть в моей жизни! Ты мой самый родной и драгоценный человек.</p>
+      <h2 style="color: var(--accent);">С праздником, моя любимая! ✨</h2>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let selectedCartoons = [];
+
+  function unlockNext(stageNum) {
+    const current = stageNum - 1;
+    document.getElementById('stage' + current).classList.remove('active');
+    document.getElementById('stage' + stageNum).classList.add('active');
+  }
+
+  function checkStage1() {
+    const val = document.getElementById('input1').value;
+    if (val === '2026-07-31' || val === '31.07.2026') {
+      document.getElementById('block1').style.display = 'block';
+      document.getElementById('err1').style.display = 'none';
+    } else {
+      document.getElementById('err1').style.display = 'block';
     }
-    setInterval(updateTimer, 1000);
-    updateTimer();
+  }
 
-    function unlockNext(nextStageNum) {
-      const nextCard = document.getElementById('stage' + nextStageNum);
-      if (nextCard) {
-        nextCard.classList.add('active');
-        nextCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+  function checkStage2() {
+    const val = document.getElementById('input2').value;
+    if (val === '2026-07-13' || val === '13.07.2026') {
+      document.getElementById('block2').style.display = 'block';
+      document.getElementById('err2').style.display = 'none';
+    } else {
+      document.getElementById('err2').style.display = 'block';
     }
+  }
 
-    // Этап 1
-    function checkStage1() {
-      const d1 = document.getElementById('date1').value.toLowerCase().trim();
-      const d2 = document.getElementById('date2').value.toLowerCase().trim();
-      const d3 = document.getElementById('date3').value.toLowerCase().trim();
-      const d4 = document.getElementById('date4').value.toLowerCase().trim();
-      const d5 = document.getElementById('date5').value.toLowerCase().trim();
-
-      const c1 = d1.includes('22') && d1.includes('июн');
-      const c2 = d2.includes('9') && d2.includes('июл');
-      const c3 = d3.includes('13') && d3.includes('июл');
-      const c4 = d4.includes('19') && d4.includes('июл');
-      const c5 = d5.includes('31') && d5.includes('июл');
-
-      if (c1 && c2 && c3 && c4 && c5) {
-        document.getElementById('err1').style.display = 'none';
-        document.getElementById('block1').style.display = 'block';
-      } else {
-        document.getElementById('err1').style.display = 'block';
-      }
+  function checkStage3() {
+    const val = document.getElementById('input3').value;
+    if (val === '2026-06-22' || val === '22.06.2026') {
+      document.getElementById('block3').style.display = 'block';
+      document.getElementById('err3').style.display = 'none';
+    } else {
+      document.getElementById('err3').style.display = 'block';
     }
+  }
 
-    // Этап 2
-    let currentAnagram = '';
-    function addTile(btn, char) {
-      currentAnagram += char;
-      btn.disabled = true;
-      document.getElementById('anagramText').textContent = currentAnagram;
+  function checkStage4() {
+    const val = document.getElementById('input4').value.trim().toLowerCase();
+    if (val.length > 0) {
+      document.getElementById('block4').style.display = 'block';
+      document.getElementById('err4').style.display = 'none';
+    } else {
+      document.getElementById('err4').style.display = 'block';
     }
+  }
 
-    function resetAnagram() {
-      currentAnagram = '';
-      document.getElementById('anagramText').textContent = '_ _ _ _ _ _ _';
-      const btns = document.querySelectorAll('#tilesBox .tile-btn');
-      btns.forEach(b => b.disabled = false);
+  function checkStage5() {
+    const val = document.getElementById('input5').value.trim().toLowerCase();
+    if (val.length > 0) {
+      document.getElementById('block5').style.display = 'block';
+      document.getElementById('err5').style.display = 'none';
+    } else {
+      document.getElementById('err5').style.display = 'block';
     }
+  }
 
-    function checkStage2() {
-      if (currentAnagram.toLowerCase() === 'сладока') {
-        document.getElementById('err2').style.display = 'none';
-        document.getElementById('block2').style.display = 'block';
-      } else {
-        document.getElementById('err2').style.display = 'block';
-      }
+  function toggleCartoon(element, num) {
+    element.classList.toggle('selected');
+    if (selectedCartoons.includes(num)) {
+      selectedCartoons = selectedCartoons.filter(item => item !== num);
+    } else {
+      selectedCartoons.push(num);
     }
+  }
 
-    // Этап 3
-    function checkStage3() {
-      const val = document.getElementById('ans3').value.toLowerCase().trim();
-      if (val.includes('скачулся')) {
-        document.getElementById('err3').style.display = 'none';
-        document.getElementById('block3').style.display = 'block';
-      } else {
-        document.getElementById('err3').style.display = 'block';
-      }
+  function checkStage6() {
+    if (selectedCartoons.length === 11) {
+      document.getElementById('block6').style.display = 'block';
+      document.getElementById('err6').style.display = 'none';
+    } else {
+      document.getElementById('err6').style.display = 'block';
     }
+  }
+</script>
 
-    // Этап 4
-    function checkStage4() {
-      const val = document.getElementById('ans4').value.toLowerCase().trim();
-      if (val.includes('дзинь') || val.includes('дзин')) {
-        document.getElementById('err4').style.display = 'none';
-        document.getElementById('block4').style.display = 'block';
-      } else {
-        document.getElementById('err4').style.display = 'block';
-      }
-    }
-
-    // Этап 5
-    const cipherTexts = [
-      "В ПЯЕПЯ ФЗЕВД",
-      "Г РАЖ РА ИИЖЕА",
-      "Д СБЗ СБ ЙЙЗЖБ",
-      "Э М Ю В М Ю У Ж В Я",
-      "Ю Н Я Г Н Я Ф З Г А",
-      "Я Л Ю Б Л Ю Т Е Б Я"
-    ];
-
-    function updateCipher() {
-      const val = document.getElementById('cipherSlider').value;
-      document.getElementById('cipherDisplay').textContent = cipherTexts[val];
-    }
-
-    function checkStage5() {
-      const val = document.getElementById('cipherSlider').value;
-      if (val == 5) {
-        document.getElementById('err5').style.display = 'none';
-        document.getElementById('block5').style.display = 'block';
-      } else {
-        document.getElementById('err5').style.display = 'block';
-      }
-    }
-    updateCipher();
-
-    // Этап 6: Проверка 11 вариантов
-    let selectedCartoons = new Set();
-    const correctAnswersStage6 = [1, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13];
-
-    function toggleCartoon(el, id) {
-      if (selectedCartoons.has(id)) {
-        selectedCartoons.delete(id);
-        el.classList.remove('selected');
-      } else {
-        selectedCartoons.add(id);
-        el.classList.add('selected');
-      }
-    }
-
-    function checkStage6() {
-      const isCorrect = correctAnswersStage6.every(id => selectedCartoons.has(id)) && selectedCartoons.size === 11;
-
-      if (isCorrect) {
-        document.getElementById('err6').style.display = 'none';
-        document.getElementById('block6').style.display = 'block';
-      } else {
-        document.getElementById('err6').style.display = 'block';
-      }
-    }
-
-    // Этап 7
-    function selectAllCheckboxes() {
-      const checkboxes = document.querySelectorAll('#checklist .chk-item');
-      checkboxes.forEach(chk => chk.checked = true);
-    }
-
-    function checkStage7() {
-      const checkboxes = document.querySelectorAll('#checklist .chk-item');
-      let allChecked = true;
-
-      checkboxes.forEach(chk => {
-        if (!chk.checked) allChecked = false;
-      });
-
-      if (allChecked) {
-        document.getElementById('err7').style.display = 'none';
-        document.getElementById('block7').style.display = 'block';
-      } else {
-        document.getElementById('err7').style.display = 'block';
-      }
-    }
-
-    // Этап 8: Drag & Drop ключа
-    const dragKey = document.getElementById('dragKey');
-    const heartWrapper = document.getElementById('heartWrapper');
-    let isDragging = false;
-    let startX, startY, currentX = 0, currentY = 0;
-
-    dragKey.addEventListener('pointerdown', (e) => {
-      isDragging = true;
-      startX = e.clientX - currentX;
-      startY = e.clientY - currentY;
-      dragKey.setPointerCapture(e.pointerId);
-    });
-
-    dragKey.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      currentX = e.clientX - startX;
-      currentY = e.clientY - startY;
-      dragKey.style.transform = `translate(${currentX}px, ${currentY}px)`;
-
-      const keyRect = dragKey.getBoundingClientRect();
-      const targetRect = heartWrapper.getBoundingClientRect();
-
-      const isOverlapping = !(
-        keyRect.right < targetRect.left ||
-        keyRect.left > targetRect.right ||
-        keyRect.bottom < targetRect.top ||
-        keyRect.top > targetRect.bottom
-      );
-
-      if (isOverlapping) {
-        unlockHeartSuccess();
-      }
-    });
-
-    function stopDragging() {
-      isDragging = false;
-    }
-
-    dragKey.addEventListener('pointerup', stopDragging);
-    dragKey.addEventListener('pointercancel', stopDragging);
-
-    function unlockHeartSuccess() {
-      if (dragKey.dataset.unlocked === 'true') return;
-      dragKey.dataset.unlocked = 'true';
-      isDragging = false;
-
-      heartWrapper.classList.add('unlocked');
-      dragKey.style.display = 'none';
-
-      setTimeout(() => {
-        const b8 = document.getElementById('block8');
-        b8.style.display = 'block';
-        b8.scrollIntoView({ behavior: 'smooth' });
-      }, 400);
-    }
-  </script>
 </body>
 </html>
