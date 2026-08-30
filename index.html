@@ -34,6 +34,8 @@
       overflow-x: hidden;
     }
 
+    /* ---- экран приветствия с нарисованным котиком — ниже ---- */
+
     /* Фоновые парящие сердечки */
     .floating-hearts {
       position: fixed;
@@ -102,65 +104,7 @@
       text-shadow: 0 2px 4px rgba(214, 51, 132, 0.1);
     }
 
-    /* Фиксированный музыкальный плеер в виде сердечка в левом нижнем углу */
-    .music-player {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--card-bg);
-      border: 2px solid var(--accent-pink);
-      padding: 8px 16px 8px 10px;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 5px 20px rgba(214, 51, 132, 0.3);
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .music-player:hover {
-      background: var(--soft-pink);
-      transform: scale(1.08) rotate(-2deg);
-      box-shadow: 0 8px 25px rgba(214, 51, 132, 0.4);
-    }
-
-    .music-btn {
-      background: var(--accent-pink);
-      color: white;
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
-      flex-shrink: 0;
-      animation: heartBeat 1.5s ease-in-out infinite;
-    }
-
-    @keyframes heartBeat {
-      0%, 100% { transform: scale(1); }
-      15%, 45% { transform: scale(1.15); }
-      30%, 60% { transform: scale(1); }
-    }
-
-    .music-player:hover .music-btn {
-      background-color: var(--deep-pink);
-      animation: none;
-    }
-
-    .music-info {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--deep-pink);
-      text-align: left;
-      white-space: nowrap;
-    }
+    /* ---- стили плеера-сердечка переехали ниже ---- */
 
     /* Таймер времени */
     .timer-box {
@@ -667,6 +611,8 @@
       transform: scale(1.05);
     }
 
+    /* ---- стили финального окна переехали ниже ---- */
+
     .footer {
       text-align: center;
       margin-top: 50px;
@@ -675,31 +621,2284 @@
       font-weight: 600;
       letter-spacing: 1px;
     }
+    /* единая колонка — горизонтального скролла быть не должно ни при каком экране */
+    html, body { overflow-x: hidden; }
+
+    /* «lub-dub» — тот же ритм сердца, что у плеера и печатей */
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      14%      { transform: scale(1.16); }
+      28%      { transform: scale(.99); }
+      42%      { transform: scale(1.09); }
+      60%      { transform: scale(1); }
+    }
+
+    /* ==========================================================================
+       УКРАШЕНИЯ: тёплая бумага, мягкие пятна цвета, «нарисованный» стиль
+       ========================================================================== */
+    @keyframes bgDrift {
+      0%   { background-position: 12% 12%, 88% 26%, 50% 92%, 0 0; }
+      100% { background-position: 12% 12%, 88% 26%, 50% 92%, 90px 70px; }
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Inter', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #fff6f8;
+      background-image:
+        radial-gradient(circle at 12% 12%, rgba(255, 182, 193, 0.35), transparent 42%),
+        radial-gradient(circle at 88% 26%, rgba(255, 223, 186, 0.45), transparent 40%),
+        radial-gradient(circle at 50% 92%, rgba(255, 205, 224, 0.45), transparent 46%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%23e79ac0' stroke-opacity='.16' stroke-width='1.2' stroke-linecap='round'%3E%3Cpath d='M28 32c-5-6-13-2-10 4 2 4 7 7 10 11 3-4 8-7 10-11 3-6-5-10-10-4z'/%3E%3Cpath d='M130 118c-4-5-11-2-8 3 1 3 5 6 8 9 3-3 7-6 8-9 3-5-4-8-8-3z'/%3E%3Cpath d='M44 138h10M49 133v10'/%3E%3Cpath d='M148 44h8M152 40v8'/%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+      background-size: auto, auto, auto, 180px 180px;
+      background-attachment: fixed;
+      animation: bgDrift 90s linear infinite alternate;
+      padding-top: 46px;
+    }
+
+    ::selection { background: #ffd3e2; color: #8a1c46; }
+
+    /* Тонкая «радужная» полоска в самом верху страницы */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ff9ec7, #ffc48a, #ff69b4, #d63384, #ffa9d0, #ff9ec7);
+      background-size: 220% 100%;
+      animation: ribbonSlide 12s linear infinite;
+      z-index: 900;
+    }
+
+    @keyframes ribbonSlide {
+      to { background-position: 220% 0; }
+    }
+
+    /* Ленточка-«конверт» в углу каждой открытой карточки */
+    .game-card {
+      position: relative;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath d='M60 96C48 84 34 76 34 62c0-9 7-15 15-15 6 0 9 4 11 7 2-3 5-7 11-7 8 0 15 6 15 15 0 14-14 22-26 34z' fill='none' stroke='%23e75a9b' stroke-opacity='.05' stroke-width='6'/%3E%3C/svg%3E");
+      background-position: right -18px top -18px;
+      background-repeat: no-repeat;
+      background-size: 210px 210px;
+    }
+
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 26px; right: 26px;
+      height: 5px;
+      border-radius: 0 0 6px 6px;
+      background: linear-gradient(90deg, transparent, var(--accent-pink), #ffc1dc, var(--accent-pink), transparent);
+      opacity: .55;
+    }
+
+    .game-card.visited::after {
+      content: '♥';
+      position: absolute;
+      top: 14px; right: 16px;
+      font-size: 18px;
+      color: var(--accent-pink);
+      opacity: .6;
+      animation: heartBeat 2.4s ease-in-out infinite;
+    }
+
+    /* Хэдер: рамка-конверт, сургучная печать, «нарисованный» разделитель */
+    .header {
+      position: relative;
+      overflow: hidden;
+      padding: 46px 24px 30px;
+      background-image:
+        radial-gradient(circle at 92% 10%, rgba(255, 105, 180, 0.10), transparent 34%),
+        radial-gradient(circle at 6% 90%, rgba(255, 160, 120, 0.10), transparent 34%);
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 9px;
+      border: 1.5px dashed rgba(214, 51, 132, 0.32);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .header::after {
+      content: '\2665';
+      position: absolute;
+      top: 18px; right: 18px;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      font-size: 20px;
+      line-height: 46px;
+      text-align: center;
+      color: rgba(255, 240, 245, .8);
+      text-shadow: 0 1px 1px rgba(90, 0, 30, .35);
+      background: radial-gradient(circle at 36% 30%, #e8789d, #c21a4f 64%, #7d0a2d 100%);
+      box-shadow: 0 3px 9px rgba(140, 10, 50, .34), inset 0 0 0 2px rgba(255,255,255,.22);
+      opacity: .95;
+      transform: rotate(-11deg);
+      animation: sealTilt 7s ease-in-out infinite alternate;
+    }
+
+    @keyframes sealTilt {
+      from { transform: rotate(-11deg) scale(1); }
+      to   { transform: rotate(-4deg) scale(1.04); }
+    }
+
+
+    .header h1 {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: 30px;
+      letter-spacing: .4px;
+    }
+
+    .header > p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    /* Разделитель-«рисунок» с сердечком */
+    .ornament {
+      width: 210px;
+      max-width: 80%;
+      height: 26px;
+      margin: 2px auto 16px;
+      display: block;
+    }
+
+    .ornament .line {
+      fill: none;
+      stroke: var(--accent-pink);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-dasharray: 5 7;
+      opacity: .8;
+      animation: dashCrawl 14s linear infinite;
+    }
+
+    @keyframes dashCrawl { to { stroke-dashoffset: -120; } }
+
+    .ornament .hrt {
+      fill: url(#sealGrad);
+      stroke: #b81f5e;
+      stroke-width: 1;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: heartBeat 1.9s ease-in-out infinite;
+    }
+
+    .ornament .spk { fill: #ffb0cf; }
+
+    /* Таймер: цифры-«конвертики» с бликом */
+    .timer-box {
+      background: linear-gradient(180deg, #fff3f6 0%, #ffe6ee 100%);
+      border: 1.5px dashed rgba(214, 51, 132, .35);
+      position: relative;
+    }
+
+    .timer-box::after {
+      content: '♥ ♥ ♥';
+      position: absolute;
+      bottom: 5px; left: 0; right: 0;
+      font-size: 8px;
+      letter-spacing: 6px;
+      color: rgba(214, 51, 132, .35);
+    }
+
+    .timer-values span {
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .timer-values span:hover {
+      transform: translateY(-3px) rotate(-2deg);
+      box-shadow: 0 6px 14px rgba(214, 51, 132, .2);
+    }
+
+    /* Прогресс любви — нарисованный «термометр» из сердечек */
+    .love-meter {
+      margin: 22px auto 0;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .love-meter .lm-label {
+      font-size: 11.5px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .love-meter .lm-track {
+      height: 15px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1.5px solid var(--border-color);
+      box-shadow: inset 0 2px 5px rgba(150, 20, 70, .07);
+      overflow: hidden;
+    }
+
+    .love-meter .lm-fill {
+      display: block;
+      height: 100%;
+      width: 11%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ff8fbe, #ff2d78, #ff8fbe, #ff2d78);
+      background-size: 200% 100%;
+      animation: shimmer 3.5s linear infinite;
+      transition: width .9s cubic-bezier(.16, 1, .3, 1);
+      position: relative;
+    }
+
+    .love-meter .lm-fill::after {
+      content: '';
+      position: absolute;
+      right: -2px; top: 50%;
+      width: 22px; height: 22px;
+      transform: translateY(-50%);
+      background: radial-gradient(circle at 35% 30%, #ff9ec4, #e01e5f);
+      clip-path: path('M11 21C4.8 15.9 0 12.1 0 7.6 0 4 2.6 1.4 5.9 1.4c2.1 0 4 1.1 5.1 2.9 1.1-1.8 3-2.9 5.1-2.9C19.4 1.4 22 4 22 7.6c0 4.5-4.8 8.3-11 13.4z');
+      animation: heartBeat 1.6s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      to { background-position: -200% 0; }
+    }
+
+    .love-meter .lm-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-weight: 700;
+    }
+
+    /* Письмо-вклейка: лист «бумаги для черновиков» со штампом */
+    .letter-block {
+      position: relative;
+      background: #fffdf8;
+      background-image: repeating-linear-gradient(180deg, transparent 0 27px, rgba(214, 51, 132, .07) 27px 28px);
+      border: 1.5px solid #f0cddb;
+      border-left: 5px solid var(--accent-pink);
+      box-shadow: 0 14px 30px rgba(214, 51, 132, .1);
+      padding: 40px 28px 28px;
+    }
+
+    .letter-block::before {
+      content: 'письмо от Танжара';
+      position: absolute;
+      top: 11px; left: 26px;
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: 12.5px;
+      letter-spacing: 1.4px;
+      color: rgba(180, 40, 95, .55);
+      transform: rotate(-1.6deg);
+    }
+
+    .letter-block::after {
+      content: '';
+      position: absolute;
+      top: 8px; right: 12px;
+      width: 54px; height: 54px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 54'%3E%3Cg fill='none' stroke='%23d63384' stroke-opacity='.45' stroke-width='1.4'%3E%3Crect x='3' y='3' width='48' height='48' rx='4' stroke-dasharray='4 3'/%3E%3Cpath d='M27 39c-7-6-12-10-12-15 0-3.4 2.6-5.6 5.6-5.6 2.4 0 4.6 1.4 6.4 3.8 1.8-2.4 4-3.8 6.4-3.8C37 18.4 39.6 20.6 39.6 24c0 5-5 9-12.6 15z'/%3E%3C/g%3E%3C/svg%3E") no-repeat center / contain;
+      transform: rotate(6deg);
+      opacity: .85;
+      pointer-events: none;
+    }
+
+    .letter-block p {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: 15.5px;
+      line-height: 1.95;
+      color: #53333c;
+    }
+
+    /* Кнопки: мягкий «зефирный» объём */
+    button {
+      background-image: linear-gradient(135deg, rgba(255,255,255,.35), rgba(255,255,255,0) 45%);
+      font-family: inherit;
+      letter-spacing: .3px;
+    }
+
+    .checklist-container::-webkit-scrollbar { width: 10px; }
+    .checklist-container::-webkit-scrollbar-track { background: #fff0f5; border-radius: 10px; }
+    .checklist-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(#ff9ec7, #e0447f);
+      border-radius: 10px;
+      border: 2px solid #fff0f5;
+    }
+
+    .footer {
+      position: relative;
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      letter-spacing: 2px;
+      color: var(--deep-pink);
+      opacity: .8;
+      padding-bottom: 26px;
+    }
+
+    .footer::before,
+    .footer::after {
+      content: '· · · ♥ · · ·';
+      display: block;
+      font-size: 12px;
+      letter-spacing: 4px;
+      color: rgba(214, 51, 132, .45);
+      margin-bottom: 12px;
+    }
+
+    .footer::after { margin: 12px 0 0; }
+
+    @media (max-width: 520px) {
+      body { padding-top: 34px; }
+      .header { padding: 34px 16px 24px; }
+      .header h1 { font-size: 23px; }
+      .cartoons-grid { gap: 10px; }
+    }
+    /* ==========================================================================
+       ПЛЕЕР-СЕРДЦЕ, КОТОРОЕ БЬЁТСЯ
+       ========================================================================== */
+    @keyframes heartSqueeze {
+      0%   { transform: scale(1, 1); }
+      10%  { transform: scale(1.11, 1.11); }
+      20%  { transform: scale(.97, .97); }
+      31%  { transform: scale(1.06, 1.06); }
+      44%  { transform: scale(1, 1); }
+      100% { transform: scale(1, 1); }
+    }
+
+    @keyframes haloPulse {
+      0%   { transform: translate(-50%, -50%) scale(.78); opacity: .55; }
+      45%  { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1.55); opacity: 0; }
+    }
+
+    @keyframes eqBounce {
+      0%, 100% { transform: scaleY(.28); }
+      50%      { transform: scaleY(1); }
+    }
+
+    @keyframes noteFloat {
+      0%   { transform: translate(0, 0) rotate(0deg) scale(.6); opacity: 0; }
+      20%  { opacity: .9; }
+      100% { transform: translate(18px, -58px) rotate(28deg) scale(1.1); opacity: 0; }
+    }
+
+    .heart-player {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      z-index: 950;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 6px 6px 4px;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, .72);
+      -webkit-backdrop-filter: blur(9px);
+      backdrop-filter: blur(9px);
+      border: 1.5px solid rgba(255, 143, 184, .55);
+      box-shadow: 0 10px 26px rgba(214, 51, 132, .2);
+      cursor: pointer;
+      user-select: none;
+      transition: transform .35s cubic-bezier(.18, .9, .28, 1.2), box-shadow .35s ease, border-color .35s ease;
+    }
+
+    .heart-player:hover {
+      transform: translateY(-4px) scale(1.03);
+      border-color: var(--accent-pink);
+      box-shadow: 0 16px 34px rgba(214, 51, 132, .32);
+    }
+
+    .heart-player.muted { opacity: .68; }
+    .heart-player.muted .hp-heart-wrap { animation-play-state: paused; }
+    .heart-player.muted .halo { display: none; }
+
+    .hp-heart-wrap {
+      position: relative;
+      width: 64px;
+      height: 60px;
+      flex-shrink: 0;
+      animation: heartSqueeze 1.45s ease-in-out infinite;
+      transform-origin: 50% 45%;
+      filter: drop-shadow(0 5px 10px rgba(198, 30, 96, .38));
+    }
+
+    .heart-player:hover .hp-heart-wrap { animation-duration: .78s; }
+
+    .hp-heart {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    .halo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 80px;
+      height: 80px;
+      margin: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 118, 168, .8);
+      transform: translate(-50%, -50%);
+      animation: haloPulse 1.45s ease-out infinite;
+      pointer-events: none;
+    }
+
+    .halo2 { animation-delay: .7s; border-color: rgba(255, 160, 200, .65); }
+
+    .eq {
+      position: absolute;
+      left: 50%;
+      bottom: 15px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 17px;
+      pointer-events: none;
+    }
+
+    .eq i {
+      width: 3px;
+      height: 100%;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, .95);
+      transform-origin: bottom center;
+      box-shadow: 0 0 4px rgba(150, 10, 60, .25);
+      animation: eqBounce .6s ease-in-out infinite;
+    }
+
+    .eq i:nth-child(2) { animation-duration: .44s; animation-delay: .1s; height: 82%; }
+    .eq i:nth-child(3) { animation-duration: .72s; animation-delay: .05s; height: 96%; }
+    .eq i:nth-child(4) { animation-duration: .52s; animation-delay: .18s; height: 70%; }
+
+    .heart-player:not(.playing) .eq i { animation-play-state: paused; transform: scaleY(.3); }
+
+    .notes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .notes i {
+      position: absolute;
+      left: 8px;
+      bottom: 44px;
+      font-size: 13px;
+      font-style: normal;
+      color: #e0447f;
+      opacity: 0;
+    }
+
+    .heart-player.playing .notes i { animation: noteFloat 2.6s ease-out infinite; }
+    .heart-player.playing .notes i:nth-child(1) { animation-delay: 0s; left: 4px; }
+    .heart-player.playing .notes i:nth-child(2) { animation-delay: .9s; left: 20px; }
+    .heart-player.playing .notes i:nth-child(3) { animation-delay: 1.7s; left: 44px; bottom: 30px; }
+
+    .hp-meta { min-width: 0; }
+
+    .hp-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--deep-pink);
+      letter-spacing: .4px;
+      white-space: nowrap;
+    }
+
+    .hp-sub {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 1px;
+      white-space: nowrap;
+    }
+
+    .hp-eq2 { display: flex; gap: 2px; margin-top: 5px; }
+
+    .hp-eq2 b {
+      width: 3px;
+      height: 9px;
+      border-radius: 2px;
+      background: var(--accent-pink);
+      opacity: .85;
+      transform-origin: bottom center;
+      animation: eqBounce .62s ease-in-out infinite;
+    }
+
+    .hp-eq2 b:nth-child(2) { animation-duration: .48s; height: 13px; }
+    .hp-eq2 b:nth-child(3) { animation-duration: .74s; height: 8px; }
+    .hp-eq2 b:nth-child(4) { animation-duration: .55s; height: 11px; }
+    .hp-eq2 b:nth-child(5) { animation-duration: .68s; height: 7px; }
+
+    .heart-player:not(.playing) .hp-eq2 b { animation-play-state: paused; opacity: .35; }
+
+    @media (max-width: 520px) {
+      .heart-player { left: 10px; bottom: 10px; gap: 8px; }
+      .hp-heart-wrap { width: 52px; height: 50px; }
+      .hp-title { font-size: 12px; }
+    }
+
+    .key-svg {
+      width: 34px;
+      height: 20px;
+      display: block;
+      flex-shrink: 0;
+      transform: rotate(-8deg);
+    }
+
+    @keyframes keyJiggle {
+      0%, 100% { transform: rotate(-8deg); }
+      50%      { transform: rotate(7deg) translateX(2px); }
+    }
+
+    .draggable-key:hover .key-svg { animation: keyJiggle .6s ease-in-out infinite; }
+
+    .f-heart {
+      color: rgba(214, 51, 132, .22);
+      text-shadow: 0 0 12px rgba(255, 143, 184, .35);
+      font-weight: 700;
+    }
+    /* ==========================================================================
+       ВСТУПЛЕНИЕ: звёздное небо и два сердца, которые летят друг к другу
+       ========================================================================== */
+    @keyframes twinkle {
+      0%, 100% { opacity: .18; transform: scale(.65); }
+      50%      { opacity: 1;   transform: scale(1.15); }
+    }
+
+    @keyframes moonFloat {
+      0%, 100% { transform: translateY(0) rotate(-6deg); }
+      50%      { transform: translateY(-14px) rotate(-2deg); }
+    }
+
+    @keyframes cloudDrift {
+      0%   { transform: translateX(-4%) scale(1); }
+      100% { transform: translateX(6%) scale(1.06); }
+    }
+
+    @keyframes drawTrail {
+      0%   { stroke-dashoffset: 100; opacity: 0; }
+      8%   { opacity: .9; }
+      70%  { stroke-dashoffset: 0; opacity: .9; }
+      100% { stroke-dashoffset: 0; opacity: 0; }
+    }
+
+    @keyframes flyA {
+      0%   { transform: translate(-38vw, 31vh) scale(.25) rotate(-22deg); opacity: 0; }
+      12%  { opacity: 1; }
+      52%  { transform: translate(-11vw, -7vh) scale(.85) rotate(12deg); }
+      78%  { transform: translate(-3.5vw, 2.5vh) scale(1.04) rotate(-7deg); }
+      100% { transform: translate(-27px, 0) scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes flyB {
+      0%   { transform: translate(38vw, 31vh) scale(.25) rotate(22deg); opacity: 0; }
+      12%  { opacity: 1; }
+      52%  { transform: translate(11vw, -7vh) scale(.85) rotate(-12deg); }
+      78%  { transform: translate(3.5vw, 2.5vh) scale(1.04) rotate(7deg); }
+      100% { transform: translate(27px, 0) scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes pairSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes pairSpinBack {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
+    }
+
+    @keyframes mergeAway {
+      to { transform: scale(.18); opacity: 0; }
+    }
+
+    @keyframes popIn {
+      0%   { opacity: 0; transform: scale(.2) rotate(-14deg); }
+      55%  { opacity: 1; transform: scale(1.16) rotate(4deg); }
+      75%  { transform: scale(.94) rotate(-2deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    @keyframes ringOut {
+      0%   { opacity: .0; transform: translate(-50%, -50%) scale(.35); }
+      20%  { opacity: .75; }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(2.4); }
+    }
+
+    @keyframes flashOnce {
+      0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.4); }
+      35%      { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    @keyframes capOut {
+      to { opacity: 0; transform: translateY(-12px); filter: blur(3px); }
+    }
+
+    @keyframes capIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes heartPop {
+      0%   { transform: translate(-50%, -50%) scale(.4) rotate(0deg); opacity: 0; }
+      20%  { opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% - 150px)) scale(1.1) rotate(var(--rot, 20deg)); opacity: 0; }
+    }
+
+    @keyframes shoot {
+      0%   { opacity: 0; transform: translate(0, 0) rotate(var(--ang, 200deg)) scaleX(.15); }
+      12%  { opacity: 1; }
+      100% { opacity: 0; transform: translate(var(--sx, -46vw), var(--sy, 30vh)) rotate(var(--ang, 200deg)) scaleX(1); }
+    }
+
+    @keyframes skyScreenOut {
+      0%   { opacity: 1; transform: scale(1); filter: blur(0); }
+      100% { opacity: 0; transform: scale(1.16); filter: blur(9px); }
+    }
+
+    .sky-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 24px 16px 34px;
+      overflow: hidden;
+      background-color: #ffeaf2;
+      background-image:
+        radial-gradient(90% 60% at 76% 8%, rgba(255, 236, 197, .85), transparent 60%),
+        radial-gradient(80% 55% at 12% 92%, rgba(255, 176, 207, .55), transparent 62%),
+        linear-gradient(178deg, #ffe1ee 0%, #ffd7e8 34%, #ffe9f0 66%, #fff6ee 100%);
+      transition: opacity .8s ease, visibility .8s;
+    }
+
+    .sky-screen.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    /* луна */
+    .moon {
+      position: absolute;
+      top: 7vh;
+      right: 9vw;
+      width: clamp(64px, 11vw, 104px);
+      animation: moonFloat 9s ease-in-out infinite;
+      filter: drop-shadow(0 0 26px rgba(255, 209, 138, .85));
+      pointer-events: none;
+    }
+
+    .moon svg { width: 100%; height: auto; display: block; }
+
+    /* облака */
+    .cloud {
+      position: absolute;
+      height: 46px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, .55);
+      filter: blur(14px);
+      animation: cloudDrift 24s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    .cloud.c1 { width: 240px; top: 22vh; left: -40px; }
+    .cloud.c2 { width: 300px; top: 62vh; right: -60px; animation-duration: 31s; opacity: .8; }
+    .cloud.c3 { width: 180px; top: 78vh; left: 12vw; animation-duration: 27s; opacity: .65; }
+
+    .stars { position: absolute; inset: 0; pointer-events: none; }
+
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 8px 2px rgba(255, 255, 255, .85);
+      animation: twinkle 3.4s ease-in-out infinite;
+    }
+
+    /* путь, по которому летят сердца */
+    .trails {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .trail {
+      fill: none;
+      stroke: #ff6fa5;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 4 9;
+      vector-effect: non-scaling-stroke;
+      opacity: 0;
+      animation: drawTrail 5.4s ease-out .35s forwards;
+    }
+
+    .trail.t2 { stroke: #f0883f; animation-delay: .45s; }
+
+    /* летуны */
+    .pair {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -50%);
+      animation: pairSpin 1s linear 3.05s 3, mergeAway .5s ease 5.45s forwards;
+    }
+
+    .flyer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+
+    .flyer.fa { animation: flyA 2.5s cubic-bezier(.42, .02, .34, 1) .4s forwards; }
+    .flyer.fb { animation: flyB 2.5s cubic-bezier(.42, .02, .34, 1) .45s forwards; }
+
+    .mini {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: clamp(54px, 8.6vw, 78px);
+      aspect-ratio: 120 / 110;
+      filter: drop-shadow(0 8px 16px rgba(196, 30, 90, .35));
+    }
+
+    .mini { animation: pairSpinBack 1s linear 3.05s 3; }
+
+    .mini svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .mini .letter {
+      position: relative;
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: clamp(19px, 3.2vw, 27px);
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(150, 10, 60, .35);
+      transform: translateY(-6%);
+    }
+
+    /* большое сердце после слияния */
+    .merge {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      width: clamp(116px, 20vw, 190px);
+      aspect-ratio: 120 / 110;
+      transform: translate(-50%, -50%) scale(.001);
+      opacity: 0;
+      cursor: pointer;
+      animation: popIn .85s cubic-bezier(.2, .9, .25, 1.4) 5.6s forwards;
+    }
+
+    .merge svg.big-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    .merge .mono {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: clamp(20px, 3.4vw, 32px);
+      font-weight: 700;
+      color: rgba(255, 255, 255, .95);
+      letter-spacing: 1px;
+      text-shadow: 0 2px 6px rgba(150, 10, 60, .4);
+      transform: translateY(6%);
+      pointer-events: none;
+    }
+
+    .merge.hug svg.big-svg { animation: heartSqueeze .62s ease-in-out 4; }
+
+    .ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 143, 190, .8);
+      transform: translate(-50%, -50%) scale(.35);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .ring { animation: ringOut 2.6s ease-out 5.85s infinite; }
+    .ring.r2 { animation-delay: 6.7s; border-color: rgba(255, 200, 130, .75); }
+    .ring.r3 { animation-delay: 7.55s; border-color: rgba(255, 255, 255, .85); }
+
+    .flash {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      width: clamp(300px, 44vw, 620px);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%) scale(.4);
+      opacity: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, .95) 0%, rgba(255, 210, 230, .55) 34%, transparent 68%);
+      pointer-events: none;
+      animation: flashOnce 1s ease-out 5.55s forwards;
+    }
+
+    .sky-burst {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      font-size: 20px;
+      color: #ff5f96;
+      pointer-events: none;
+      animation: heartPop 1.15s ease-out forwards;
+      z-index: 3;
+    }
+
+    .shooting {
+      position: absolute;
+      width: 130px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .95), #fff);
+      box-shadow: 0 0 12px 2px rgba(255, 255, 255, .8);
+      pointer-events: none;
+      animation: shoot .9s ease-out forwards;
+    }
+
+    .shooting::after {
+      content: '';
+      position: absolute;
+      right: -4px;
+      top: -3px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 14px 5px rgba(255, 235, 200, .9);
+    }
+
+    /* подпись снизу, поверх неба */
+    .sky-words {
+      position: relative;
+      z-index: 4;
+      text-align: center;
+      width: 100%;
+    }
+
+    .cap-swap { display: grid; margin: 0 auto 6px; }
+
+    .cap {
+      grid-area: 1 / 1;
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: clamp(20px, 4.4vw, 32px);
+      font-weight: 700;
+      color: #c2185b;
+      line-height: 1.35;
+      text-shadow: 0 2px 0 rgba(255, 255, 255, .7);
+    }
+
+    .cap-b { opacity: 0; }
+    .sky-screen .cap-a { animation: capOut .6s ease 5.5s forwards; }
+    .sky-screen .cap-b { animation: capIn .8s cubic-bezier(.2, .9, .3, 1.2) 5.9s forwards; }
+
+    .sky-note {
+      font-size: 12.5px;
+      letter-spacing: 2.6px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: rgba(150, 60, 100, .62);
+      margin-bottom: 6px;
+    }
+
+    .sky-sub {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: 14px;
+      color: rgba(140, 70, 95, .85);
+      margin-bottom: 16px;
+    }
+
+    .sky-screen.closing { animation: skyScreenOut .78s cubic-bezier(.4, 0, .7, .2) forwards; }
+
+    @media (max-width: 560px) {
+      .flyer.fa { animation-name: flyAm; }
+      .flyer.fb { animation-name: flyBm; }
+      .moon { right: 6vw; top: 5vh; }
+    }
+
+    @keyframes flyAm {
+      0%   { transform: translate(-36vw, 26vh) scale(.25) rotate(-22deg); opacity: 0; }
+      12%  { opacity: 1; }
+      55%  { transform: translate(-9vw, -6vh) scale(.8) rotate(12deg); }
+      100% { transform: translate(-27px, 0) scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes flyBm {
+      0%   { transform: translate(36vw, 26vh) scale(.25) rotate(22deg); opacity: 0; }
+      12%  { opacity: 1; }
+      55%  { transform: translate(9vw, -6vh) scale(.8) rotate(-12deg); }
+      100% { transform: translate(27px, 0) scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .star, .cloud, .moon, .pair, .mini { animation: none; }
+      .flyer { animation-duration: .01s; }
+    }
+
+    @keyframes fadeUpSoft {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .welcome-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      animation: fadeUpSoft .9s ease 1.2s both;
+    }
+
+    .welcome-hint {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: 12.5px;
+      color: rgba(150, 70, 100, .8);
+      opacity: 0;
+      animation: fadeUpSoft .8s ease 5.2s forwards;
+    }
+    /* ==========================================================================
+       ФИНАЛЬНЫЙ ВОПРОС: ПОЛНОЭКРАННОЕ ОКНО, РАМОЧКА И УБЕГАЮЩАЯ КНОПКА «НЕТ»
+       ========================================================================== */
+    @keyframes modalRise {
+      0%   { opacity: 0; transform: translateY(40px) scale(.94); }
+      70%  { opacity: 1; transform: translateY(-6px) scale(1.012); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes cornerDraw {
+      from { opacity: 0; transform: scale(.6) rotate(-12deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    @keyframes crownDrop {
+      0%   { opacity: 0; transform: translateY(-26px) rotate(-14deg); }
+      70%  { opacity: 1; transform: translateY(3px) rotate(4deg); }
+      100% { opacity: 1; transform: translateY(0) rotate(0deg); }
+    }
+
+    @keyframes runKick {
+      0%, 100% { transform: rotate(0deg); }
+      30%      { transform: rotate(-38deg); }
+      65%      { transform: rotate(26deg); }
+    }
+
+    @keyframes runKickBack {
+      0%, 100% { transform: rotate(0deg); }
+      35%      { transform: rotate(34deg); }
+      70%      { transform: rotate(-22deg); }
+    }
+
+    @keyframes wobbleNo {
+      0%, 100% { transform: rotate(var(--tilt, -4deg)); }
+      50%      { transform: rotate(calc(var(--tilt, -4deg) * -1)); }
+    }
+
+    @keyframes sweatDrop {
+      0%   { opacity: 0; transform: translateY(-4px) scale(.6); }
+      25%  { opacity: 1; }
+      100% { opacity: 0; transform: translateY(16px) scale(1); }
+    }
+
+    @keyframes yesBreath {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.045); }
+    }
+
+    @keyframes borderFlow {
+      0%   { background-position: -46% 0, 146% 100%; }
+      100% { background-position: 146% 0, -46% 100%; }
+    }
+
+    .proposal-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3vmin;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .55s ease, visibility .55s;
+      background:
+        radial-gradient(120% 90% at 8% 6%, rgba(255, 176, 207, .95), transparent 55%),
+        radial-gradient(120% 90% at 94% 96%, rgba(255, 214, 168, .92), transparent 55%),
+        linear-gradient(160deg, #fff1f6 0%, #ffe6f0 48%, #fff6ee 100%);
+      background-blend-mode: normal;
+    }
+
+    .proposal-modal.open { opacity: 1; visibility: visible; }
+
+    .proposal-modal .pm-bg-doodles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.9' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M40 60c-8-9-21-3-16 7 3 6 11 11 16 17 5-6 13-11 16-17 5-10-8-16-16-7z'/%3E%3Cpath d='M225 190c-7-8-18-2-14 6 2 5 9 9 14 15 5-6 12-10 14-15 4-8-7-14-14-6z'/%3E%3Cpath d='M150 30l6 12 12 6-12 6-6 12-6-12-12-6 12-6z'/%3E%3Cpath d='M60 240h14M67 233v14'/%3E%3Cpath d='M250 90h12M256 84v12'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 300px 300px;
+      animation: bgDrift 60s linear infinite alternate;
+    }
+
+    .proposal-box {
+      position: relative;
+      width: min(1240px, 100%);
+      max-height: 100%;
+      overflow: auto;
+      padding: clamp(28px, 5vmin, 60px) clamp(20px, 5vmin, 64px) clamp(24px, 4vmin, 46px);
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, #fffefe 0%, #fff7fa 100%);
+      box-shadow: 0 30px 80px rgba(150, 30, 80, .28), 0 0 0 6px rgba(255, 255, 255, .55);
+      border: 2px solid #ffcfe1;
+      text-align: center;
+      transform-origin: center;
+    }
+
+    .proposal-modal.open .proposal-box { animation: modalRise .8s cubic-bezier(.18, .9, .28, 1.15) both; }
+
+    /* двойная «кружевная» рамка с бегущим пунктиром */
+    .proposal-box::before,
+    .proposal-box::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      border-radius: 18px;
+    }
+
+    .proposal-box::before {
+      inset: 12px;
+      border: 1.5px dashed rgba(214, 51, 132, .38);
+    }
+
+    .proposal-box::after {
+      inset: 22px;
+      border: 1px solid rgba(255, 143, 184, .35);
+      background-image:
+        linear-gradient(90deg, transparent, rgba(255, 122, 172, .95), rgba(255, 206, 130, .95), rgba(255, 122, 172, .95), transparent),
+        linear-gradient(90deg, transparent, rgba(255, 122, 172, .95), rgba(255, 206, 130, .95), rgba(255, 122, 172, .95), transparent);
+      background-size: 46% 2px, 46% 2px;
+      background-position: -62% 0, 162% 100%;
+      background-repeat: no-repeat;
+      animation: borderFlow 7s linear infinite;
+    }
+
+    .pm-ornament {
+      position: absolute;
+      width: clamp(56px, 9vmin, 92px);
+      height: clamp(56px, 9vmin, 92px);
+      pointer-events: none;
+      color: var(--deep-pink);
+      opacity: 0;
+    }
+
+    .proposal-modal.open .pm-ornament { animation: cornerDraw .7s cubic-bezier(.18, .9, .28, 1.3) both; }
+    .pm-ornament svg { width: 100%; height: 100%; display: block; }
+    .pm-ornament .line { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; opacity: .85; }
+    .pm-ornament .h { fill: #ff7ba9; stroke: #c22a6b; stroke-width: 1; }
+    .pm-ornament.tl { top: 16px; left: 16px; }
+    .pm-ornament.tr { top: 16px; right: 16px; transform: scaleX(-1); }
+    .pm-ornament.bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
+    .pm-ornament.br { bottom: 16px; right: 16px; transform: scale(-1, -1); }
+    .proposal-modal.open .pm-ornament.tr { animation-delay: .1s; }
+    .proposal-modal.open .pm-ornament.bl { animation-delay: .2s; }
+    .proposal-modal.open .pm-ornament.br { animation-delay: .3s; }
+
+    .pm-crown {
+      width: clamp(58px, 9vmin, 86px);
+      height: auto;
+      margin: 0 auto 6px;
+      display: block;
+      opacity: 0;
+    }
+
+    .proposal-modal.open .pm-crown { animation: crownDrop .9s cubic-bezier(.18, .9, .28, 1.4) .35s forwards; }
+
+    .pm-kicker {
+      font-size: 11.5px;
+      letter-spacing: 4.5px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .proposal-title {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: clamp(23px, 4.6vmin, 42px);
+      line-height: 1.25;
+      font-weight: 700;
+      color: #b81f5e;
+      margin: 0 auto 6px;
+      max-width: 20ch;
+      text-shadow: 2px 3px 0 rgba(255, 190, 214, .5);
+    }
+
+    .pm-divider {
+      width: min(360px, 76%);
+      height: 26px;
+      margin: 4px auto 10px;
+      display: block;
+      color: var(--accent-pink);
+    }
+
+    .pm-divider .line { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 6 8; animation: dashCrawl 12s linear infinite; }
+    .pm-divider .hrt { fill: #ff7ba9; stroke: #c22a6b; stroke-width: 1.2; transform-box: fill-box; transform-origin: center; animation: heartBeat 1.8s ease-in-out infinite; }
+    .pm-divider .wisp { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; opacity: .5; }
+
+    .pm-note {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: clamp(13px, 2.1vmin, 16px);
+      color: var(--text-muted);
+      max-width: 46ch;
+      margin: 0 auto clamp(20px, 4vmin, 40px);
+      line-height: 1.7;
+    }
+
+    .proposal-buttons {
+      position: relative;
+      min-height: clamp(180px, 26vmin, 240px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    /* ---------- КНОПКА «ДА» с нарядной рамочкой ---------- */
+    .btn-yes {
+      position: relative;
+      z-index: 6;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+      transition: transform .35s cubic-bezier(.18, .9, .28, 1.3), filter .35s ease;
+      animation: yesBreath 2.6s ease-in-out infinite;
+    }
+
+    .btn-yes:hover { transform: translateY(-4px) scale(1.05); filter: drop-shadow(0 14px 22px rgba(200, 30, 90, .35)); }
+    .btn-yes:active { transform: translateY(0) scale(.985); }
+
+    .yes-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: clamp(15px, 2.6vmin, 22px) clamp(28px, 5vmin, 48px);
+      border-radius: 60px;
+      color: #fff;
+      background:
+        radial-gradient(120% 140% at 18% 0%, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 46%),
+        linear-gradient(135deg, #ff8fbe 0%, #ff3d7f 45%, #d6155c 100%);
+      box-shadow:
+        0 12px 26px rgba(214, 21, 92, .38),
+        inset 0 -3px 0 rgba(120, 0, 45, .22),
+        inset 0 2px 0 rgba(255, 255, 255, .35);
+      overflow: hidden;
+      font-size: clamp(18px, 3.4vmin, 27px);
+      font-weight: 800;
+      letter-spacing: .8px;
+      text-shadow: 0 2px 4px rgba(140, 0, 55, .35);
+    }
+
+    .yes-inner::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 60px;
+      border: 1.5px dashed rgba(255, 255, 255, .65);
+      pointer-events: none;
+    }
+
+    .yes-inner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .55), transparent);
+      transform: skewX(-18deg);
+      animation: sweep 3.4s ease-in-out infinite;
+    }
+
+    @keyframes sweep {
+      0%, 55% { left: -60%; }
+      100%    { left: 130%; }
+    }
+
+    .yes-frame {
+      position: absolute;
+      inset: -13px -16px;
+      border: 1.5px dashed rgba(214, 51, 132, .42);
+      border-radius: 72px;
+      pointer-events: none;
+    }
+
+    .yes-frame::before,
+    .yes-frame::after {
+      content: '\2665';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      color: #ff7ba9;
+    }
+
+    .yes-frame::before { left: -8px; }
+    .yes-frame::after { right: -8px; }
+
+    .yes-heart { width: clamp(26px, 4.4vmin, 38px); height: auto; display: block; flex-shrink: 0; }
+    .yes-heart .hb { fill: url(#yesHeartGrad); }
+    .yes-heart .hl { fill: rgba(255, 255, 255, .85); }
+    .yes-heart .sk { fill: #fff2a8; }
+
+    .yes-label { font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive; font-weight: 700; }
+
+    /* ---------- КНОПКА «НЕТ»: чёрная, с ножками и ручками, убегает ---------- */
+    .btn-no {
+      position: absolute;
+      left: 50%;
+      top: 24px;
+      z-index: 4;
+      display: inline-block;
+      padding: 12px 26px 15px;
+      border: 2px solid #000;
+      border-radius: 18px 16px 17px 19px;
+      background: #131118;
+      background-image: radial-gradient(120% 160% at 20% 0%, rgba(255, 255, 255, .16), transparent 46%);
+      color: #ffeaf2;
+      font-size: clamp(14px, 2.4vmin, 17px);
+      font-weight: 700;
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      letter-spacing: .6px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .12);
+      transform: translate(-50%, 0) scale(1) rotate(0deg);
+      transition: transform .22s cubic-bezier(.2, .86, .26, 1.15), opacity .3s ease, box-shadow .3s ease;
+      animation: wobbleNo 3.4s ease-in-out infinite;
+      touch-action: none;
+    }
+
+    .btn-no:hover { background-color: #1d1a25; box-shadow: 0 16px 30px rgba(0, 0, 0, .38); }
+
+    .btn-no .limb {
+      position: absolute;
+      stroke: #100e14;
+      stroke-width: 3.4;
+      stroke-linecap: round;
+      overflow: visible;
+    }
+
+    .limb-arms { top: -15px; left: 0; width: 100%; height: 18px; }
+    .limb-legs { bottom: -18px; left: 0; width: 100%; height: 22px; }
+    .btn-no .limb .paw { fill: #100e14; stroke: none; }
+
+    .btn-no.running .limb-arms path { animation: runKick .34s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .btn-no.running .limb-arms path:last-of-type { animation: runKickBack .34s ease-in-out infinite; }
+    .btn-no.running .limb-legs path { animation: runKickBack .3s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0%; }
+    .btn-no.running .limb-legs path:last-of-type { animation: runKick .3s ease-in-out infinite; }
+
+    .btn-no .sweat {
+      position: absolute;
+      top: -14px;
+      right: -6px;
+      width: 10px;
+      height: 14px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn-no.running .sweat { animation: sweatDrop 1s ease-out infinite; }
+    .btn-no.running { box-shadow: 0 18px 34px rgba(0, 0, 0, .38); }
+    .btn-no.tired { filter: grayscale(.15); }
+
+    .pm-caption {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      min-height: 20px;
+      margin-top: 4px;
+      transition: opacity .3s ease;
+    }
+
+    .pm-caption b { color: var(--deep-pink); }
+
+    /* финальный экран после «да» */
+    .proposal-modal.yes .pm-question { display: none; }
+    .proposal-modal .pm-answer { display: none; }
+    .proposal-modal.yes .pm-answer { display: block; animation: modalRise .8s cubic-bezier(.18, .9, .28, 1.2) both; }
+
+    .answer-title {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: clamp(28px, 7vmin, 62px);
+      color: #d6155c;
+      margin: 6px 0 4px;
+      text-shadow: 3px 4px 0 rgba(255, 196, 220, .55);
+      line-height: 1.1;
+    }
+
+    .answer-heart {
+      width: clamp(90px, 16vmin, 150px);
+      height: auto;
+      display: block;
+      margin: 8px auto 6px;
+      filter: drop-shadow(0 14px 22px rgba(214, 21, 92, .35));
+      animation: heartSqueeze 1.35s ease-in-out infinite;
+    }
+
+    .answer-text {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: clamp(14px, 2.4vmin, 19px);
+      color: #6c4650;
+      max-width: 44ch;
+      margin: 0 auto 18px;
+      line-height: 1.75;
+    }
+
+    .answer-sign {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 800;
+    }
+
+    .pm-btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+
+    .pm-ghost {
+      background: rgba(255, 255, 255, .8);
+      color: var(--deep-pink);
+      border: 1.5px dashed var(--accent-pink);
+      box-shadow: none;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .pm-ghost:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 18px rgba(214, 51, 132, .18); }
+
+    .trigger-yes {
+      background: linear-gradient(135deg, #ff8fbe, #d6155c);
+      color: #fff;
+      border: none;
+      padding: 15px 32px;
+      border-radius: 40px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(214, 21, 92, .35);
+      animation: heartBeat 2.2s ease-in-out infinite;
+    }
+
+    .trigger-yes:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 30px rgba(214, 21, 92, .45); }
+
+    @media (max-width: 640px) {
+      .proposal-buttons { min-height: 250px; }
+      .yes-inner { padding: 14px 26px; }
+    }
+    /* ---------- доводки: бег кнопкой, вспышка сердечек, запасные варианты для картинок ---------- */
+    @keyframes wobbleNo {
+      0%, 100% { transform: rotate(var(--tilt, -4deg)) scale(var(--scale, 1)); }
+      50%      { transform: rotate(calc(var(--tilt, -4deg) * -1.4)) scale(var(--scale, 1)); }
+    }
+
+    .btn-no {
+      transform: scale(var(--scale, 1)) rotate(var(--tilt, -4deg));
+      transition:
+        transform .22s cubic-bezier(.2, .86, .26, 1.15),
+        left .2s cubic-bezier(.2, .86, .26, 1.15),
+        top .2s cubic-bezier(.2, .86, .26, 1.15),
+        opacity .3s ease,
+        box-shadow .3s ease,
+        filter .3s ease;
+    }
+
+
+
+
+    .pm-burst {
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      z-index: 4;
+      animation: burstOut 1.05s cubic-bezier(.1, .8, .3, 1) forwards;
+    }
+
+    @keyframes burstOut {
+      0%   { transform: translate(-50%, -50%) scale(.3); opacity: 0; }
+      18%  { opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(1.15) rotate(var(--rot, 25deg)); opacity: 0; }
+    }
+
+    body.no-scroll { overflow: hidden; }
+
+    /* если фото рядом с файлом нет — рисуем аккуратную заглушку, а не битую картинку */
+    .cartoon-card.no-img img,
+    .dzin-img-box.no-img img { display: none; }
+
+    .cartoon-card.no-img {
+      min-height: 115px;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .cartoon-card.no-img::before {
+      content: '';
+      width: 46px;
+      height: 42px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 42'%3E%3Cpath d='M23 39C10 30 2 23 2 15 2 8 7 3 13 3c4 0 8 2 10 6 2-4 6-6 10-6 6 0 11 5 11 12 0 8-8 15-21 24z' fill='%23ffd3e4' stroke='%23d63384' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+      opacity: .9;
+    }
+
+    .dzin-img-box.no-img { min-height: 120px; }
+
+    .dzin-img-box.no-img::after {
+      content: 'здесь будет наше фото · dzin.jpg';
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: 13px;
+      color: #a35a72;
+      padding: 18px 12px;
+      text-align: center;
+    }
+
+    /* сердечко-плеер не замирает полностью — оно просто дышит спокойнее */
+    .heart-player.muted .hp-heart-wrap {
+      animation-play-state: running;
+      animation-duration: 3.1s;
+    }
+
+    /* плавное появление текста письма построчно */
+    .letter-block p {
+      opacity: 0;
+      animation: lineIn .7s ease forwards;
+    }
+
+    @keyframes lineIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .letter-block p:nth-child(1) { animation-delay: .05s; }
+    .letter-block p:nth-child(2) { animation-delay: .18s; }
+    .letter-block p:nth-child(3) { animation-delay: .31s; }
+    .letter-block p:nth-child(4) { animation-delay: .44s; }
+    .letter-block p:nth-child(5) { animation-delay: .57s; }
+    /* ==========================================================================
+       НОВЫЕ ИГРЫ: ловец сердечек, мемо, колесо желаний, пазл, автомат
+       ========================================================================== */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1.5px solid var(--border-color);
+      border-radius: 999px;
+      padding: 6px 15px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      box-shadow: 0 3px 10px rgba(214, 51, 132, .08);
+    }
+
+    .chip b { color: var(--deep-pink); font-size: 14.5px; }
+
+    .catch-hud,
+    .memo-hud,
+    .wheel-hud,
+    .puzzle-hud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .btn-chip {
+      cursor: pointer;
+      font-family: inherit;
+      background: linear-gradient(180deg, #fff 0%, #ffe7f1 100%);
+      background-color: #fff;
+      color: var(--deep-pink);
+      transition: transform .2s cubic-bezier(.2,.9,.3,1.2), box-shadow .2s ease;
+    }
+
+    .btn-chip:hover {
+      background: linear-gradient(180deg, #fff 0%, #ffd7e8 100%);
+      background-color: #fff;
+      color: var(--deep-pink);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 18px rgba(214, 51, 132, .22);
+    }
+
+    .btn-chip:active { transform: translateY(0) scale(.98); }
+
+    .btn-chip.soft {
+      background: #fff;
+      background-color: #fff;
+      color: var(--text-muted);
+      border-style: dashed;
+    }
+
+    .catch-state {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: 13.5px;
+      color: rgba(140, 70, 95, .62);
+      margin-bottom: 12px;
+      min-height: 21px;
+      transition: color .25s ease;
+    }
+
+    /* ---------- ЭТАП 9: ловец ---------- */
+    .catch-area {
+      position: relative;
+      height: clamp(230px, 40vw, 330px);
+      overflow: hidden;
+      border-radius: 22px;
+      border: 2px dashed rgba(214, 51, 132, .32);
+      background:
+        radial-gradient(80% 50% at 50% 0%, rgba(255, 255, 255, .9), transparent 70%),
+        linear-gradient(180deg, #fff8fb 0%, #ffe8f2 100%);
+      box-shadow: inset 0 10px 26px rgba(214, 51, 132, .08);
+      margin-bottom: 12px;
+      cursor: crosshair;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .catch-area.armed { border-style: solid; border-color: var(--accent-pink); }
+
+    @keyframes heartFall {
+      from { transform: translateY(0); }
+      to   { transform: translateY(var(--fall, 380px)); }
+    }
+
+    @keyframes sway {
+      0%, 100% { transform: translateX(-7px) rotate(-9deg); }
+      50%      { transform: translateX(7px) rotate(9deg); }
+    }
+
+    @keyframes caughtPop {
+      0%   { transform: scale(1); opacity: 1; }
+      40%  { transform: scale(1.6) rotate(-6deg); opacity: 1; }
+      100% { transform: scale(.35) translateY(-34px) rotate(10deg); opacity: 0; }
+    }
+
+    .drop {
+      position: absolute;
+      top: -48px;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      animation-name: heartFall;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+      will-change: transform;
+    }
+
+    .drop-in {
+      display: block;
+      font-size: 30px;
+      line-height: 1;
+      color: #ff5f96;
+      text-shadow: 0 5px 12px rgba(200, 20, 80, .28);
+      animation: sway 1.7s ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    .drop:hover .drop-in { color: #e0115e; }
+
+    .drop.missed { opacity: .35; }
+
+    .drop.caught { animation-play-state: paused; pointer-events: none; }
+    .drop.caught .drop-in { animation: caughtPop .38s cubic-bezier(.2,.9,.3,1.2) forwards; }
+
+    .catch-pips {
+      position: absolute;
+      left: 0; right: 0; bottom: 10px;
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .catch-pips i {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(214, 51, 132, .15);
+      transition: transform .3s cubic-bezier(.2,.9,.3,1.4), background .3s ease;
+    }
+
+    .catch-pips i.on {
+      background: linear-gradient(135deg, #ff9ec7, #e0447f);
+      transform: scale(1.55);
+    }
+
+    /* ---------- ЭТАП 10: мемо ---------- */
+    .memo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+      perspective: 900px;
+    }
+
+    .memo-card {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      border-radius: 15px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .25s ease;
+    }
+
+    .memo-card:hover:not(.found):not(.flipped) { transform: translateY(-4px) rotate(-1deg); }
+
+    .memo-inner {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transition: transform .5s cubic-bezier(.2,.8,.25,1.05);
+    }
+
+    .memo-card.flipped .memo-inner,
+    .memo-card.found .memo-inner { transform: rotateY(180deg); }
+
+    .memo-face {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      border: 2px solid var(--border-color);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    .memo-back {
+      background:
+        repeating-linear-gradient(135deg, rgba(255, 255, 255, .55) 0 6px, transparent 6px 12px),
+        linear-gradient(135deg, #ffd9e8, #ffb6d2);
+      color: rgba(163, 19, 63, .55);
+      font-size: 20px;
+      box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .55);
+    }
+
+    .memo-back::after { content: '\2665'; }
+
+    .memo-front {
+      background: #fff;
+      transform: rotateY(180deg);
+    }
+
+    .memo-front svg { width: 62%; height: 62%; display: block; }
+
+    .memo-card.found .memo-face {
+      border-color: var(--deep-pink);
+      box-shadow: 0 0 0 3px rgba(255, 143, 190, .4), 0 10px 20px rgba(214, 51, 132, .22);
+      animation: foundPop .5s cubic-bezier(.2,.9,.3,1.3);
+    }
+
+    @keyframes foundPop {
+      0%, 100% { transform: scale(1) }
+      45%      { transform: scale(1.14) }
+    }
+
+    .memo-card.wrong .memo-inner { animation: wrongShake .42s ease; }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: rotateY(180deg) translateX(0) }
+      30%      { transform: rotateY(180deg) translateX(-5px) }
+      60%      { transform: rotateY(180deg) translateX(5px) }
+    }
+
+    /* ---------- ЭТАП 11: колесо ---------- */
+    .wheel-wrap {
+      position: relative;
+      width: min(300px, 78vw);
+      margin: 0 auto 14px;
+    }
+
+    .wheel {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: conic-gradient(
+        #ffd7e8 0 45deg, #ffbcd8 45deg 90deg,
+        #ffd7e8 90deg 135deg, #ffbcd8 135deg 180deg,
+        #ffd7e8 180deg 225deg, #ffbcd8 225deg 270deg,
+        #ffd7e8 270deg 315deg, #ffbcd8 315deg 360deg);
+      border: 5px solid #fff;
+      box-shadow: 0 16px 34px rgba(214, 51, 132, .26), inset 0 0 0 2px rgba(214, 51, 132, .14);
+      transition: transform 3.7s cubic-bezier(.13,.72,.05,1);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .wheel::before {
+      content: '';
+      position: absolute;
+      inset: 9%;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(255, 255, 255, .8);
+      pointer-events: none;
+    }
+
+    .wheel-lab {
+      position: absolute;
+      inset: 0;
+      display: block;
+      transform: rotate(var(--a, 0deg));
+      transform-origin: 50% 50%;
+      pointer-events: none;
+    }
+
+    .wheel-lab i {
+      position: absolute;
+      top: 7.5%;
+      left: 50%;
+      /* слово доворачивается в обратную сторону — оно всегда стоит ровно,
+         даже когда колесо крутится (переход совпадает по времени и кривой) */
+      transform: translateX(-50%) rotate(var(--fix, 0deg));
+      transition: transform 3.7s cubic-bezier(.13,.72,.05,1);
+      font-style: normal;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: .3px;
+      text-transform: lowercase;
+      color: #9c1040;
+      white-space: nowrap;
+    }
+
+    .wheel-hub {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 42px;
+      height: 42px;
+      margin: -21px 0 0 -21px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 34% 30%, #ff9ec4, #d6155c 72%);
+      box-shadow: 0 4px 12px rgba(150, 10, 60, .35), inset 0 0 0 3px rgba(255, 255, 255, .35);
+      color: #fff;
+      font-size: 18px;
+      display: grid;
+      place-items: center;
+      animation: heartBeat 1.9s ease-in-out infinite;
+    }
+
+    .wheel-pointer {
+      position: absolute;
+      left: 50%;
+      top: -13px;
+      width: 0;
+      height: 0;
+      transform: translateX(-50%);
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-top: 20px solid #d6155c;
+      filter: drop-shadow(0 3px 4px rgba(150, 10, 60, .35));
+      z-index: 2;
+    }
+
+    .wheel.spinning { box-shadow: 0 16px 34px rgba(214, 51, 132, .26), inset 0 0 0 2px rgba(214, 51, 132, .14), 0 0 0 8px rgba(255, 158, 196, .25); }
+
+    .wheel-out {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      min-height: 46px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 10px;
+      max-width: 420px;
+      padding: 10px 16px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1.5px dashed var(--accent-pink);
+      color: var(--deep-pink);
+      font-size: 15px;
+      text-align: center;
+      transition: transform .3s cubic-bezier(.2,.9,.3,1.3), box-shadow .3s ease;
+    }
+
+    .wheel-out.hit { transform: scale(1.04); box-shadow: 0 10px 22px rgba(214, 51, 132, .2); }
+
+    .wish-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 0 0 6px;
+      padding: 0;
+    }
+
+    .wish-list li {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fff, #ffe6f0);
+      border: 1.5px solid var(--border-color);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--deep-pink);
+      animation: wishIn .5s cubic-bezier(.2,.9,.3,1.3) both;
+    }
+
+    .wish-list li::before { content: '\2665'; color: #ff5f96; }
+
+    @keyframes wishIn {
+      from { opacity: 0; transform: translateY(8px) scale(.9) }
+      to   { opacity: 1; transform: translateY(0) scale(1) }
+    }
+
+    /* ---------- ЭТАП 12: пазл ---------- */
+    .puzzle-wrap {
+      --pz: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20300%20300%27%20width%3D%27300%27%20height%3D%27300%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23ffc6dd%27%2F%3E%3Cstop%20offset%3D%2755%25%27%20stop-color%3D%27%23ff5f96%27%2F%3E%3Cstop%20offset%3D%27100%25%27%20stop-color%3D%27%23c2185b%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%27300%27%20height%3D%27300%27%20fill%3D%27%23fffdf8%27%2F%3E%3Cg%20stroke%3D%27%23f5dde8%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M0%2060h300M0%20120h300M0%20180h300M0%20240h300%27%2F%3E%3C%2Fg%3E%3Crect%20x%3D%2712%27%20y%3D%2712%27%20width%3D%27276%27%20height%3D%27276%27%20rx%3D%2720%27%20fill%3D%27none%27%20stroke%3D%27%23e79ac0%27%20stroke-width%3D%274%27%20stroke-dasharray%3D%2713%209%27%2F%3E%3Cpath%20d%3D%27M150%20246C66%20186%2026%20150%2026%20104%2026%2066%2056%2040%2092%2040c24%200%2046%2013%2058%2034%2012-21%2034-34%2058-34%2036%200%2066%2026%2066%2064%200%2046-40%2082-124%20142z%27%20fill%3D%27url%28%23g%29%27%20stroke%3D%27%238d0b3c%27%20stroke-width%3D%276%27%20stroke-linejoin%3D%27round%27%2F%3E%3Cpath%20d%3D%27M78%2074c-18%208-30%2020-30%2036%200%209%204%2018%2010%2026%27%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C.72%29%27%20stroke-width%3D%2711%27%20stroke-linecap%3D%27round%27%2F%3E%3Ctext%20x%3D%27150%27%20y%3D%27168%27%20text-anchor%3D%27middle%27%20font-family%3D%27Georgia%2Cserif%27%20font-size%3D%2744%27%20fill%3D%27%23ffffff%27%20letter-spacing%3D%273%27%3E%D0%A2%20%E2%99%A5%20%D0%9C%3C%2Ftext%3E%3Cpath%20d%3D%27M244%2046l6%2015%2015%206-15%206-6%2015-6-15-15-6%2015-6z%27%20fill%3D%27%23ffd08a%27%2F%3E%3Cpath%20d%3D%27M50%20230l4.5%2011%2011%204.5-11%204.5-4.5%2011-4.5-11-11-4.5%2011-4.5z%27%20fill%3D%27%23ffb0cf%27%2F%3E%3C%2Fsvg%3E");
+      position: relative;
+      width: min(300px, 84vw);
+      margin: 0 auto 12px;
+    }
+
+    .puzzle {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      padding: 8px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #fff, #ffeef5);
+      border: 2px solid var(--border-color);
+      box-shadow: 0 14px 28px rgba(214, 51, 132, .16);
+    }
+
+    .puzzle-hint {
+      position: absolute;
+      inset: 8px;
+      border-radius: 14px;
+      background-image: var(--pz);
+      background-size: cover;
+      opacity: .22;
+      pointer-events: none;
+    }
+
+    .pz-tile {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 11px;
+      cursor: pointer;
+      background-image: var(--pz);
+      background-size: 300% 300%;
+      box-shadow: inset 0 0 0 1px rgba(214, 51, 132, .18);
+      transition: transform .22s cubic-bezier(.2,.9,.3,1.2), box-shadow .22s ease, filter .22s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .pz-tile:hover { transform: scale(1.05) rotate(-1.2deg); filter: saturate(1.15); }
+
+    .pz-tile.right {
+      box-shadow: 0 0 0 2px rgba(255, 143, 190, .6), inset 0 0 0 1px rgba(214, 51, 132, .2);
+    }
+
+    .pz-tile.picked {
+      box-shadow: 0 0 0 3px var(--accent-pink), 0 12px 20px rgba(214, 51, 132, .3);
+      transform: scale(1.07);
+      filter: saturate(1.25);
+    }
+
+    .pz-tile.swap { animation: tileSwap .34s ease; }
+
+    @keyframes tileSwap {
+      0%   { transform: scale(1) rotate(0) }
+      50%  { transform: scale(.86) rotate(6deg) }
+      100% { transform: scale(1) rotate(0) }
+    }
+
+    .pz-tile.bad { animation: tileBad .38s ease; }
+
+    @keyframes tileBad {
+      0%, 100% { transform: translateX(0) }
+      30%      { transform: translateX(-6px) rotate(-3deg) }
+      65%      { transform: translateX(6px) rotate(3deg) }
+    }
+
+    .puzzle.solved { border-color: var(--deep-pink); box-shadow: 0 0 0 5px rgba(255, 143, 190, .35), 0 16px 34px rgba(214, 51, 132, .26); }
+    .puzzle.solved .pz-tile { animation: tileSolved .6s cubic-bezier(.2,.9,.3,1.3) both }
+
+    @keyframes tileSolved {
+      0%, 100% { transform: scale(1) }
+      45%      { transform: scale(1.1) rotate(-3deg) }
+    }
+
+    /* ---------- ЭТАП 13: автомат комплиментов ---------- */
+    .slot {
+      position: relative;
+      display: grid;
+      gap: 10px;
+      padding: 14px 52px 14px 14px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fff 0%, #ffe7f1 100%);
+      border: 3px solid var(--deep-pink);
+      box-shadow: 0 16px 32px rgba(214, 51, 132, .24), inset 0 0 0 4px rgba(255, 255, 255, .75);
+      max-width: 440px;
+      margin: 0 auto 12px;
+    }
+
+    .slot-top {
+      letter-spacing: 9px;
+      color: #ffb64d;
+      font-size: 12px;
+      text-align: center;
+      text-shadow: 0 1px 0 #fff;
+    }
+
+    .reels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px }
+
+    .reel {
+      overflow: hidden;
+      height: 54px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1.5px solid var(--border-color);
+      box-shadow: inset 0 -9px 14px rgba(214, 51, 132, .09), inset 0 9px 14px rgba(214, 51, 132, .09);
+    }
+
+    .strip { display: flex; flex-direction: column; transition: transform 1.25s cubic-bezier(.18,.72,.12,1) }
+
+    .strip b {
+      height: 54px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      padding: 0 5px;
+      text-align: center;
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--deep-pink);
+      line-height: 1.15;
+    }
+
+    .slot-lever {
+      position: absolute;
+      right: 12px;
+      top: 34px;
+      width: 26px;
+      height: 86px;
+      cursor: pointer;
+      border-radius: 14px;
+    }
+
+    .slot-lever::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      bottom: 0;
+      width: 4px;
+      height: 40px;
+      border-radius: 3px;
+      background: linear-gradient(#d6155c, #8d0b3c);
+    }
+
+    .lever-stick {
+      position: absolute;
+      left: 11px;
+      top: 16px;
+      width: 4px;
+      height: 48px;
+      border-radius: 3px;
+      background: linear-gradient(#f3749f, #b5114a);
+      transition: transform .2s cubic-bezier(.3,.9,.3,1.4);
+    }
+
+    .lever-knob {
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 28%, #ffe0a8, #ef8a2a 68%, #b95c05);
+      box-shadow: 0 4px 9px rgba(120, 60, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .6);
+      transition: transform .2s cubic-bezier(.3,.9,.3,1.4);
+    }
+
+    .slot-lever:hover .lever-knob { transform: translateY(-4px) }
+    .slot-lever.pull .lever-knob { transform: translateY(26px) }
+    .slot-lever.pull .lever-stick { transform: translateY(26px) scaleY(.78) }
+
+    .slot-out {
+      font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+      min-height: 42px;
+      display: grid;
+      place-items: center;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1.5px dashed var(--accent-pink);
+      color: #a3133f;
+      font-size: 14.5px;
+      text-align: center;
+      transition: transform .3s cubic-bezier(.2,.9,.3,1.3);
+    }
+
+    .slot-out.hit { transform: scale(1.05); box-shadow: 0 10px 20px rgba(214, 51, 132, .18) }
+
+    .slot.rolling .strip b { filter: blur(.4px) }
+
+    /* ---------- глобальные «живые» эффекты ---------- */
+    @keyframes sparkFade {
+      0%   { opacity: 0; transform: translate(-50%, -50%) scale(.4) rotate(0deg); }
+      25%  { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -150%) scale(1.15) rotate(28deg); }
+    }
+
+    .cursor-spark {
+      position: fixed;
+      z-index: 9997;
+      pointer-events: none;
+      font-size: 12px;
+      line-height: 1;
+      color: #ff7ba9;
+      text-shadow: 0 0 9px rgba(255, 150, 190, .8);
+      animation: sparkFade .9s ease-out forwards;
+    }
+
+    @keyframes tapPop {
+      0%   { opacity: 0; transform: translate(-50%, -50%) scale(.3); }
+      25%  { opacity: 1; transform: translate(-50%, -75%) scale(1.18); }
+      100% { opacity: 0; transform: translate(-50%, -210%) scale(.8); }
+    }
+
+    .tap-heart {
+      position: fixed;
+      z-index: 9997;
+      pointer-events: none;
+      color: #ff5f96;
+      font-size: 18px;
+      line-height: 1;
+      animation: tapPop .78s ease-out forwards;
+    }
+
+    .toast {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      z-index: 9990;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .94);
+      border: 1.5px solid var(--accent-pink);
+      box-shadow: 0 14px 30px rgba(214, 51, 132, .24);
+      color: #a3133f;
+      font-weight: 800;
+      font-size: 13.5px;
+      letter-spacing: .3px;
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      transform: translate(-50%, -190%);
+      opacity: 0;
+      transition: transform .55s cubic-bezier(.2,.9,.25,1.2), opacity .4s ease;
+      pointer-events: none;
+      max-width: 92vw;
+      text-align: center;
+    }
+
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+    .toast svg { width: 21px; height: 19px; flex-shrink: 0; }
+
+    @media (max-width: 520px) {
+      .memo-grid { gap: 7px }
+      .slot { padding-right: 44px }
+      .wheel-lab i { font-size: 10px }
+      .strip b { font-size: 12.5px }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor-spark, .tap-heart { display: none; }
+      .wheel-hub, .pz-tile, .memo-card { animation: none !important; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Фоновые парящие сердечки -->
-  <div class="floating-hearts" id="floatingHearts"></div>
 
-  <!-- Аудио элемент с автозапуском -->
-  <audio id="bg-audio" loop autoplay>
-    <source src="song.mp3" type="audio/mpeg">
-  </audio>
+  <!-- ЭКРАН ПРИВЕТСТВИЯ: небо, звёзды и два сердца, летящих друг к другу -->
+  <div class="welcome-screen sky-screen" id="welcomeScreen">
+    <span class="moon" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="33" fill="#fff6e2" stroke="#f0c68a" stroke-width="2"/>
+        <circle cx="39" cy="43" r="7" fill="#f9e6c2"/>
+        <circle cx="58" cy="61" r="5" fill="#f9e6c2"/>
+        <circle cx="64" cy="39" r="3.2" fill="#f9e6c2"/>
+        <path d="M50 17a33 33 0 000 66 26 26 0 010-66z" fill="rgba(255,255,255,.6)"/>
+      </svg>
+    </span>
+    <span class="cloud c1" aria-hidden="true"></span>
+    <span class="cloud c2" aria-hidden="true"></span>
+    <span class="cloud c3" aria-hidden="true"></span>
+    <div class="stars" id="skyStars"></div>
 
-  <!-- Фиксированный музыкальный плеер-сердечко в левом нижнем углу -->
-  <div class="music-player" onclick="togglePlay(); playSound('click');" title="Управление музыкой">
-    <button class="music-btn" id="playBtn">❤️</button>
-    <div class="music-info">
-      <div id="musicStatus">Наша песня</div>
+    <svg class="trails" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path class="trail t1" pathLength="100" d="M13 84C27 71 25 36 50 46"/>
+      <path class="trail t2" pathLength="100" d="M87 84C73 71 75 36 50 46"/>
+    </svg>
+
+    <div class="pair" id="skyPair">
+      <div class="flyer fa">
+        <span class="mini">
+          <svg viewBox="0 0 120 110" aria-hidden="true">
+            <path d="M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z" fill="url(#sealGrad)"/>
+            <path d="M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z" fill="none" stroke="#8d0b3c" stroke-opacity=".35" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M31 27c-7 2-12 7-12 14 0 4 2 8 5 12" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+          <span class="letter">Т</span>
+        </span>
+      </div>
+      <div class="flyer fb">
+        <span class="mini">
+          <svg viewBox="0 0 120 110" aria-hidden="true">
+            <path d="M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z" fill="url(#skyHeartB)"/>
+            <path d="M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z" fill="none" stroke="#8d0b3c" stroke-opacity=".35" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M88 26c7 3 12 8 12 15 0 4-1 7-3 10" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+          <span class="letter">М</span>
+        </span>
+      </div>
+    </div>
+
+    <span class="flash" aria-hidden="true"></span>
+
+    <div class="merge" id="bigHeart" role="button" tabindex="0" aria-label="Обнять сердце" title="Обними меня">
+      <span class="ring r1" aria-hidden="true"></span>
+      <span class="ring r2" aria-hidden="true"></span>
+      <span class="ring r3" aria-hidden="true"></span>
+      <svg class="big-svg" viewBox="0 0 120 110" aria-hidden="true">
+        <path d="M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z" fill="url(#sealGrad)"/>
+        <path d="M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z" fill="none" stroke="#a10f43" stroke-opacity=".45" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M30 26c-8 3-13 9-13 18 0 5 2 9 5 13" fill="none" stroke="rgba(255,255,255,.92)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M96 19l2.8 6.4 6.4 2.8-6.4 2.8-2.8 6.4-2.8-6.4-6.4-2.8 6.4-2.8z" fill="#fff3a8"/>
+        <path d="M104 62l1.6 3.6 3.6 1.6-3.6 1.6-1.6 3.6-1.6-3.6-3.6-1.6 3.6-1.6z" fill="rgba(255,255,255,.9)"/>
+      </svg>
+      <span class="mono">Т ♥ М</span>
+    </div>
+
+    <div class="sky-words">
+      <div class="sky-note">черновик неба · для марии</div>
+      <div class="cap-swap">
+        <div class="cap cap-a">Мы всегда летим друг к другу…</div>
+        <div class="cap cap-b">…и всегда долетаем ♥</div>
+      </div>
+      <div class="sky-sub">нажми на сердце — оно обнимет в ответ</div>
+      <div class="welcome-actions">
+        <button type="button" class="trigger-yes" onclick="closeWelcome()">Открыть наше сердце</button>
+        <div class="welcome-hint">кликни по небу — я загадаю звезду</div>
+      </div>
     </div>
   </div>
 
+  <!-- Скрытые градиенты для сердечек и печатей (используются всеми SVG на странице) -->
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <linearGradient id="sealGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffd3e4"/>
+        <stop offset="55%" stop-color="#ff7ba9"/>
+        <stop offset="100%" stop-color="#d6155c"/>
+      </linearGradient>
+      <linearGradient id="yesHeartGrad" x1="0" y1="0" x2="0.9" y2="1">
+        <stop offset="0" stop-color="#fff6fb"/>
+        <stop offset="42%" stop-color="#ffd0e4"/>
+        <stop offset="100%" stop-color="#ff8fbc"/>
+      </linearGradient>
+      <radialGradient id="playerHeartGrad" cx="34%" cy="26%" r="82%">
+        <stop offset="0" stop-color="#ffeaf3"/>
+        <stop offset="42%" stop-color="#ff7ba9"/>
+        <stop offset="100%" stop-color="#c2104f"/>
+      </radialGradient>
+      <linearGradient id="skyHeartB" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff3d6"/>
+        <stop offset="45%" stop-color="#ffb46f"/>
+        <stop offset="100%" stop-color="#f0663f"/>
+      </linearGradient>
+      <linearGradient id="pencilGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffdb8f"/>
+        <stop offset="100%" stop-color="#eeb044"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Фоновые парящие сердечки -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <!-- Аудио элемент -->
+  <audio id="bg-audio" loop>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ПЛЕЕР: нарисованное сердечко, которое бьётся в такт музыке -->
+  <div class="heart-player playing" id="heartPlayer" title="Наша песня — нажми, чтобы остановить" role="button" tabindex="0" aria-label="Управление музыкой">
+    <div class="hp-heart-wrap">
+      <span class="halo"></span>
+      <span class="halo halo2"></span>
+      <svg class="hp-heart" viewBox="0 0 120 110" aria-hidden="true">
+        <path d="M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z" fill="url(#playerHeartGrad)"/>
+        <path d="M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z" fill="none" stroke="#8d0b3c" stroke-opacity=".35" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M31 27c-7 2-12 7-12 14 0 4 2 8 5 12" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="86" cy="26" r="3.4" fill="rgba(255,255,255,.9)"/>
+      </svg>
+      <span class="eq"><i></i><i></i><i></i><i></i></span>
+      <span class="notes"><i>♪</i><i>♫</i><i>♪</i></span>
+    </div>
+    <div class="hp-meta">
+      <div class="hp-title" id="hpTitle">Наша песня</div>
+      <span class="hp-sub" id="hpSub">играет</span>
+      <span class="hp-eq2"><b></b><b></b><b></b><b></b><b></b></span>
+    </div>
+  </div>
   <div class="container">
 
     <div class="header">
       <h1>История нашей любви — Мария и Танжар</h1>
+      <svg class="ornament" viewBox="0 0 220 26" aria-hidden="true">
+        <path class="line" d="M6 15c22 7 36-6 52-6s24 9 42 7"/>
+        <path class="line" d="M214 15c-22 7-36-6-52-6s-24 9-42 7"/>
+        <path class="hrt" d="M110 23c-8-6-13-10-13-15 0-4 3-6 6-6 3 0 5 1 7 4 2-3 4-4 7-4 3 0 6 2 6 6 0 5-5 9-13 15z"/>
+        <path class="spk" d="M32 3l1.7 3.8 3.8 1.7-3.8 1.7L32 14l-1.7-3.8-3.8-1.7 3.8-1.7zM188 3l1.7 3.8 3.8 1.7-3.8 1.7-1.7 3.8-1.7-3.8-3.8-1.7 3.8-1.7z"/>
+      </svg>
       <p>Каждый шаг здесь открывает следующую страницу наших чувств.</p>
+
 
       <div class="timer-box">
         <div class="timer-title">Мы официально вместе уже:</div>
@@ -709,6 +2908,12 @@
           <span id="t-mins">0</span> мин.
           <span id="t-secs">0</span> сек.
         </div>
+      </div>
+
+      <div class="love-meter">
+        <div class="lm-label">наш путь до главного вопроса</div>
+        <div class="lm-track"><span class="lm-fill"></span></div>
+        <div class="lm-count">этапов пройдено: 0 из 8</div>
       </div>
     </div>
 
@@ -745,8 +2950,8 @@
 
       <div class="letter-block" id="block1">
         <p><strong>Память о каждом мгновении:</strong></p>
-        <p>22 июня произошел случайный клик в Дайвинчике, который перевернул всю мою жизнь. Ты искала архитекторов, а я написал: "Извини, я не архитектор". Но этот разговор затянул нас с первой же секунды[cite: 7].</p>
-        <p>Затем были волшебные июльские дни: 9 июля твои слова признания, 13 июля моё "люблю", 19 июля твоё взаимное "люблю", и 31 июля, когда мы стали парой. Каждая из этих дат навсегда высечена в моём сердце[cite: 7].</p>
+        <p>22 июня произошел случайный клик в Дайвинчике, который перевернул всю мою жизнь. Ты искала архитекторов, а я написал: "Извини, я не архитектор". Но этот разговор затянул нас с первой же секунды.</p>
+        <p>Затем были волшебные июльские дни: 9 июля твои слова признания, 13 июля моё "люблю", 19 июля твоё взаимное "люблю", и 31 июля, когда мы стали парой. Каждая из этих дат навсегда высечена в моём сердце.</p>
         <button style="margin-top: 15px;" onclick="unlockNext(2); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
@@ -776,8 +2981,8 @@
 
       <div class="letter-block" id="block2">
         <p><strong>Моя сладока, Масоня, Мюлю:</strong></p>
-        <p>Я обожаю называть тебя этими именами. Для меня ты — куным, айым, моя хорошая девочка, моя жена, невестка и аманатым[cite: 7].</p>
-        <p>Ты даришь мне ту нежность и тепло, которые я не испытывал никогда в жизни[cite: 7].</p>
+        <p>Я обожаю называть тебя этими именами. Для меня ты — куным, айым, моя хорошая девочка, моя жена, невестка и аманатым.</p>
+        <p>Ты даришь мне ту нежность и тепло, которые я не испытывал никогда в жизни.</p>
         <button style="margin-top: 15px;" onclick="unlockNext(3); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
@@ -794,8 +2999,8 @@
 
       <div class="letter-block" id="block3">
         <p><strong>Океан чувств на расстоянии:</strong></p>
-        <p>Когда я пишу тебе это слово, за ним стоит огромное тоскующее сердце. Мне не хватает твоего голоса, смеха и прикосновений[cite: 7].</p>
-        <p>Расстояние лишь доказывает мне каждый день, насколько сильно ты мне необходима[cite: 7].</p>
+        <p>Когда я пишу тебе это слово, за ним стоит огромное тоскующее сердце. Мне не хватает твоего голоса, смеха и прикосновений.</p>
+        <p>Расстояние лишь доказывает мне каждый день, насколько сильно ты мне необходима.</p>
         <button style="margin-top: 15px;" onclick="unlockNext(4); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
@@ -807,7 +3012,7 @@
       <div class="dzin-frame">
         <div class="dzin-top">МЫЫЫЫЫЫ</div>
         <div class="dzin-img-box">
-          <img src="dzin.jpg" alt="Дзинь" onerror="this.parentElement.innerHTML='<span>[ Добавь dzin.jpg ]</span>'">
+          <img src="dzin.jpg" alt="Дзинь" onerror="this.parentElement.classList.add('no-img')">
         </div>
         <div class="dzin-bottom">Чувство, которое приходит единожды...</div>
       </div>
@@ -821,8 +3026,8 @@
 
       <div class="letter-block" id="block4">
         <p><strong>И мой дзинь случился именно с тобой:</strong></p>
-        <p>Это не просто совпадение из мультика. Это то самое волшебное чувство, когда понимаешь: вот он, мой единственный человек на всю жизнь[cite: 7].</p>
-        <p>Я обожаю наши внутренние шутки, когда мы угараем с "мы шымкентские детка" или фразочек вроде "ампылда, жерге жатып ынкылла". С тобой я могу быть собой на 100%[cite: 7].</p>
+        <p>Это не просто совпадение из мультика. Это то самое волшебное чувство, когда понимаешь: вот он, мой единственный человек на всю жизнь.</p>
+        <p>Я обожаю наши внутренние шутки, когда мы угараем с "мы шымкентские детка" или фразочек вроде "ампылда, жерге жатып ынкылла". С тобой я могу быть собой на 100%.</p>
         <button style="margin-top: 15px;" onclick="unlockNext(5); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
@@ -844,7 +3049,7 @@
 
       <div class="letter-block" id="block5">
         <p><strong>Моя благодарность тебе:</strong></p>
-        <p>Я ценил и ценю в тебе абсолютно всё. Ты показала мне, что такое настоящая любовь, верность и счастье. Ты подарила мне надежду и искреннее желание развиваться и строить наше общее будущее[cite: 7].</p>
+        <p>Я ценил и ценю в тебе абсолютно всё. Ты показала мне, что такое настоящая любовь, верность и счастье. Ты подарила мне надежду и искреннее желание развиваться и строить наше общее будущее.</p>
         <button style="margin-top: 15px;" onclick="unlockNext(6); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
@@ -856,63 +3061,63 @@
       
       <div class="cartoons-grid">
         <div class="cartoon-card" onclick="toggleCartoon(this, 1); playSound('pop');">
-          <img src="morticia_gomez.jpg" alt="1" onerror="this.style.display='none'">
+          <img src="morticia_gomez.jpg" alt="1" onerror="this.parentElement.classList.add('no-img')">
           <span>1</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 2); playSound('pop');">
-          <img src="tom_jerry.jpg" alt="2" onerror="this.style.display='none'">
+          <img src="tom_jerry.jpg" alt="2" onerror="this.parentElement.classList.add('no-img')">
           <span>2</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 3); playSound('pop');">
-          <img src="toothless_fury.jpg" alt="3" onerror="this.style.display='none'">
+          <img src="toothless_fury.jpg" alt="3" onerror="this.parentElement.classList.add('no-img')">
           <span>3</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 4); playSound('pop');">
-          <img src="shrek_fiona.jpg" alt="4" onerror="this.style.display='none'">
+          <img src="shrek_fiona.jpg" alt="4" onerror="this.parentElement.classList.add('no-img')">
           <span>4</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 5); playSound('pop');">
-          <img src="dracula_erika.jpg" alt="5" onerror="this.style.display='none'">
+          <img src="dracula_erika.jpg" alt="5" onerror="this.parentElement.classList.add('no-img')">
           <span>5</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 6); playSound('pop');">
-          <img src="simba_nala.jpg" alt="6" onerror="this.style.display='none'">
+          <img src="simba_nala.jpg" alt="6" onerror="this.parentElement.classList.add('no-img')">
           <span>6</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 7); playSound('pop');">
-          <img src="romeo_juliet.jpg" alt="7" onerror="this.style.display='none'">
+          <img src="romeo_juliet.jpg" alt="7" onerror="this.parentElement.classList.add('no-img')">
           <span>7</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 8); playSound('pop');">
-          <img src="aladdin_jasmine.jpg" alt="8" onerror="this.style.display='none'">
+          <img src="aladdin_jasmine.jpg" alt="8" onerror="this.parentElement.classList.add('no-img')">
           <span>8</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 9); playSound('pop');">
-          <img src="rapunzel_eugene.jpg" alt="9" onerror="this.style.display='none'">
+          <img src="rapunzel_eugene.jpg" alt="9" onerror="this.parentElement.classList.add('no-img')">
           <span>9</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 10); playSound('pop');">
-          <img src="beauty_beast.jpg" alt="10" onerror="this.style.display='none'">
+          <img src="beauty_beast.jpg" alt="10" onerror="this.parentElement.classList.add('no-img')">
           <span>10</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 11); playSound('pop');">
-          <img src="naruto_hinata.jpg" alt="11" onerror="this.style.display='none'">
+          <img src="naruto_hinata.jpg" alt="11" onerror="this.parentElement.classList.add('no-img')">
           <span>11</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 12); playSound('pop');">
-          <img src="walle_eve.jpg" alt="12" onerror="this.style.display='none'">
+          <img src="walle_eve.jpg" alt="12" onerror="this.parentElement.classList.add('no-img')">
           <span>12</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 13); playSound('pop');">
-          <img src="tarzan_jane.jpg" alt="13" onerror="this.style.display='none'">
+          <img src="tarzan_jane.jpg" alt="13" onerror="this.parentElement.classList.add('no-img')">
           <span>13</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 14); playSound('pop');">
-          <img src="hercules_megara.jpg" alt="14" onerror="this.style.display='none'">
+          <img src="hercules_megara.jpg" alt="14" onerror="this.parentElement.classList.add('no-img')">
           <span>14</span>
         </div>
         <div class="cartoon-card" onclick="toggleCartoon(this, 15); playSound('pop');">
-          <img src="peter_wendy.jpg" alt="15" onerror="this.style.display='none'">
+          <img src="peter_wendy.jpg" alt="15" onerror="this.parentElement.classList.add('no-img')">
           <span>15</span>
         </div>
       </div>
@@ -922,8 +3127,8 @@
 
       <div class="letter-block" id="block6">
         <p><strong>Наши особенные пары:</strong></p>
-        <p>Мы как Мортиша и Гомез Адамс — безумно, страстно и навсегда преданные друг другу. Мы как Беззубик и Белая Фурия, которые нашли свою пару среди всего мира[cite: 7].</p>
-        <p>Мне невероятно греют душу все ласковые слова, которыми ты меня называешь: малыш, жаным, любимый, алтыным, котеночек, солнышко, папочка, хозяин, любовь, асыл жарым, жалгызым, суйыктым[cite: 7].</p>
+        <p>Мы как Мортиша и Гомез Адамс — безумно, страстно и навсегда преданные друг другу. Мы как Беззубик и Белая Фурия, которые нашли свою пару среди всего мира.</p>
+        <p>Мне невероятно греют душу все ласковые слова, которыми ты меня называешь: малыш, жаным, любимый, алтыным, котеночек, солнышко, папочка, хозяин, любовь, асыл жарым, жалгызым, суйыктым.</p>
         <button style="margin-top: 15px;" onclick="unlockNext(7); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
@@ -938,7 +3143,6 @@
       </div>
       
       <div class="checklist-container" id="checklist">
-        <!-- Список причин полностью сохранен -->
         <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты просто есть в моей жизни.</label>
         <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты появилась в моей жизни совершенно неожиданно.</label>
         <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно ты стала человеком который настолько сильно запал мне в сердце.</label>
@@ -1280,11 +3484,152 @@
 
       <div class="letter-block" id="block7">
         <p><strong>Я люблю тебя за абсолютно всё:</strong></p>
-        <p>Каждая из этих причин — лишь малая часть того, что я к тебе чувствую. Ты уникальный, глубокий и абсолютно никем не заменимый человек[cite: 7].</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(8); playSound('click');">Перейти к финальному замочку</button>
+        <p>Каждая из этих причин — лишь малая часть того, что я к тебе чувствую. Ты уникальный, глубокий и абсолютно никем не заменимый человек.</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(9); playSound('click');">Дальше — игры, которые я придумал для тебя</button>
       </div>
     </div>
 
+    <!-- ЭТАП 9: ЛОВЕЦ СЕРДЕЧЕК -->
+    <div class="game-card" id="stage9">
+      <div class="game-title">Этап 9: Ловец сердечек</div>
+      <div class="question">Поймай 12 сердечек — они падают так же, как мысли о тебе</div>
+
+      <div class="catch-hud">
+        <span class="chip">поймано <b id="catchScore">0</b> / 12</span>
+        <span class="chip">осталось <b id="catchTime">30</b> сек</span>
+        <button type="button" class="chip btn-chip" onclick="startCatch()">старт</button>
+        <button type="button" class="chip btn-chip soft" onclick="resetCatch()">заново</button>
+      </div>
+
+      <div class="catch-area" id="catchArea">
+        <div class="catch-pips" id="catchPips"></div>
+        <div class="catch-state" id="catchState">нажми «старт» и лови — сердечки хрупкие</div>
+      </div>
+
+      <div class="error-msg" id="err9">Не доловила — ничего, у нас ещё целая жизнь. Давай ещё раз</div>
+
+      <div class="letter-block" id="block9">
+        <p><strong>Руки у тебя быстрые — как и сердце.</strong></p>
+        <p>Я ведь тоже ловлю тебя с 22 июня: сначала одним сообщением в Дайвинчике, потом каждым твоим голосовым по утрам. И до сих пор ни разу не промахнулся.</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(10); playSound('click');">Дальше, моя хорошая</button>
+      </div>
+    </div>
+
+    <!-- ЭТАП 10: МЕМО-ПАРЫ -->
+    <div class="game-card" id="stage10">
+      <div class="game-title">Этап 10: Найди наши пары</div>
+      <div class="question">Переворачивай карточки и собери все шесть пар</div>
+
+      <div class="memo-hud">
+        <span class="chip">пары <b id="memoFound">0</b> / 6</span>
+        <span class="chip">ходов <b id="memoMoves">0</b></span>
+        <button type="button" class="chip btn-chip soft" onclick="resetMemo()">заново</button>
+      </div>
+
+      <div class="memo-grid" id="memoGrid"></div>
+      <div class="catch-state" id="memoState"> рубашкой вверх — там наши значки</div>
+
+      <div class="error-msg" id="err10">Пока не всё собрано — но пары никуда не денутся</div>
+
+      <div class="letter-block" id="block10">
+        <p><strong>Пары находятся, даже если переворачиваешь не туда.</strong></p>
+        <p>Так и мы: сколько бы жизнь ни переворачивала карты — мы всё равно находим друг друга. Я тебя нашёл сразу и менять ни на кого не собираюсь.</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(11); playSound('click');">Крутить колесо желаний</button>
+      </div>
+    </div>
+
+    <!-- ЭТАП 11: КОЛЕСО ЖЕЛАНИЙ -->
+    <div class="game-card" id="stage11">
+      <div class="game-title">Этап 11: Колесо желаний</div>
+      <div class="question">Крути колесо — оно решает, что я тебе сегодня подарю. Нужно три желания</div>
+
+      <div class="wheel-wrap">
+        <span class="wheel-pointer" aria-hidden="true"></span>
+        <div class="wheel" id="wheel">
+          <span class="wheel-lab" style="--a:22.5deg"><i>поцелуй</i></span>
+          <span class="wheel-lab" style="--a:67.5deg"><i>объятие</i></span>
+          <span class="wheel-lab" style="--a:112.5deg"><i>танец</i></span>
+          <span class="wheel-lab" style="--a:157.5deg"><i>утро</i></span>
+          <span class="wheel-lab" style="--a:202.5deg"><i>желание</i></span>
+          <span class="wheel-lab" style="--a:247.5deg"><i>секрет</i></span>
+          <span class="wheel-lab" style="--a:292.5deg"><i>рука</i></span>
+          <span class="wheel-lab" style="--a:337.5deg"><i>смех</i></span>
+          <span class="wheel-hub" aria-hidden="true">♥</span>
+        </div>
+      </div>
+
+      <div class="wheel-hud">
+        <span class="chip">желаний собрано <b id="wheelCount">0</b> / 3</span>
+        <button type="button" class="chip btn-chip" onclick="spinWheel()">крутить</button>
+      </div>
+
+      <div class="wheel-out" id="wheelOut">Колесо уже выбрало, что тебе сегодня нужно. Крути.</div>
+      <ul class="wish-list" id="wishList"></ul>
+
+      <div class="error-msg" id="err11">Нужно три желания — колесо не спорит, оно просто крутится дальше</div>
+
+      <div class="letter-block" id="block11">
+        <p><strong>Три желания — и все три уже в пути.</strong></p>
+        <p>Крути хоть до утра, у меня на тебя всегда есть чем заплатить: обещаний накоплено больше, чем дней, что мы провели порознь.</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(12); playSound('click');">Собрать сердце из осколков</button>
+      </div>
+    </div>
+
+    <!-- ЭТАП 12: ПАЗЛ -->
+    <div class="game-card" id="stage12">
+      <div class="game-title">Этап 12: Собери наше сердце</div>
+      <div class="question">Щёлкни по двум кусочкам, чтобы поменять их местами. Собери картинку</div>
+
+      <div class="puzzle-wrap">
+        <div class="puzzle" id="puzzle"></div>
+        <div class="puzzle-hint" aria-hidden="true"></div>
+      </div>
+
+      <div class="puzzle-hud">
+        <span class="chip">на месте <b id="pzOk">0</b> / 9</span>
+        <button type="button" class="chip btn-chip soft" onclick="shufflePuzzle()">перемешать</button>
+      </div>
+
+      <div class="error-msg" id="err12">Почти. Кусочек за кусочком — как у нас с тобой</div>
+
+      <div class="letter-block" id="block12">
+        <p><strong>Сердце собирается из мелочей.</strong></p>
+        <p>Из утренних голосовых, из «ампылда», из «жерге жатып ынкылла», из каждого «я скачулся». Казалось бы — ерунда, а сложилось в самое дорогое, что у меня есть.</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(13); playSound('click');">Пойти к автомату комплиментов</button>
+      </div>
+    </div>
+
+    <!-- ЭТАП 13: АВТОМАТ КОМПЛИМЕНТОВ -->
+    <div class="game-card" id="stage13">
+      <div class="game-title">Этап 13: Автомат комплиментов</div>
+      <div class="question">Дёрни за рычаг три раза — и получи то, что я говорю тебе каждый день</div>
+
+      <div class="slot" id="slotMachine">
+        <div class="slot-top" aria-hidden="true">★ ★ ★</div>
+        <div class="reels">
+          <div class="reel"><div class="strip" id="reel0"></div></div>
+          <div class="reel"><div class="strip" id="reel1"></div></div>
+          <div class="reel"><div class="strip" id="reel2"></div></div>
+        </div>
+        <div class="slot-lever" id="slotLever" role="button" tabindex="0" aria-label="Дёрнуть рычаг" onclick="pullLever()">
+          <span class="lever-stick" aria-hidden="true"></span>
+          <span class="lever-knob" aria-hidden="true"></span>
+        </div>
+        <div class="slot-out" id="slotOut">Три рыжих рычага — три комплимента. Начинай.</div>
+      </div>
+
+      <div class="puzzle-hud">
+        <span class="chip">комплиментов выпало <b id="slotCount">0</b> / 3</span>
+      </div>
+
+      <div class="error-msg" id="err13">Мало трёх — давай ещё, я не жадный</div>
+
+      <div class="letter-block" id="block13">
+        <p><strong>Машина говорит ровно то, что я думаю.</strong></p>
+        <p>Ты не обижайся, что я повторяюсь. Просто у меня нет других слов, которые описывали бы тебя точнее — есть только эти, и они не надоедают.</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(8); playSound('click');">Перейти к финальному замочку</button>
+      </div>
+    </div>
     <!-- ЭТАП 8: ЗАМОК В СЕРДЦЕ И ИНТЕРАКТИВНЫЙ КЛЮЧ -->
     <div class="game-card" id="stage8">
       <div class="game-title">Финальный этап: Ключ от моего сердца</div>
@@ -1301,16 +3646,26 @@
         </div>
 
         <div class="draggable-key" id="dragKey">
-          🔑 Перетащи меня в замок
+          <svg viewBox="0 0 40 22" aria-hidden="true" class="key-svg">
+            <circle cx="10" cy="11" r="7.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+            <circle cx="10" cy="11" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M17.5 11H37M31 11v6M37 11v5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+          Перетащи меня в замок
         </div>
       </div>
 
       <div class="letter-block" id="block8">
         <p><strong>Мои самые главные обещания тебе, моя Мария:</strong></p>
-        <p>Самым счастливым моментом в моей жизни был день, когда я предложил тебе встречаться, и те моменты, когда мы радовали друг друга подарками и вниманием[cite: 7].</p>
-        <p>Я хочу пообещать тебе, что буду любить тебя всегда. Меня интересует далеко не только твоё тело — я обожаю тебя всю целиком, каждую твою клеточку, твою душу, мысли и твой характер[cite: 7].</p>
-        <p>Я сделаю всё, чтобы осчастливить тебя, уберечь от любых бед и сделать нас настоящей, крепкой и счастливой семьёй[cite: 7].</p>
-        <p>Ты — самая важная, незаменимая, самая любимая и ценная девочка в моём жизни[cite: 7].</p>
+        <p>Самым счастливым моментом в моей жизни был день, когда я предложил тебе встречаться, и те моменты, когда мы радовали друг друга подарками и вниманием.</p>
+        <p>Я хочу пообещать тебе, что буду любить тебя всегда. Меня интересует далеко не только твоё тело — я обожаю тебя всю целиком, каждую твою клеточку, твою душу, мысли и твой характер.</p>
+        <p>Я сделаю всё, чтобы осчастливить тебя, уберечь от любых бед и сделать нас настоящей, крепкой и счастливой семьёй.</p>
+        <p>Ты — самая важная, незаменимая, самая любимая и ценная девочка в моём жизни.</p>
+        
+    <!-- Кнопка, которая открывает финальное окно на весь экран -->
+    <div style="margin-top: 22px;">
+      <button type="button" class="trigger-yes" onclick="openProposal()">Главный вопрос ✦</button>
+    </div>
       </div>
     </div>
 
@@ -1320,8 +3675,109 @@
 
   </div>
 
+  <!-- ============ ФИНАЛЬНОЕ ОКНО НА ВЕСЬ ЭКРАН ============ -->
+  <div class="proposal-modal" id="proposalModal" role="dialog" aria-modal="true" aria-labelledby="proposalTitle">
+    <span class="pm-bg-doodles"></span>
+    <div class="proposal-box">
+      <span class="pm-ornament tl" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path class="line" d="M6 46C6 22 22 6 46 6M6 68C6 34 34 6 68 6M16 40c-2-10 4-18 14-18 8 0 12 6 8 12-3 5-10 5-13 1"/>
+          <path class="h" d="M30 30c-4-5-11-2-9 3 1 3 5 5 9 9 4-4 8-6 9-9 2-5-5-8-9-3z"/>
+          <path class="line" d="M52 12l3 6 6 3-6 3-3 6-3-6-6-3 6-3z" style="opacity:.7"/>
+        </svg>
+      </span>
+      <span class="pm-ornament tr" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path class="line" d="M6 46C6 22 22 6 46 6M6 68C6 34 34 6 68 6M16 40c-2-10 4-18 14-18 8 0 12 6 8 12-3 5-10 5-13 1"/>
+          <path class="h" d="M30 30c-4-5-11-2-9 3 1 3 5 5 9 9 4-4 8-6 9-9 2-5-5-8-9-3z"/>
+          <path class="line" d="M52 12l3 6 6 3-6 3-3 6-3-6-6-3 6-3z" style="opacity:.7"/>
+        </svg>
+      </span>
+      <span class="pm-ornament bl" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path class="line" d="M6 46C6 22 22 6 46 6M6 68C6 34 34 6 68 6M16 40c-2-10 4-18 14-18 8 0 12 6 8 12-3 5-10 5-13 1"/>
+          <path class="h" d="M30 30c-4-5-11-2-9 3 1 3 5 5 9 9 4-4 8-6 9-9 2-5-5-8-9-3z"/>
+          <path class="line" d="M52 12l3 6 6 3-6 3-3 6-3-6-6-3 6-3z" style="opacity:.7"/>
+        </svg>
+      </span>
+      <span class="pm-ornament br" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path class="line" d="M6 46C6 22 22 6 46 6M6 68C6 34 34 6 68 6M16 40c-2-10 4-18 14-18 8 0 12 6 8 12-3 5-10 5-13 1"/>
+          <path class="h" d="M30 30c-4-5-11-2-9 3 1 3 5 5 9 9 4-4 8-6 9-9 2-5-5-8-9-3z"/>
+          <path class="line" d="M52 12l3 6 6 3-6 3-3 6-3-6-6-3 6-3z" style="opacity:.7"/>
+        </svg>
+      </span>
+
+      <div class="pm-question">
+        <svg class="pm-crown" viewBox="0 0 120 70" aria-hidden="true">
+          <path d="M60 66C40 51 26 40 26 27 26 16 34 8 45 8c7 0 12 4 15 9 3-5 8-9 15-9 11 0 19 8 19 19 0 13-14 24-34 39z" fill="url(#sealGrad)" stroke="#c22a6b" stroke-width="2"/>
+          <path d="M42 24c-5 1-8 4-8 8" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M20 14l3 7 7 3-7 3-3 7-3-7-7-3 7-3zM98 8l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5zM112 32l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffcf6b"/>
+        </svg>
+
+        <div class="pm-kicker">финальный этап · наш с тобой</div>
+        <div class="proposal-title" id="proposalTitle">Мария, ты будешь моей навсегда?</div>
+        <svg class="pm-divider" viewBox="0 0 360 26" aria-hidden="true">
+          <path class="line" d="M6 16c26 6 44-6 62-6s30 10 52 8M288 16c-26 6-44-6-62-6s-30 10-52 8"/>
+          <path class="hrt" d="M180 24C170 16 162 12 162 8 162 3.6 166 1 170.5 1 174.6 1 178 3.4 180 6 182 3.4 185.4 1 189.5 1 194 1 198 3.6 198 8 198 12 190 16 180 24z"/>
+          <path class="wisp" d="M152 8c-4 2-8 2-12 0M208 8c4 2 8 2 12 0"/>
+        </svg>
+        <div class="pm-note">Здесь уже ни на что не надо отвечать честно. Есть только один правильный ответ, и ты его знаешь.</div>
+
+        <div class="proposal-buttons" id="proposalArea">
+          <button type="button" class="btn-yes" id="btnYes" onclick="sayYes()">
+            <span class="yes-inner">
+              <svg class="yes-heart" viewBox="0 0 44 40" aria-hidden="true">
+                <path class="hb" d="M22 37C8 27 1 20 1 12.6 1 6 6.3 1 12.8 1c4 0 7.4 2.1 9.2 5.2C23.8 3.1 27.2 1 31.2 1 37.7 1 43 6 43 12.6 43 20 36 27 22 37z"/>
+                <path class="hl" d="M10 11c-3 1-5 3.5-5 6.5"/>
+                <path class="sk" d="M33 6l1.6 3.6 3.6 1.6-3.6 1.6L33 16l-1.6-3.2L27.8 11.2l3.6-1.6z"/>
+              </svg>
+              <span class="yes-label">Да, конечно да</span>
+            </span>
+            <span class="yes-frame" aria-hidden="true"></span>
+          </button>
+
+          <button type="button" class="btn-no" id="btnNo">
+            <svg class="limb limb-arms" viewBox="0 0 120 18" aria-hidden="true" preserveAspectRatio="none">
+              <path d="M24 18C18 12 10 10 4 6"/>
+              <path class="paw" d="M1.5 4.5a4.5 4.5 0 106 4.5z" transform="translate(0,-1)"/>
+              <path d="M96 18c6-6 14-8 20-12"/>
+              <path class="paw" d="M112 2.5a4.5 4.5 0 106 4.5z"/>
+            </svg>
+            <svg class="limb limb-legs" viewBox="0 0 120 22" aria-hidden="true" preserveAspectRatio="none">
+              <path d="M32 2c-6 6-10 10-12 16"/>
+              <path class="paw" d="M14 16.5h11v4.5H14z"/>
+              <path d="M88 2c6 6 10 10 12 16"/>
+              <path class="paw" d="M95 16.5h11v4.5H95z"/>
+            </svg>
+            <svg class="sweat" viewBox="0 0 10 14" aria-hidden="true">
+              <path d="M5 0c3 4 5 6.5 5 8.6A5 5 0 010 8.6C0 6.5 2 4 5 0z" fill="#8fd3ff"/>
+            </svg>
+            Нет
+          </button>
+        </div>
+        <div class="pm-caption" id="pmCaption"></div>
+      </div>
+
+      <div class="pm-answer">
+        <div class="pm-kicker">так и знал</div>
+        <div class="answer-title">Ура! Ты — моя</div>
+        <svg class="answer-heart" viewBox="0 0 120 110" aria-hidden="true">
+          <path d="M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z" fill="url(#sealGrad)" stroke="#8d0b3c" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M31 30c-8 3-13 9-13 17" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+        <div class="answer-text">Танжар теперь самый счастливый человек на свете. Я люблю тебя больше, чем умею это объяснить словами, — и буду доказывать это каждым днём нашей жизни.</div>
+        <div class="answer-sign">навсегда · твой Танжар</div>
+        <div class="pm-btn-row">
+          <button type="button" class="pm-ghost" onclick="closeProposal()">Закрыть</button>
+          <button type="button" class="pm-ghost" onclick="startConfetti()">Ещё разок сердечками</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Встроенный синтезатор звуков (Web Audio API) без внешних файлов
+    // Встроенный синтезатор звуков (Web Audio API)
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playSound(type) {
       if (audioCtx.state === 'suspended') {
@@ -1331,7 +3787,6 @@
       const gain = audioCtx.createGain();
       osc.connect(gain);
       gain.connect(audioCtx.destination);
-
       const now = audioCtx.currentTime;
 
       if (type === 'click') {
@@ -1351,7 +3806,6 @@
         osc.start(now);
         osc.stop(now + 0.05);
       } else if (type === 'success') {
-        // Волшебный аккорд успеха
         [523.25, 659.25, 783.99, 1046.50].forEach((freq, index) => {
           const o = audioCtx.createOscillator();
           const g = audioCtx.createGain();
@@ -1367,9 +3821,17 @@
       }
     }
 
+    // Закрыть приветствие с котиком
+    function closeWelcome() {
+      playSound('success');
+      const ws = document.getElementById('welcomeScreen');
+      ws.style.opacity = '0';
+      setTimeout(() => { ws.style.display = 'none'; }, 800);
+    }
+
     // Создание фоновых парящих сердечек
     const heartsContainer = document.getElementById('floatingHearts');
-    const heartSymbols = ['❤️', '💖', '✨', '💕', '💗'];
+    const heartSymbols = ['♡', '♥', '✧', '♡', '♥', '✦'];
     for (let i = 0; i < 18; i++) {
       const span = document.createElement('div');
       span.className = 'f-heart';
@@ -1381,53 +3843,7 @@
       heartsContainer.appendChild(span);
     }
 
-    // Управление музыкой
-    const audio = document.getElementById('bg-audio');
-    const playBtn = document.getElementById('playBtn');
-    const musicStatus = document.getElementById('musicStatus');
-    let isPlaying = false;
-
-    window.addEventListener('DOMContentLoaded', () => {
-      audio.play().then(() => {
-        isPlaying = true;
-        playBtn.textContent = '❚❚';
-        musicStatus.textContent = 'Играет';
-      }).catch(error => {
-        isPlaying = false;
-        playBtn.textContent = '▶';
-        musicStatus.textContent = 'Включить';
-        
-        const unlockAudio = () => {
-          audio.play().then(() => {
-            isPlaying = true;
-            playBtn.textContent = '❚❚';
-            musicStatus.textContent = 'Играет';
-            window.removeEventListener('click', unlockAudio);
-            window.removeEventListener('touchstart', unlockAudio);
-          }).catch(e => console.log("Ожидание клика для звука", e));
-        };
-        
-        window.addEventListener('click', unlockAudio, { once: true });
-        window.addEventListener('touchstart', unlockAudio, { once: true });
-      });
-    });
-
-    function togglePlay() {
-      if (isPlaying) {
-        audio.pause();
-        playBtn.textContent = '▶';
-        musicStatus.textContent = 'Включить';
-        isPlaying = false;
-      } else {
-        audio.play().then(() => {
-          playBtn.textContent = '❚❚';
-          musicStatus.textContent = 'Играет';
-          isPlaying = true;
-        }).catch(error => {
-          console.log("Ошибка воспроизведения", error);
-        });
-      }
-    }
+    /* управление музыкой живёт ниже — в блоке «плеер-сердечко» */
 
     function updateTimer() {
       const startDate = new Date(2026, 6, 31, 0, 0, 0);
@@ -1599,7 +4015,6 @@
       playSound('click');
       const checkboxes = document.querySelectorAll('#checklist .chk-item');
       let allChecked = true;
-
       checkboxes.forEach(chk => {
         if (!chk.checked) allChecked = false;
       });
@@ -1613,63 +4028,1070 @@
       }
     }
 
-    // Этап 8
+    // Этап 8: Перетаскивание ключа
     const dragKey = document.getElementById('dragKey');
     const heartWrapper = document.getElementById('heartWrapper');
+    let isUnlocked = false;
+
     let isDragging = false;
-    let startX, startY, currentX = 0, currentY = 0;
+    let startX, startY;
 
-    dragKey.addEventListener('pointerdown', (e) => {
+    dragKey.addEventListener('mousedown', startDrag);
+    dragKey.addEventListener('touchstart', startDrag, {passive: false});
+
+    function startDrag(e) {
+      if (isUnlocked) return;
       isDragging = true;
-      startX = e.clientX - currentX;
-      startY = e.clientY - currentY;
-      dragKey.setPointerCapture(e.pointerId);
-      playSound('click');
-    });
-
-    dragKey.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      currentX = e.clientX - startX;
-      currentY = e.clientY - startY;
-      dragKey.style.transform = `translate(${currentX}px, ${currentY}px)`;
-
-      const keyRect = dragKey.getBoundingClientRect();
-      const targetRect = heartWrapper.getBoundingClientRect();
-
-      const isOverlapping = !(
-        keyRect.right < targetRect.left ||
-        keyRect.left > targetRect.right ||
-        keyRect.bottom < targetRect.top ||
-        keyRect.top > targetRect.bottom
-      );
-
-      if (isOverlapping) {
-        unlockHeartSuccess();
-      }
-    });
-
-    function stopDialogging() {
-      isDragging = false;
+      startX = e.clientX || e.touches[0].clientX;
+      startY = e.clientY || e.touches[0].clientY;
+      document.addEventListener('mousemove', onDrag);
+      document.addEventListener('mouseup', endDrag);
+      document.addEventListener('touchmove', onDrag, {passive: false});
+      document.addEventListener('touchend', endDrag);
     }
 
-    dragKey.addEventListener('pointerup', stopDialogging);
-    dragKey.addEventListener('pointercancel', stopDialogging);
+    function onDrag(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const currentX = e.clientX || e.touches[0].clientX;
+      const currentY = e.clientY || e.touches[0].clientY;
+      const dx = currentX - startX;
+      const dy = currentY - startY;
 
-    function unlockHeartSuccess() {
-      if (dragKey.dataset.unlocked === 'true') return;
-      dragKey.dataset.unlocked = 'true';
+      dragKey.style.transform = `translate(${dx}px, ${dy}px)`;
+
+      // Проверка попадания на сердце
+      const heartRect = heartWrapper.getBoundingClientRect();
+      const keyRect = dragKey.getBoundingClientRect();
+
+      const isColliding = !(
+        keyRect.right < heartRect.left ||
+        keyRect.left > heartRect.right ||
+        keyRect.bottom < heartRect.top ||
+        keyRect.top > heartRect.bottom
+      );
+
+      if (isColliding) {
+        unlockHeart();
+      }
+    }
+
+    function endDrag() {
+      if (!isDragging) return;
       isDragging = false;
+      if (!isUnlocked) {
+        dragKey.style.transform = 'translate(0px, 0px)';
+      }
+      document.removeEventListener('mousemove', onDrag);
+      document.removeEventListener('mouseup', endDrag);
+      document.removeEventListener('touchmove', onDrag);
+      document.removeEventListener('touchend', endDrag);
+    }
 
+    function unlockHeart() {
+      if (isUnlocked) return;
+      isUnlocked = true;
       playSound('success');
       heartWrapper.classList.add('unlocked');
       dragKey.style.display = 'none';
-
-      setTimeout(() => {
-        const b8 = document.getElementById('block8');
-        b8.style.display = 'block';
-        b8.scrollIntoView({ behavior: 'smooth' });
-      }, 500);
+      document.getElementById('block8').style.display = 'block';
+      document.getElementById('block8').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+
   </script>
-</body>
+
+  <script>
+    /* =====================================================================
+       ДОПОЛНИТЕЛЬНО: котик-рисунок, плеер-сердечко, прогресс, финальное окно
+       ===================================================================== */
+    (function () {
+      'use strict';
+
+      var SYMBOLS = ['💗', '💖', '♥', '💕', '✨', '💘'];
+
+      function play(type) {
+        try { if (typeof playSound === 'function') playSound(type); } catch (e) {}
+      }
+
+      /* ---------------- 1. НЕБО: звёзды, падающие звёзды, сердце-обнимашка ---------------- */
+      var screen = document.getElementById('welcomeScreen');
+      var starHost = document.getElementById('skyStars');
+      var bigHeart = document.getElementById('bigHeart');
+      var SKY_MARKS = ['♥', '♡', '✦', '✧', '♥', '♡'];
+
+      if (starHost) {
+        var frag = document.createDocumentFragment();
+        for (var i = 0; i < 48; i++) {
+          var st = document.createElement('span');
+          st.className = 'star';
+          st.style.left = (Math.random() * 100).toFixed(2) + '%';
+          st.style.top = (Math.random() * 92).toFixed(2) + '%';
+          var sz = (1.8 + Math.random() * 3.2).toFixed(1);
+          st.style.width = sz + 'px';
+          st.style.height = sz + 'px';
+          st.style.animationDuration = (2.2 + Math.random() * 3).toFixed(2) + 's';
+          st.style.animationDelay = (Math.random() * 4).toFixed(2) + 's';
+          frag.appendChild(st);
+        }
+        starHost.appendChild(frag);
+      }
+
+      function skyBurst(n) {
+        if (!screen) return;
+        for (var k = 0; k < n; k++) {
+          (function (k) {
+            setTimeout(function () {
+              var s = document.createElement('span');
+              s.className = 'sky-burst';
+              s.textContent = SKY_MARKS[k % SKY_MARKS.length];
+              s.style.setProperty('--dx', (Math.random() * 300 - 150).toFixed(0) + 'px');
+              s.style.setProperty('--rot', (Math.random() * 100 - 50).toFixed(0) + 'deg');
+              s.style.left = (50 + (Math.random() * 26 - 13)) + '%';
+              s.style.top = (46 + (Math.random() * 16 - 8)) + '%';
+              s.style.fontSize = (13 + Math.random() * 17) + 'px';
+              s.style.animationDelay = (k * 0.045) + 's';
+              screen.appendChild(s);
+              setTimeout(function () { s.remove(); }, 1500);
+            }, k * 42);
+          })(k);
+        }
+      }
+
+      function shootingStar(x, y) {
+        if (!screen) return;
+        var s = document.createElement('span');
+        s.className = 'shooting';
+        var w = window.innerWidth || 1000, h = window.innerHeight || 700;
+        var sxPx = -(0.28 + Math.random() * 0.24) * w;
+        var syPx = (0.16 + Math.random() * 0.14) * h;
+        s.style.left = (x / w * 100).toFixed(2) + '%';
+        s.style.top = (y / h * 100).toFixed(2) + '%';
+        s.style.setProperty('--sx', (sxPx / w * 100).toFixed(1) + 'vw');
+        s.style.setProperty('--sy', (syPx / h * 100).toFixed(1) + 'vh');
+        s.style.setProperty('--ang', (Math.atan2(syPx, sxPx) * 180 / Math.PI).toFixed(1) + 'deg');
+        screen.appendChild(s);
+        setTimeout(function () { s.remove(); }, 1100);
+      }
+
+      function hugHeart() {
+        if (!bigHeart) return;
+        bigHeart.classList.remove('hug');
+        void bigHeart.offsetWidth;
+        bigHeart.classList.add('hug');
+        skyBurst(10);
+        play('pop');
+      }
+
+      if (bigHeart) {
+        bigHeart.addEventListener('click', function (e) { e.stopPropagation(); hugHeart(); });
+        bigHeart.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); hugHeart(); }
+        });
+      }
+
+      if (screen) {
+        screen.addEventListener('click', function (e) {
+          if (e.target && e.target.closest && e.target.closest('button, .merge')) return;
+          shootingStar(e.clientX, e.clientY);
+          play('pop');
+        });
+        if (window.matchMedia && window.matchMedia('(hover: hover)').matches && starHost) {
+          screen.addEventListener('pointermove', function (e) {
+            var x = e.clientX / (window.innerWidth || 1000) - .5;
+            var y = e.clientY / (window.innerHeight || 700) - .5;
+            starHost.style.transform = 'translate(' + (x * -16).toFixed(1) + 'px,' + (y * -12).toFixed(1) + 'px)';
+          });
+        }
+      }
+
+      /* парение луны и звёзд чуть смещается за курсором — лёгкий параллакс */
+      window.closeWelcome = function () {
+        play('success');
+        if (!screen) return;
+        skyBurst(16);
+        screen.classList.add('closing');
+        setTimeout(function () { screen.classList.add('gone'); }, 300);
+        setTimeout(function () { screen.style.display = 'none'; }, 1200);
+      };
+
+      /* ---------------- 2. ПЛЕЕР-СЕРДЦЕ ---------------- */
+      var player = document.getElementById('heartPlayer');
+      var hpSub = document.getElementById('hpSub');
+      var hpTitle = document.getElementById('hpTitle');
+      var bg = document.getElementById('bg-audio');
+
+      var srcFailed = false;
+
+      function trackMissing() {
+        srcFailed = true;
+        if (hpTitle) hpTitle.textContent = 'song.mp3 не найден';
+        if (hpSub) hpSub.textContent = 'положи трек рядом';
+        setPlayerUI(false);
+        started = true;
+      }
+
+      function setPlayerUI(on) {
+        if (!player) return;
+        player.classList.toggle('playing', !!on);
+        player.classList.toggle('muted', !on);
+        if (hpSub) hpSub.textContent = on ? 'играет' : 'тишина';
+        player.title = on
+          ? 'Наша песня — нажми, чтобы притихла'
+          : 'Нажми — и сердце снова запоёт';
+      }
+
+      function verifyState(delay) {
+        setTimeout(function () {
+          if (srcFailed || bg.paused) {
+            if (srcFailed) { trackMissing(); } else { setPlayerUI(false); }
+          } else {
+            setPlayerUI(true);
+          }
+        }, delay);
+      }
+
+      function togglePlayV2() {
+        if (!bg) { setPlayerUI(false); return; }
+        if (bg.paused) {
+          if (srcFailed) { trackMissing(); return; }
+          var p = bg.play();
+          if (p && p.catch) p.catch(function () { setPlayerUI(false); });
+          verifyState(180);
+          verifyState(900);
+        } else {
+          bg.pause();
+          setPlayerUI(false);
+        }
+      }
+
+      if (bg) {
+        bg.addEventListener('play', function () { if (!srcFailed) setPlayerUI(true); });
+        bg.addEventListener('pause', function () { setPlayerUI(false); });
+        bg.addEventListener('error', trackMissing, true);
+        bg.addEventListener('stalled', function () { verifyState(400); });
+      }
+
+      setPlayerUI(false);
+
+      var started = false;
+      function tryAutoplay() {
+        if (started || !bg) return;
+        var p = bg.play();
+        if (p && p.then) { p.then(function () { started = true; }).catch(function () {}); }
+      }
+      tryAutoplay();
+      function unlockAudio() {
+        tryAutoplay();
+        window.removeEventListener('pointerdown', unlockAudio);
+        window.removeEventListener('keydown', unlockAudio);
+      }
+      window.addEventListener('pointerdown', unlockAudio);
+      window.addEventListener('keydown', unlockAudio);
+
+      /* ---------------- 3. ПРОГРЕСС «СКОЛЬКО МЫ УЖЕ ОТКРЫЛИ» ---------------- */
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.game-card'));
+      var lmFill = document.querySelector('.lm-fill');
+      var lmCount = document.querySelector('.lm-count');
+
+      function refreshMeter() {
+        var done = cards.filter(function (c) { return c.classList.contains('visited'); }).length;
+        if (lmFill) lmFill.style.width = Math.max(10, Math.round((done / cards.length) * 100)) + '%';
+        if (lmCount) lmCount.textContent = done >= cards.length
+          ? 'мы прошли весь путь до конца ♥'
+          : 'этапов пройдено: ' + done + ' из ' + cards.length;
+      }
+
+      if ('IntersectionObserver' in window && cards.length) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting && en.target.classList.contains('active') && !en.target.classList.contains('visited')) {
+              en.target.classList.add('visited');
+              refreshMeter();
+            }
+          });
+        }, { threshold: 0.3 });
+        cards.forEach(function (c) { io.observe(c); });
+      }
+      refreshMeter();
+
+      /* ---------------- 4. ФИНАЛЬНОЕ ОКНО НА ВЕСЬ ЭКРАН ---------------- */
+      var modal = document.getElementById('proposalModal');
+      var area = document.getElementById('proposalArea');
+      var btnNo = document.getElementById('btnNo');
+      var btnYes = document.getElementById('btnYes');
+      var caption = document.getElementById('pmCaption');
+      var box = modal ? modal.querySelector('.proposal-box') : null;
+      var dodges = 0;
+      var lastDodge = 0;
+
+      var CAPTIONS = [
+        'Кнопка «Нет» просто для вида. Она это знает.',
+        'Она бегает быстрее, чем думает. Жми «Да» ♥',
+        'Смотри, у неё уже ножки дрожат.',
+        '«Нет» устала. Ей тоже хочется, чтобы ты сказала «Да».',
+        'Подсказка: в этом уголке тоже спрятано «Да».',
+        'Осталась одна маленькая чёрная кнопка, которая ничего не решает.'
+      ];
+
+      function updateCaption() {
+        if (!caption) return;
+        if (dodges === 0) { caption.innerHTML = ''; return; }
+        var line = CAPTIONS[Math.min(dodges - 1, CAPTIONS.length - 1)];
+        caption.innerHTML = '<b>' + dodges + '</b> · ' + line;
+      }
+
+      function positionNo() {
+        if (!btnNo || !area) return;
+        var aw = area.clientWidth, ah = area.clientHeight;
+        var bw = btnNo.offsetWidth, bh = btnNo.offsetHeight;
+        var padX = 12, padTop = 44, padBottom = 20;
+        btnNo.style.left = Math.round(aw / 2 - bw / 2) + 'px';
+        btnNo.style.top = Math.round(ah - bh - padBottom + 14) + 'px';
+      }
+
+      function dodge(fromX, fromY) {
+        if (!btnNo || !area || btnNo.style.display === 'none') return;
+        var now = Date.now();
+        if (now - lastDodge < 190) return;
+        lastDodge = now;
+
+        var aw = area.clientWidth, ah = area.clientHeight;
+        var bw = btnNo.offsetWidth, bh = btnNo.offsetHeight;
+        var padX = 12, padTop = 44, padBottom = 20;
+        var cx = aw / 2, cy = ah / 2;
+        var fx = (fromX == null) ? cx : fromX - area.getBoundingClientRect().left;
+        var fy = (fromY == null) ? cy : fromY - area.getBoundingClientRect().top;
+        var best = null, bestScore = -Infinity;
+
+        for (var i = 0; i < 28; i++) {
+          var x = padX + Math.random() * Math.max(1, aw - bw - padX * 2);
+          var y = padTop + Math.random() * Math.max(1, ah - bh - padTop - padBottom);
+          var mx = x + bw / 2, my = y + bh / 2;
+          var score = Math.hypot(mx - fx, my - fy) - Math.hypot(mx - cx, my - cy) * 0.22;
+          if (score > bestScore) { bestScore = score; best = { x: x, y: y }; }
+        }
+        if (!best) return;
+
+        dodges++;
+        var scale = Math.max(0.5, 1 - dodges * 0.055);
+        var tilt = (Math.random() * 16 - 8).toFixed(1);
+        btnNo.style.left = Math.round(best.x) + 'px';
+        btnNo.style.top = Math.round(best.y) + 'px';
+        btnNo.style.setProperty('--scale', scale.toFixed(2));
+        btnNo.style.setProperty('--tilt', tilt + 'deg');
+        btnNo.classList.add('running');
+        clearTimeout(btnNo._rt);
+        btnNo._rt = setTimeout(function () { btnNo.classList.remove('running'); }, 1200);
+        if (dodges >= 3) btnNo.classList.add('tired');
+        if (dodges >= 9) { btnNo.style.opacity = '0.45'; }
+        updateCaption();
+        play('pop');
+      }
+
+      if (area) {
+        area.addEventListener('pointermove', function (e) {
+          if (!btnNo || btnNo.style.display === 'none') return;
+          var r = btnNo.getBoundingClientRect();
+          var d = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
+          if (d < 105) dodge(e.clientX, e.clientY);
+        }, { passive: true });
+
+        area.addEventListener('touchstart', function (e) {
+          if (!btnNo || !e.touches[0]) return;
+          var t = e.touches[0];
+          var r = btnNo.getBoundingClientRect();
+          if (Math.hypot(t.clientX - (r.left + r.width / 2), t.clientY - (r.top + r.height / 2)) < 130) {
+            dodge(t.clientX, t.clientY);
+          }
+        }, { passive: true });
+      }
+
+      if (btnNo) {
+        ['pointerdown', 'mousedown', 'click', 'dblclick'].forEach(function (ev) {
+          btnNo.addEventListener(ev, function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dodge(e.clientX, e.clientY);
+          }, { passive: false });
+        });
+        btnNo.addEventListener('mouseenter', function () { dodge(); });
+        btnNo.addEventListener('focus', function () { btnNo.blur(); });
+      }
+
+      /* сердечки-дождь */
+      function heartRain(n, layer) {
+        var host = layer || document.getElementById('floatingHearts');
+        if (!host) return;
+        for (var i = 0; i < n; i++) {
+          (function (i) {
+            setTimeout(function () {
+              var s = document.createElement('div');
+              s.className = 'f-heart';
+              s.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+              s.style.left = Math.random() * 100 + '%';
+              s.style.fontSize = (16 + Math.random() * 30) + 'px';
+              s.style.animationDuration = (2.6 + Math.random() * 3.4) + 's';
+              host.appendChild(s);
+              setTimeout(function () { s.remove(); }, 6200);
+            }, i * 45);
+          })(i);
+        }
+      }
+
+      function burstFrom(el, count) {
+        if (!box || !el) return;
+        var br = box.getBoundingClientRect();
+        var r = el.getBoundingClientRect();
+        var ox = r.left + r.width / 2 - br.left;
+        var oy = r.top + r.height / 2 - br.top;
+        for (var i = 0; i < count; i++) {
+          var s = document.createElement('span');
+          s.className = 'pm-burst';
+          s.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+          var ang = Math.random() * Math.PI * 2;
+          var dist = 90 + Math.random() * 260;
+          s.style.left = ox + 'px';
+          s.style.top = oy + 'px';
+          s.style.setProperty('--dx', Math.cos(ang) * dist + 'px');
+          s.style.setProperty('--dy', Math.sin(ang) * dist + 'px');
+          s.style.setProperty('--rot', (Math.random() * 120 - 60) + 'deg');
+          s.style.fontSize = (14 + Math.random() * 22) + 'px';
+          s.style.animationDelay = (Math.random() * 0.25) + 's';
+          box.appendChild(s);
+          setTimeout(function (node) { return function () { node.remove(); }; }(s), 1500);
+        }
+      }
+
+      window.openProposal = function () {
+        if (!modal) return;
+        modal.classList.add('open');
+        modal.classList.remove('yes');
+        document.body.classList.add('no-scroll');
+        dodges = 0;
+        updateCaption();
+        if (btnNo) {
+          btnNo.style.display = '';
+          btnNo.style.opacity = '1';
+          btnNo.style.pointerEvents = '';
+          btnNo.classList.remove('tired');
+          btnNo.style.setProperty('--scale', '1');
+        }
+        play('success');
+        requestAnimationFrame(function () { requestAnimationFrame(positionNo); heartRain(18); });
+      };
+
+      window.closeProposal = function () {
+        if (!modal) return;
+        modal.classList.remove('open');
+        document.body.classList.remove('no-scroll');
+      };
+
+      window.startConfetti = function () {
+        heartRain(50);
+        burstFrom(box ? box.querySelector('.answer-heart') : null, 26);
+        play('success');
+      };
+
+      /* «Да» — больше не alert, а красивый ответ внутри окна */
+      window.sayYes = function () {
+        play('success');
+        if (btnNo) {
+          btnNo.style.opacity = '0';
+          btnNo.style.pointerEvents = 'none';
+          setTimeout(function () { btnNo.style.display = 'none'; }, 350);
+        }
+        burstFrom(btnYes, 34);
+        if (modal) modal.classList.add('yes');
+        heartRain(60);
+      };
+
+      /* после открытия замка — сами распахиваем финальное окно */
+      window.unlockHeart = function () {
+        if (window.__heartOpened) return;
+        window.__heartOpened = true;
+        play('success');
+        var hw = document.getElementById('heartWrapper');
+        if (hw) hw.classList.add('unlocked');
+        var key = document.getElementById('dragKey');
+        if (key) {
+          key.style.transition = 'transform .5s ease, opacity .5s ease';
+          key.style.transform = 'translateY(24px) scale(.8) rotate(-8deg)';
+          key.style.opacity = '0';
+          setTimeout(function () { key.style.display = 'none'; }, 500);
+        }
+        var b8 = document.getElementById('block8');
+        if (b8) {
+          b8.style.display = 'block';
+          if (b8.scrollIntoView) b8.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        setTimeout(function () { window.openProposal(); }, 1100);
+      };
+
+      /*Esc закрывает окно — но «Нет» всё равно не работает */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal && modal.classList.contains('open')) window.closeProposal();
+      });
+
+      /* пропущенные картинки: вместо битого кадра — нарисованное сердечко */
+      Array.prototype.forEach.call(document.querySelectorAll('img'), function (img) {
+        img.addEventListener('error', function () {
+          var p = img.parentElement;
+          if (p) p.classList.add('no-img');
+        });
+        if (img.complete && img.naturalWidth === 0) {
+          var par = img.parentElement;
+          if (par) par.classList.add('no-img');
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    /* =====================================================================
+       ИГРЫ: ловец сердечек · мемо-пары · колесо желаний · пазл · автомат
+       + живые мелочи по всему сайту (тосты, искры, конфетти)
+       ===================================================================== */
+    (function () {
+      'use strict';
+
+      var HEART_D = 'M60 104C26 79 8 61 8 40 8 22 22 10 37 10c10 0 18 5 23 13 5-8 13-13 23-13 15 0 29 12 29 30 0 21-18 39-52 64z';
+      var mq = window.matchMedia ? window.matchMedia.bind(window) : null;
+      var reduce = !!(mq && mq('(prefers-reduced-motion: reduce)').matches);
+
+      function $(id) { return document.getElementById(id); }
+      function play(t) { try { if (typeof playSound === 'function') playSound(t); } catch (e) {} }
+
+      /* ---------------- общая мелочь: конфетти, тосты, искры ---------------- */
+      function confetti(n) {
+        var host = $('floatingHearts');
+        if (!host) return;
+        var marks = ['♥', '♡', '✦', '✧', '💖'];
+        for (var i = 0; i < (n || 34); i++) {
+          (function (i) {
+            setTimeout(function () {
+              var s = document.createElement('div');
+              s.className = 'f-heart';
+              s.textContent = marks[Math.floor(Math.random() * marks.length)];
+              s.style.left = Math.random() * 100 + '%';
+              s.style.fontSize = (15 + Math.random() * 28) + 'px';
+              s.style.animationDuration = (2.6 + Math.random() * 3.2) + 's';
+              host.appendChild(s);
+              setTimeout(function () { s.remove(); }, 6200);
+            }, i * 40);
+          })(i);
+        }
+      }
+
+      var toastEl = null;
+      function toast(text) {
+        if (!text) return;
+        if (!toastEl) {
+          toastEl = document.createElement('div');
+          toastEl.className = 'toast';
+          toastEl.innerHTML = '<svg viewBox="0 0 120 110" aria-hidden="true"><path d="' + HEART_D +
+            '" fill="#ff5f96"/><path d="M31 27c-7 2-12 7-12 14" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="5" stroke-linecap="round"/></svg><span></span>';
+          document.body.appendChild(toastEl);
+        }
+        toastEl.querySelector('span').textContent = text;
+        toastEl.classList.add('show');
+        clearTimeout(toastEl._t);
+        toastEl._t = setTimeout(function () { toastEl.classList.remove('show'); }, 2800);
+      }
+
+      function miniBurst(x, y, n) {
+        if (reduce) return;
+        var vw = document.documentElement.clientWidth || window.innerWidth;
+        var vh = document.documentElement.clientHeight || window.innerHeight;
+        x = Math.min(Math.max(x, 6), vw - 6);
+        y = Math.min(Math.max(y, 6), vh - 6);
+        var marks = ['♥', '♡', '✦'];
+        for (var i = 0; i < n; i++) {
+          var s = document.createElement('span');
+          s.className = 'tap-heart';
+          s.textContent = marks[i % marks.length];
+          s.style.left = (x + (Math.random() * 28 - 14)) + 'px';
+          s.style.top = (y + (Math.random() * 20 - 10)) + 'px';
+          s.style.fontSize = (12 + Math.random() * 11) + 'px';
+          document.body.appendChild(s);
+          (function (node) { setTimeout(function () { node.remove(); }, 900); })(s);
+        }
+      }
+
+      if (!reduce) {
+        var lastSpark = 0;
+        document.addEventListener('pointermove', function (e) {
+          var now = Date.now();
+          if (now - lastSpark < 95) return;
+          lastSpark = now;
+          var s = document.createElement('span');
+          s.className = 'cursor-spark';
+          s.textContent = ['✦', '✧', '♥', '♡'][Math.floor(Math.random() * 4)];
+          s.style.left = Math.min(e.clientX, document.documentElement.clientWidth - 14) + 'px';
+          s.style.top = Math.min(e.clientY, document.documentElement.clientHeight - 14) + 'px';
+          s.style.fontSize = (9 + Math.random() * 9) + 'px';
+          document.body.appendChild(s);
+          setTimeout(function () { s.remove(); }, 1000);
+        }, { passive: true });
+      }
+
+      document.addEventListener('pointerdown', function (e) {
+        if (e.target && e.target.closest && e.target.closest('.drop')) return;
+        miniBurst(e.clientX, e.clientY, 3);
+      }, { passive: true });
+
+      /* письмо-вклейка этапа + тост + конфетти */
+      function revealStage(n, msg) {
+        var b = $('block' + n);
+        if (b) {
+          b.style.display = 'block';
+          setTimeout(function () { if (b.scrollIntoView) b.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 260);
+        }
+        var err = $('err' + n);
+        if (err) err.style.display = 'none';
+        play('success');
+        confetti(30);
+        if (msg) toast(msg);
+      }
+
+      /* переопределяем переход между этапами: теперь он с конфетти */
+      var _unlockNext = window.unlockNext;
+      window.unlockNext = function (n) {
+        if (typeof _unlockNext === 'function') _unlockNext(n);
+        confetti(26);
+        toast('Этап ' + n + ' открыт ♥');
+      };
+
+      /* ---------------- маленькие значки для мемо ---------------- */
+      function miniIcon(kind) {
+        var s = {
+          heart: '<path d="' + HEART_D + '" fill="#ff7ba9" stroke="#c2185b" stroke-width="4" stroke-linejoin="round"/>',
+          moon: '<path d="M78 10a52 52 0 100 100 40 40 0 010-100z" fill="#ffe6a8" stroke="#d69a2e" stroke-width="5" stroke-linejoin="round"/>',
+          star: '<path d="M60 10l13 29 32 3-24 21 7 31-28-16-28 16 7-31-24-21 32-3z" fill="#ffc46b" stroke="#d68a1e" stroke-width="5" stroke-linejoin="round"/>',
+          infinity: '<path d="M22 60c0-11 9-19 19-19 15 0 23 36 38 36 10 0 19-8 19-19s-9-19-19-19c-15 0-23 36-38 36-10 0-19-8-19-15z" fill="none" stroke="#d6155c" stroke-width="9" stroke-linecap="round"/>',
+          key: '<circle cx="30" cy="60" r="15" fill="none" stroke="#c98a1e" stroke-width="8"/><path d="M45 60h52M82 60v18M97 60v14" fill="none" stroke="#c98a1e" stroke-width="8" stroke-linecap="round"/>',
+          letter: '<rect x="12" y="28" width="96" height="64" rx="8" fill="#fff" stroke="#c2185b" stroke-width="6"/><path d="M15 32l45 34 45-34" fill="none" stroke="#c2185b" stroke-width="6" stroke-linejoin="round"/>'
+        };
+        return '<svg viewBox="0 0 120 120" aria-hidden="true">' + (s[kind] || s.heart) + '</svg>';
+      }
+
+      /* =====================================================================
+         ЭТАП 9 — ловец сердечек
+         ===================================================================== */
+      var CATCH_TARGET = 12, CATCH_TIME = 30;
+      var catchArea = $('catchArea'), catchState = $('catchState'), catchPips = $('catchPips');
+      var caught = 0, left = CATCH_TIME, tick = null, spawner = null, running = false;
+
+      if (catchPips) { for (var pi = 0; pi < CATCH_TARGET; pi++) catchPips.appendChild(document.createElement('i')); }
+
+      function setCatchScore(n) {
+        var sc = $('catchScore');
+        if (sc) sc.textContent = n;
+        var pips = catchPips ? catchPips.children : [];
+        for (var i = 0; i < pips.length; i++) pips[i].classList.toggle('on', i < n);
+      }
+
+      function stopCatch() {
+        running = false;
+        if (tick) { clearInterval(tick); tick = null; }
+        if (spawner) { clearInterval(spawner); spawner = null; }
+      }
+
+      function spawnDrop() {
+        if (!catchArea) return;
+        var h = catchArea.clientHeight || 300;
+        var d = document.createElement('div');
+        d.className = 'drop';
+        d.innerHTML = '<span class="drop-in">\u2665</span>';
+        d.style.left = 'calc(' + (6 + Math.random() * 80).toFixed(1) + '% - 22px)';
+        d.style.setProperty('--fall', (h + 80) + 'px');
+        d.style.animationDuration = (2.2 + Math.random() * 1.9).toFixed(2) + 's';
+
+        var hit = function (e) {
+          if (e && e.preventDefault) e.preventDefault();
+          if (d.classList.contains('caught')) return;
+          d.classList.add('caught');
+          caught++;
+          setCatchScore(caught);
+          play('pop');
+          if (e && e.clientX != null) miniBurst(e.clientX, e.clientY, 5);
+          setTimeout(function () {
+            if (d.parentNode) d.remove();
+            if (caught >= CATCH_TARGET) finishCatch(true);
+          }, 330);
+        };
+
+        d.addEventListener('pointerdown', hit);
+        d.addEventListener('mouseenter', function (e) { if (e.buttons) hit(e); });
+        d.addEventListener('animationend', function () {
+          d.classList.add('missed');
+          setTimeout(function () { if (d.parentNode) d.remove(); }, 380);
+        });
+        catchArea.appendChild(d);
+      }
+
+      function finishCatch(win) {
+        stopCatch();
+        if (catchArea) catchArea.classList.remove('armed');
+        if (win) {
+          revealStage(9, 'Двенадцать сердечек в руках — и одно моё');
+        } else {
+          var e9 = $('err9');
+          if (e9) e9.style.display = 'block';
+          if (catchState) {
+            catchState.style.display = '';
+            catchState.textContent = 'поймано ' + caught + ' из ' + CATCH_TARGET + ' · жми «заново», я подожду';
+          }
+        }
+      }
+
+      window.resetCatch = function () {
+        stopCatch();
+        caught = 0;
+        setCatchScore(0);
+        var e9 = $('err9');
+        if (e9) e9.style.display = 'none';
+        if (catchTimeEl) catchTimeEl.textContent = CATCH_TIME;
+        if (catchState) { catchState.style.display = ''; catchState.textContent = 'нажми «старт» и лови — сердечки хрупкие'; }
+        if (catchArea) {
+          catchArea.classList.remove('armed');
+          Array.prototype.slice.call(catchArea.querySelectorAll('.drop')).forEach(function (d) { d.remove(); });
+        }
+        play('click');
+      };
+
+      var catchTimeEl = $('catchTime');
+
+      window.startCatch = function () {
+        if (running) return;
+        var done = $('block9');
+        if (done && done.style.display === 'block') { toast('Этот этап уже пройден ♥'); return; }
+        stopCatch();
+        Array.prototype.slice.call(catchArea.querySelectorAll('.drop')).forEach(function (d) { d.remove(); });
+        caught = 0;
+        setCatchScore(0);
+        left = CATCH_TIME;
+        if (catchTimeEl) catchTimeEl.textContent = left;
+        if (catchState) catchState.style.display = 'none';
+        var e9 = $('err9');
+        if (e9) e9.style.display = 'none';
+        if (catchArea) catchArea.classList.add('armed');
+        running = true;
+        play('click');
+        spawnDrop();
+        spawner = setInterval(spawnDrop, 640);
+        tick = setInterval(function () {
+          left--;
+          if (catchTimeEl) catchTimeEl.textContent = left < 0 ? 0 : left;
+          if (left <= 0) finishCatch(caught >= CATCH_TARGET);
+        }, 1000);
+      };
+
+      /* =====================================================================
+         ЭТАП 10 — мемо-пары
+         ===================================================================== */
+      var KINDS = ['heart', 'moon', 'star', 'infinity', 'key', 'letter'];
+      var memoGrid = $('memoGrid'), memoState = $('memoState');
+      var memoLocked = false, memoFirst = null, memoFound = 0, memoMoves = 0;
+
+      function buildMemo() {
+        if (!memoGrid) return;
+        memoGrid.innerHTML = '';
+        var deck = [];
+        KINDS.forEach(function (k) { deck.push(k); deck.push(k); });
+        for (var i = deck.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = deck[i]; deck[i] = deck[j]; deck[j] = t;
+        }
+        deck.forEach(function (kind) {
+          var c = document.createElement('div');
+          c.className = 'memo-card';
+          c.setAttribute('role', 'button');
+          c.setAttribute('tabindex', '0');
+          c.setAttribute('aria-label', 'карточка');
+          c.dataset.kind = kind;
+          c.innerHTML = '<div class="memo-inner">' +
+            '<div class="memo-face memo-back"></div>' +
+            '<div class="memo-face memo-front">' + miniIcon(kind) + '</div>' +
+            '</div>';
+          var act = function () { flipMemo(c); };
+          c.addEventListener('click', act);
+          c.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); } });
+          memoGrid.appendChild(c);
+        });
+      }
+
+      function flipMemo(card) {
+        if (memoLocked || card.classList.contains('found') || card.classList.contains('flipped')) return;
+        card.classList.add('flipped');
+        play('pop');
+        if (!memoFirst) { memoFirst = card; return; }
+        var a = memoFirst;
+        memoFirst = null;
+        memoMoves++;
+        var mv = $('memoMoves');
+        if (mv) mv.textContent = memoMoves;
+        var fd = $('memoFound');
+
+        if (a.dataset.kind === card.dataset.kind) {
+          memoLocked = true;
+          setTimeout(function () {
+            a.classList.add('found');
+            card.classList.add('found');
+            a.removeAttribute('tabindex');
+            card.removeAttribute('tabindex');
+            memoFound++;
+            if (fd) fd.textContent = memoFound;
+            memoLocked = false;
+            play('success');
+            if (memoFound === KINDS.length) {
+              if (memoState) memoState.textContent = 'все пары на месте — как ты и я';
+              revealStage(10, 'Шесть пар из шести');
+            }
+          }, 380);
+        } else {
+          memoLocked = true;
+          a.classList.add('wrong');
+          card.classList.add('wrong');
+          setTimeout(function () {
+            a.classList.remove('flipped', 'wrong');
+            card.classList.remove('flipped', 'wrong');
+            memoLocked = false;
+          }, 760);
+        }
+      }
+
+      window.resetMemo = function () {
+        memoLocked = false;
+        memoFirst = null;
+        memoFound = 0;
+        memoMoves = 0;
+        var fd = $('memoFound'), mv = $('memoMoves'), e10 = $('err10');
+        if (fd) fd.textContent = '0';
+        if (mv) mv.textContent = '0';
+        if (e10) e10.style.display = 'none';
+        if (memoState) memoState.textContent = 'рубашкой вверх — там наши значки';
+        buildMemo();
+        play('click');
+      };
+
+      buildMemo();
+
+      /* =====================================================================
+         ЭТАП 11 — колесо желаний
+         ===================================================================== */
+      var PRIZES = [
+        { t: 'поцелуй', d: 'Поцелуй в щёку. Засчитан, даже если ты его ещё не получила.' },
+        { t: 'объятие', d: 'Объятие на двадцать секунд. Я уже считаю.' },
+        { t: 'танец', d: 'Танец на двоих посреди кухни. Любая песня.' },
+        { t: 'утро', d: 'Утро, где ты спишь, а я уже рядом.' },
+        { t: 'желание', d: 'Любое твоё желание. Кроме «не скучать» — то не выполню.' },
+        { t: 'секрет', d: 'Секрет, который знаю только я. Скажу на ушко.' },
+        { t: 'рука', d: 'Моя рука в твоей — весь день, без перерывов.' },
+        { t: 'смех', d: 'Три мои лучшие шутки. Одна точно будет смешной.' }
+      ];
+      var wheel = $('wheel'), wheelRot = 0, wheelSpins = 0, wheelBusy = false;
+      var wheelLabs = wheel ? Array.prototype.slice.call(wheel.querySelectorAll('.wheel-lab')) : [];
+
+      // сектор повёрнут на --a, колесо — на wheelRot; слово доворачиваем на минус это число
+      function labelsUpright() {
+        for (var k = 0; k < wheelLabs.length; k++) {
+          var a = parseFloat(wheelLabs[k].style.getPropertyValue('--a'));
+          if (isNaN(a)) a = 22.5 + k * 45;
+          wheelLabs[k].style.setProperty('--fix', (-(a + wheelRot)) + 'deg');
+        }
+      }
+      labelsUpright();
+
+      window.spinWheel = function () {
+        if (!wheel || wheelBusy || wheelSpins >= 3) return;
+        var done = $('block11');
+        if (done && done.style.display === 'block') { toast('Колесо уже всё отдало ♥'); return; }
+        wheelBusy = true;
+        wheel.classList.add('spinning');
+        play('click');
+        var idx = Math.floor(Math.random() * PRIZES.length);
+        var need = (((-(22.5 + idx * 45)) - wheelRot) % 360 + 360) % 360;
+        wheelRot += need + 360 * 4;
+        wheel.style.transform = 'rotate(' + wheelRot + 'deg)';
+        labelsUpright();
+        wheel.dataset.win = idx;
+        setTimeout(function () {
+          wheelBusy = false;
+          wheel.classList.remove('spinning');
+          wheelSpins++;
+          var wc = $('wheelCount');
+          if (wc) wc.textContent = wheelSpins;
+          var out = $('wheelOut'), list = $('wishList');
+          if (out) {
+            out.innerHTML = '<b>' + PRIZES[idx].t + '</b>&nbsp;— ' + PRIZES[idx].d;
+            out.classList.add('hit');
+            setTimeout(function () { out.classList.remove('hit'); }, 420);
+          }
+          if (list) {
+            var li = document.createElement('li');
+            li.textContent = PRIZES[idx].t;
+            list.appendChild(li);
+          }
+          play('success');
+          if (wheelSpins >= 3) revealStage(11, 'Три желания собраны — иду исполнять');
+          else if (out) out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 3850);
+      };
+
+      /* =====================================================================
+         ЭТАП 12 — пазл из девяти кусочков
+         ===================================================================== */
+      var puzzle = $('puzzle'), pzOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8], pzPicked = null, pzSolved = false;
+
+      function renderPuzzle() {
+        if (!puzzle) return;
+        puzzle.innerHTML = '';
+        pzOrder.forEach(function (correct, slot) {
+          var t = document.createElement('div');
+          t.className = 'pz-tile' + (correct === slot ? ' right' : '');
+          t.dataset.correct = correct;
+          t.dataset.slot = slot;
+          t.style.backgroundPosition = (correct % 3) * 50 + '% ' + Math.floor(correct / 3) * 50 + '%';
+          t.addEventListener('click', function () { pickTile(t); });
+          puzzle.appendChild(t);
+        });
+        var ok = 0;
+        pzOrder.forEach(function (c, i) { if (c === i) ok++; });
+        var el = $('pzOk');
+        if (el) el.textContent = ok;
+        return ok;
+      }
+
+      function pickTile(tile) {
+        if (pzSolved) return;
+        if (pzPicked === tile) { tile.classList.remove('picked'); pzPicked = null; return; }
+        if (!pzPicked) { pzPicked = tile; tile.classList.add('picked'); play('pop'); return; }
+
+        var a = pzPicked, b = tile;
+        pzPicked = null;
+        a.classList.remove('picked');
+        var ia = +a.dataset.slot, ib = +b.dataset.slot;
+        var tmp = pzOrder[ia]; pzOrder[ia] = pzOrder[ib]; pzOrder[ib] = tmp;
+        var ok = renderPuzzle();
+        play('click');
+        if (ok === 9) {
+          pzSolved = true;
+          puzzle.classList.add('solved');
+          revealStage(12, 'Сердце собрано. Как и всё остальное');
+        } else if (ok < 3) {
+          var e12 = $('err12');
+          if (e12) e12.style.display = 'block';
+        }
+      }
+
+      window.shufflePuzzle = function () {
+        var tries = 0, arr;
+        do {
+          arr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+          for (var i = 8; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+          }
+          tries++;
+        } while (arr.every(function (c, idx) { return c === idx; }) && tries < 24);
+        pzOrder = arr;
+        pzSolved = false;
+        if (puzzle) puzzle.classList.remove('solved');
+        var e12 = $('err12');
+        if (e12) e12.style.display = 'none';
+        renderPuzzle();
+        play('click');
+      };
+
+      window.shufflePuzzle();
+
+      /* =====================================================================
+         ЭТАП 13 — автомат комплиментов
+         ===================================================================== */
+      var REELS = [
+        ['Ты моя', 'Ты самая', 'Ты —', 'Ты', 'Ты — та самая', 'Моя'],
+        ['нежная', 'безумно красивая', 'единственная', 'солнечная', 'родная', 'смешная'],
+        ['Мария', 'сладока', 'Масоня', 'Мюлю', 'девочка', 'любовь']
+      ];
+      var REPS = 4, REEL_H = 54, slotCount = 0, slotBusy = false;
+
+      function buildStrips() {
+        REELS.forEach(function (words, r) {
+          var el = $('reel' + r);
+          if (!el) return;
+          el.dataset.r = r;
+          var html = '';
+          for (var k = 0; k < REPS; k++) words.forEach(function (w) { html += '<b>' + w + '</b>'; });
+          el.innerHTML = html;
+          el.style.transition = 'none';
+          el.style.transform = 'translateY(0px)';
+        });
+      }
+
+      function spinReel(el, target, wait, dur, cb) {
+        var len = REELS[+el.dataset.r].length;
+        var base = (REPS - 1) * len + target;
+        el.style.transition = 'none';
+        el.style.transform = 'translateY(0px)';
+        setTimeout(function () {
+          requestAnimationFrame(function () {
+            el.style.transition = 'transform ' + dur + 's cubic-bezier(.18,.72,.12,1)';
+            el.style.transform = 'translateY(' + (-base * REEL_H) + 'px)';
+            setTimeout(cb, dur * 1000 + 90);
+          });
+        }, wait);
+      }
+
+      window.pullLever = function () {
+        if (slotBusy) return;
+        var done = $('block13');
+        if (done && done.style.display === 'block' && slotCount >= 3) { toast('Автомат пуст — всё твоё ♥'); return; }
+        slotBusy = true;
+        var machine = $('slotMachine'), lever = $('slotLever');
+        if (machine) machine.classList.add('rolling');
+        if (lever) {
+          lever.classList.add('pull');
+          setTimeout(function () { lever.classList.remove('pull'); }, 280);
+        }
+        play('click');
+        var picks = REELS.map(function (w) { return Math.floor(Math.random() * w.length); });
+        var finished = 0;
+        function step() {
+          if (++finished < 3) return;
+          if (machine) machine.classList.remove('rolling');
+          var line = REELS[0][picks[0]] + ' ' + REELS[1][picks[1]] + ' ' + REELS[2][picks[2]] + '.';
+          var out = $('slotOut');
+          if (out) {
+            out.textContent = line;
+            out.classList.add('hit');
+            setTimeout(function () { out.classList.remove('hit'); }, 460);
+          }
+          slotCount++;
+          var sc = $('slotCount');
+          if (sc) sc.textContent = slotCount;
+          play('success');
+          miniBurst(window.innerWidth / 2, window.innerHeight / 2, 6);
+          if (slotCount >= 3) revealStage(13, 'Три комплимента — и тысяча в кармане');
+          slotBusy = false;
+        }
+        [0, 1, 2].forEach(function (r) {
+          var el = $('reel' + r);
+          if (!el) { step(); return; }
+          spinReel(el, picks[r], 120 + r * 260, 1.15 + r * 0.35, step);
+        });
+      };
+
+      buildStrips();
+      if ($('slotLever')) {
+        $('slotLever').addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.pullLever(); }
+        });
+      }
+
+      /* подсказка в первом тосте — чтобы было понятно, что играть можно */
+      setTimeout(function () { toast('Загляни в новые игры — там сердечки, колесо и пазл ♥'); }, 2600);
+    })();
+  </script>
+
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a333b90fba233f34',t:'MTc4ODA5MjE0Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
