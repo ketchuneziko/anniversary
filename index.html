@@ -517,8 +517,8 @@
 </head>
 <body>
 
-  <!-- Аудио элемент (замени song.mp3 на название твоего файла или ссылку) -->
-  <audio id="bg-audio" loop>
+  <!-- Аудио элемент с автозапуском -->
+  <audio id="bg-audio" loop autoplay>
     <source src="song.mp3" type="audio/mpeg">
   </audio>
 
@@ -530,10 +530,10 @@
 
       <!-- Красивая кнопка плеера в шапке -->
       <div class="music-player" onclick="togglePlay()">
-        <button class="music-btn" id="playBtn">▶</button>
+        <button class="music-btn" id="playBtn">❚❚</button>
         <div class="music-info">
           <div style="font-size: 12px; color: var(--text-muted);">Наша песня</div>
-          <div id="musicStatus">Включить музыку</div>
+          <div id="musicStatus">Играет наша песня</div>
         </div>
       </div>
 
@@ -1162,6 +1162,33 @@
     const musicStatus = document.getElementById('musicStatus');
     let isPlaying = false;
 
+    // Пробуем запустить музыку сразу при загрузке страницы
+    window.addEventListener('DOMContentLoaded', () => {
+      audio.play().then(() => {
+        isPlaying = true;
+        playBtn.textContent = '❚❚';
+        musicStatus.textContent = 'Играет наша песня';
+      }).catch(error => {
+        // Если браузер заблокировал автовоспроизведение, музыка включится при первом клике/касании на экран
+        isPlaying = false;
+        playBtn.textContent = '▶';
+        musicStatus.textContent = 'Включить музыку';
+        
+        const unlockAudio = () => {
+          audio.play().then(() => {
+            isPlaying = true;
+            playBtn.textContent = '❚❚';
+            musicStatus.textContent = 'Играет наша песня';
+            window.removeEventListener('click', unlockAudio);
+            window.removeEventListener('touchstart', unlockAudio);
+          }).catch(e => console.log("Ожидание клика для звука", e));
+        };
+        
+        window.addEventListener('click', unlockAudio, { once: true });
+        window.addEventListener('touchstart', unlockAudio, { once: true });
+      });
+    });
+
     function togglePlay() {
       if (isPlaying) {
         audio.pause();
@@ -1174,7 +1201,7 @@
           musicStatus.textContent = 'Играет наша песня';
           isPlaying = true;
         }).catch(error => {
-          console.log("Автовоспроизведение заблокировано браузером", error);
+          console.log("Ошибка воспроизведения", error);
         });
       }
     }
