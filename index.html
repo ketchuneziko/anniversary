@@ -53,6 +53,50 @@
       font-weight: 700;
     }
 
+    /* Музыкальный плеер */
+    .music-player {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--soft-pink);
+      border: 1px solid var(--border-color);
+      padding: 10px 20px;
+      border-radius: 25px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .music-player:hover {
+      background-color: #fbd3db;
+    }
+
+    .music-btn {
+      background: var(--accent-pink);
+      color: white;
+      border: none;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .music-player:hover .music-btn {
+      background-color: var(--deep-pink);
+    }
+
+    .music-info {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--deep-pink);
+      text-align: left;
+    }
+
     /* Таймер времени */
     .timer-box {
       background: var(--soft-pink);
@@ -473,11 +517,25 @@
 </head>
 <body>
 
+  <!-- Аудио элемент (замени song.mp3 на название твоего файла или ссылку) -->
+  <audio id="bg-audio" loop>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="container">
 
     <div class="header">
       <h1>История нашей любви — Мария и Танжар</h1>
       <p>Каждый шаг здесь открывает следующую страницу наших чувств.</p>
+
+      <!-- Красивая кнопка плеера в шапке -->
+      <div class="music-player" onclick="togglePlay()">
+        <button class="music-btn" id="playBtn">▶</button>
+        <div class="music-info">
+          <div style="font-size: 12px; color: var(--text-muted);">Наша песня</div>
+          <div id="musicStatus">Включить музыку</div>
+        </div>
+      </div>
 
       <div class="timer-box">
         <div class="timer-title">Мы официально вместе уже:</div>
@@ -953,7 +1011,7 @@
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды смотреть назад и понимать сколько всего мы прошли вместе.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы наши отношения становились крепче.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется беречь тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется беречь твоё сердце.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется беречь твое сердце.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется относиться к тебе бережно.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть внимательнее к твоим чувствам.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется никогда не воспринимать тебя как что-то само собой разумеющееся.</label>
@@ -1021,7 +1079,7 @@
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы Всевышний направлял нас друг к другу.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы Всевышний хранил нашу любовь.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы наша любовь становилась только сильнее.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу пройти с тобой через всё что нам приготовит жизнь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я пройти с тобой через всё что нам приготовит жизнь.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу однажды посмотреть на всё это спустя много лет и понять что мы смогли.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу однажды сказать тебе что любил тебя тогда и люблю тебя сейчас.</label>
         <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя несмотря на расстояние.</label>
@@ -1087,7 +1145,7 @@
         <p>Самым счастливым моментом в моей жизни был день, когда я предложил тебе встречаться, и те моменты, когда мы радовали друг друга подарками и вниманием.</p>
         <p>Я хочу пообещать тебе, что буду любить тебя всегда. Меня интересует далеко не только твоё тело — я обожаю тебя всю целиком, каждую твою клеточку, твою душу, мысли и твой характер.</p>
         <p>Я сделаю всё, чтобы осчастливить тебя, уберечь от любых бед и сделать нас настоящей, крепкой и счастливой семьёй.</p>
-        <p>Ты — самая важная, незаменимая, самая любимая и ценная девочка в моей жизни.</p>
+        <p>Ты — самая важная, незаменимая, самая любимая и ценная девочка в моём жизни.</p>
       </div>
     </div>
 
@@ -1098,6 +1156,29 @@
   </div>
 
   <script>
+    // Управление музыкой
+    const audio = document.getElementById('bg-audio');
+    const playBtn = document.getElementById('playBtn');
+    const musicStatus = document.getElementById('musicStatus');
+    let isPlaying = false;
+
+    function togglePlay() {
+      if (isPlaying) {
+        audio.pause();
+        playBtn.textContent = '▶';
+        musicStatus.textContent = 'Включить музыку';
+        isPlaying = false;
+      } else {
+        audio.play().then(() => {
+          playBtn.textContent = '❚❚';
+          musicStatus.textContent = 'Играет наша песня';
+          isPlaying = true;
+        }).catch(error => {
+          console.log("Автовоспроизведение заблокировано браузером", error);
+        });
+      }
+    }
+
     function updateTimer() {
       const startDate = new Date(2026, 6, 31, 0, 0, 0);
       const now = new Date();
@@ -1301,12 +1382,12 @@
       }
     });
 
-    function stopDragging() {
+    function stopDialogging() {
       isDragging = false;
     }
 
-    dragKey.addEventListener('pointerup', stopDragging);
-    dragKey.addEventListener('pointercancel', stopDragging);
+    dragKey.addEventListener('pointerup', stopDialogging);
+    dragKey.addEventListener('pointercancel', stopDialogging);
 
     function unlockHeartSuccess() {
       if (dragKey.dataset.unlocked === 'true') return;
