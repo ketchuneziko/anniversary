@@ -14,6 +14,7 @@
       --text-color: #4a2e35;
       --text-muted: #8c6b73;
       --border-color: #f8c8dc;
+      --glow-pink: rgba(255, 105, 180, 0.35);
     }
 
     * {
@@ -29,207 +30,305 @@
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.8;
       padding: 30px 15px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Фоновые парящие сердечки */
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .f-heart {
+      position: absolute;
+      bottom: -50px;
+      color: rgba(255, 105, 180, 0.25);
+      font-size: 20px;
+      animation: floatUp 8s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.8;
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-105vh) translateX(50px) rotate(360deg) scale(1.2);
+        opacity: 0;
+      }
     }
 
     .container {
       max-width: 680px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .header {
       text-align: center;
-      padding: 35px 20px;
+      padding: 40px 20px;
       background: var(--card-bg);
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(214, 51, 132, 0.08);
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(214, 51, 132, 0.12);
       margin-bottom: 35px;
-      border: 1px solid var(--border-color);
+      border: 2px solid var(--border-color);
+      animation: pulseGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 10px 25px rgba(214, 51, 132, 0.08); }
+      100% { box-shadow: 0 15px 35px rgba(255, 105, 180, 0.25); }
     }
 
     .header h1 {
       color: var(--deep-pink);
-      font-size: 26px;
+      font-size: 28px;
       margin-bottom: 10px;
-      font-weight: 700;
+      font-weight: 800;
+      text-shadow: 0 2px 4px rgba(214, 51, 132, 0.1);
     }
 
-    /* Музыкальный плеер */
+    /* Фиксированный музыкальный плеер в виде сердечка в левом нижнем углу */
     .music-player {
-      display: inline-flex;
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
       align-items: center;
-      gap: 12px;
-      background: var(--soft-pink);
-      border: 1px solid var(--border-color);
-      padding: 10px 20px;
-      border-radius: 25px;
-      margin-top: 15px;
+      gap: 10px;
+      background: var(--card-bg);
+      border: 2px solid var(--accent-pink);
+      padding: 8px 16px 8px 10px;
+      border-radius: 30px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      box-shadow: 0 5px 20px rgba(214, 51, 132, 0.3);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .music-player:hover {
-      background-color: #fbd3db;
+      background: var(--soft-pink);
+      transform: scale(1.08) rotate(-2deg);
+      box-shadow: 0 8px 25px rgba(214, 51, 132, 0.4);
     }
 
     .music-btn {
       background: var(--accent-pink);
       color: white;
       border: none;
-      width: 35px;
-      height: 35px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 14px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s;
+      flex-shrink: 0;
+      animation: heartBeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      15%, 45% { transform: scale(1.15); }
+      30%, 60% { transform: scale(1); }
     }
 
     .music-player:hover .music-btn {
       background-color: var(--deep-pink);
+      animation: none;
     }
 
     .music-info {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       color: var(--deep-pink);
       text-align: left;
+      white-space: nowrap;
     }
 
     /* Таймер времени */
     .timer-box {
       background: var(--soft-pink);
       border: 1px solid var(--border-color);
-      border-radius: 15px;
-      padding: 15px;
+      border-radius: 16px;
+      padding: 16px;
       margin-top: 20px;
       text-align: center;
+      box-shadow: inset 0 2px 5px rgba(214, 51, 132, 0.05);
     }
 
     .timer-title {
       font-size: 13px;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 600;
-      margin-bottom: 5px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
     .timer-values {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 19px;
+      font-weight: 800;
       color: var(--deep-pink);
     }
 
     .timer-values span {
       background: var(--card-bg);
-      padding: 4px 8px;
-      border-radius: 6px;
-      margin: 0 2px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin: 0 3px;
       border: 1px solid var(--border-color);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      display: inline-block;
+      min-width: 36px;
     }
 
     .game-card {
       background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 30px 20px;
+      border: 2px solid var(--border-color);
+      border-radius: 24px;
+      padding: 35px 25px;
       margin-bottom: 35px;
-      box-shadow: 0 8px 20px rgba(214, 51, 132, 0.05);
+      box-shadow: 0 10px 25px rgba(214, 51, 132, 0.08);
       text-align: center;
       display: none;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .game-card.active {
       display: block;
-      animation: fadeIn 0.8s ease forwards;
+      transform: translateY(0);
+      opacity: 1;
+      animation: cardAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes cardAppear {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .game-title {
       font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: var(--accent-pink);
-      font-weight: 600;
-      margin-bottom: 10px;
+      font-weight: 700;
+      margin-bottom: 12px;
     }
 
     .question {
-      font-size: 17px;
+      font-size: 18px;
       color: var(--text-color);
-      margin-bottom: 20px;
-      font-weight: 600;
+      margin-bottom: 22px;
+      font-weight: 700;
     }
 
     .input-group {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       max-width: 400px;
       margin: 0 auto;
     }
 
     input[type="text"] {
-      padding: 12px 18px;
+      padding: 14px 20px;
       border: 2px solid var(--border-color);
-      border-radius: 25px;
+      border-radius: 30px;
       font-size: 15px;
       outline: none;
       text-align: center;
       color: var(--text-color);
       background-color: var(--bg-color);
-      transition: border-color 0.3s;
+      transition: all 0.3s ease;
       width: 100%;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
     }
 
     input[type="text"]:focus {
       border-color: var(--accent-pink);
+      background-color: #fff;
+      box-shadow: 0 0 12px var(--glow-pink);
     }
 
     button {
       background-color: var(--accent-pink);
       color: white;
       border: none;
-      padding: 12px 25px;
-      border-radius: 25px;
+      padding: 14px 28px;
+      border-radius: 30px;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
     }
 
     button:hover {
       background-color: var(--deep-pink);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(214, 51, 132, 0.5);
+    }
+
+    button:active {
+      transform: translateY(1px);
     }
 
     .error-msg {
-      color: #dc3545;
-      font-size: 13px;
-      margin-top: 10px;
+      color: #e63946;
+      font-size: 13.5px;
+      margin-top: 12px;
       display: none;
+      font-weight: 600;
+      animation: shake 0.4s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
     }
 
     .letter-block {
       display: none;
-      background: #fff6f8;
-      border-left: 4px solid var(--accent-pink);
-      padding: 25px;
-      border-radius: 12px;
+      background: linear-gradient(135deg, #fff6f8 0%, #ffeef2 100%);
+      border-left: 5px solid var(--accent-pink);
+      padding: 28px;
+      border-radius: 16px;
       margin-top: 25px;
       text-align: left;
-      animation: fadeIn 0.8s ease forwards;
+      box-shadow: 0 5px 20px rgba(214, 51, 132, 0.06);
+      animation: fadeInBlock 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes fadeInBlock {
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .letter-block p {
-      margin-bottom: 15px;
-      font-size: 15px;
+      margin-bottom: 16px;
+      font-size: 15.5px;
       color: var(--text-color);
+      line-height: 1.8;
     }
 
     .letter-block p:last-child {
@@ -240,156 +339,194 @@
     .dates-grid {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 16px;
       text-align: left;
       max-width: 450px;
-      margin: 0 auto 20px;
+      margin: 0 auto 22px;
     }
 
     .date-row {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
 
     .date-row label {
       font-size: 14px;
       color: var(--text-color);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     /* Этап 2: Анаграмма */
     .tiles-container {
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 15px;
+      margin-bottom: 18px;
     }
 
     .tile-btn {
       background: var(--soft-pink);
       color: var(--deep-pink);
-      border: 1px solid var(--border-color);
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 18px;
+      border: 2px solid var(--border-color);
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 19px;
       cursor: pointer;
+      box-shadow: 0 3px 10px rgba(214, 51, 132, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .tile-btn:hover:not(:disabled) {
+      background: var(--accent-pink);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
     }
 
     .tile-btn:disabled {
       opacity: 0.3;
       cursor: default;
+      transform: none;
+      box-shadow: none;
     }
 
     .anagram-display {
-      min-height: 45px;
-      border-bottom: 2px dashed var(--accent-pink);
-      margin-bottom: 15px;
-      font-size: 22px;
-      font-weight: 700;
+      min-height: 50px;
+      border-bottom: 3px dashed var(--accent-pink);
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 800;
       color: var(--deep-pink);
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: rgba(255, 228, 225, 0.3);
+      border-radius: 10px 10px 0 0;
     }
 
     /* Этап 4: Рамка */
     .dzin-frame {
-      border: 2px dashed var(--accent-pink);
-      border-radius: 15px;
-      padding: 20px;
+      border: 3px dashed var(--accent-pink);
+      border-radius: 20px;
+      padding: 22px;
       background: var(--soft-pink);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 20px rgba(214, 51, 132, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .dzin-frame:hover {
+      transform: scale(1.01);
     }
 
     .dzin-top {
-      font-size: 24px;
-      font-weight: 800;
+      font-size: 26px;
+      font-weight: 900;
       color: var(--deep-pink);
-      margin-bottom: 10px;
-      letter-spacing: 2px;
+      margin-bottom: 12px;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 4px rgba(214, 51, 132, 0.15);
     }
 
     .dzin-img-box {
       width: 100%;
-      max-height: 250px;
-      border-radius: 10px;
+      max-height: 260px;
+      border-radius: 14px;
       overflow: hidden;
-      margin: 10px 0;
+      margin: 12px 0;
       background: #f8c8dc;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
     .dzin-img-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .dzin-img-box:hover img {
+      transform: scale(1.05);
     }
 
     .dzin-bottom {
-      font-size: 15px;
+      font-size: 15.5px;
       color: var(--text-color);
-      margin-top: 10px;
+      margin-top: 12px;
       font-style: italic;
+      font-weight: 600;
     }
 
     /* Этап 5: Шифратор */
     .cipher-box {
       background: var(--soft-pink);
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 20px;
+      padding: 24px;
+      border-radius: 18px;
+      margin-bottom: 22px;
       border: 1px solid var(--border-color);
+      box-shadow: inset 0 2px 6px rgba(214, 51, 132, 0.05);
     }
 
     .cipher-code {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 3px;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 4px;
       color: var(--deep-pink);
-      margin-bottom: 15px;
+      margin-bottom: 18px;
+      text-shadow: 0 1px 2px rgba(214, 51, 132, 0.1);
     }
 
     input[type="range"] {
-      width: 80%;
+      width: 85%;
       accent-color: var(--deep-pink);
+      height: 6px;
+      cursor: pointer;
     }
 
-    /* Этап 6: Сетка карточек только с номерами */
+    /* Этап 6: Сетка карточек */
     .cartoons-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 14px;
+      margin-bottom: 22px;
     }
 
     .cartoon-card {
       background: var(--bg-color);
       border: 2px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 8px;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       user-select: none;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      min-height: 110px;
+      min-height: 115px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+    }
+
+    .cartoon-card:hover {
+      border-color: var(--accent-pink);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 15px rgba(255, 105, 180, 0.25);
     }
 
     .cartoon-card img {
       width: 100%;
       height: 75px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 10px;
       margin-bottom: 6px;
       background-color: var(--soft-pink);
     }
@@ -398,6 +535,8 @@
       border-color: var(--deep-pink);
       background: var(--soft-pink);
       color: var(--deep-pink);
+      box-shadow: 0 0 15px var(--glow-pink);
+      transform: scale(1.03);
     }
 
     /* Этап 7: Чек-лист */
@@ -405,36 +544,44 @@
       display: flex;
       gap: 10px;
       justify-content: center;
-      margin-bottom: 15px;
+      margin-bottom: 16px;
     }
 
     .checklist-container {
       text-align: left;
       background: var(--bg-color);
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 20px;
+      padding: 22px;
+      border-radius: 18px;
+      margin-bottom: 22px;
       border: 1px solid var(--border-color);
       max-height: 450px;
       overflow-y: auto;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);
     }
 
     .check-item {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-      font-size: 13.5px;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-size: 14px;
       cursor: pointer;
-      line-height: 1.4;
+      line-height: 1.5;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .check-item:hover {
+      color: var(--deep-pink);
     }
 
     .check-item input[type="checkbox"] {
       accent-color: var(--deep-pink);
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       margin-top: 2px;
       flex-shrink: 0;
+      cursor: pointer;
     }
 
     /* Этап 8: Замок и ключ */
@@ -444,19 +591,20 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 30px;
-      min-height: 280px;
+      gap: 35px;
+      min-height: 300px;
       user-select: none;
     }
 
     .heart-wrapper {
       position: relative;
-      width: 120px;
-      height: 120px;
+      width: 130px;
+      height: 130px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.4s ease;
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      filter: drop-shadow(0 8px 20px rgba(255, 105, 180, 0.4));
     }
 
     .heart-icon {
@@ -468,8 +616,8 @@
 
     .lock-icon {
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       fill: #ffffff;
       transition: opacity 0.4s, transform 0.4s;
       pointer-events: none;
@@ -477,34 +625,46 @@
 
     .heart-wrapper.unlocked .heart-icon {
       fill: var(--deep-pink);
-      transform: scale(1.2);
+      transform: scale(1.25);
+      animation: heartPulse 1s ease infinite alternate;
+    }
+
+    @keyframes heartPulse {
+      0% { transform: scale(1.2); }
+      100% { transform: scale(1.3); filter: drop-shadow(0 0 20px var(--deep-pink)); }
     }
 
     .heart-wrapper.unlocked .lock-icon {
       opacity: 0;
-      transform: scale(0.4);
+      transform: scale(0.4) rotate(45deg);
     }
 
     .draggable-key {
       background: var(--soft-pink);
       border: 2px solid var(--deep-pink);
       color: var(--deep-pink);
-      padding: 12px 24px;
-      border-radius: 25px;
-      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: 800;
       cursor: grab;
       touch-action: none;
-      box-shadow: 0 4px 12px rgba(214, 51, 132, 0.2);
-      transition: box-shadow 0.2s ease;
+      box-shadow: 0 6px 18px rgba(214, 51, 132, 0.3);
+      transition: box-shadow 0.2s ease, background-color 0.2s;
       z-index: 10;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      font-size: 15px;
+    }
+
+    .draggable-key:hover {
+      background-color: #fff;
     }
 
     .draggable-key:active {
       cursor: grabbing;
-      box-shadow: 0 8px 20px rgba(214, 51, 132, 0.4);
+      box-shadow: 0 10px 25px rgba(214, 51, 132, 0.5);
+      transform: scale(1.05);
     }
 
     .footer {
@@ -512,30 +672,34 @@
       margin-top: 50px;
       font-size: 14px;
       color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 1px;
     }
   </style>
 </head>
 <body>
+
+  <!-- Фоновые парящие сердечки -->
+  <div class="floating-hearts" id="floatingHearts"></div>
 
   <!-- Аудио элемент с автозапуском -->
   <audio id="bg-audio" loop autoplay>
     <source src="song.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Фиксированный музыкальный плеер-сердечко в левом нижнем углу -->
+  <div class="music-player" onclick="togglePlay(); playSound('click');" title="Управление музыкой">
+    <button class="music-btn" id="playBtn">❤️</button>
+    <div class="music-info">
+      <div id="musicStatus">Наша песня</div>
+    </div>
+  </div>
+
   <div class="container">
 
     <div class="header">
       <h1>История нашей любви — Мария и Танжар</h1>
       <p>Каждый шаг здесь открывает следующую страницу наших чувств.</p>
-
-      <!-- Красивая кнопка плеера в шапке -->
-      <div class="music-player" onclick="togglePlay()">
-        <button class="music-btn" id="playBtn">❚❚</button>
-        <div class="music-info">
-          <div style="font-size: 12px; color: var(--text-muted);">Наша песня</div>
-          <div id="musicStatus">Играет наша песня</div>
-        </div>
-      </div>
 
       <div class="timer-box">
         <div class="timer-title">Мы официально вместе уже:</div>
@@ -581,9 +745,9 @@
 
       <div class="letter-block" id="block1">
         <p><strong>Память о каждом мгновении:</strong></p>
-        <p>22 июня произошел случайный клик в Дайвинчике, который перевернул всю мою жизнь. Ты искала архитекторов, а я написал: "Извини, я не архитектор". Но этот разговор затянул нас с первой же секунды.</p>
-        <p>Затем были волшебные июльские дни: 9 июля твои слова признания, 13 июля моё "люблю", 19 июля твоё взаимное "люблю", и 31 июля, когда мы стали парой. Каждая из этих дат навсегда высечена в моём сердце.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(2)">Перейти к следующему этапу</button>
+        <p>22 июня произошел случайный клик в Дайвинчике, который перевернул всю мою жизнь. Ты искала архитекторов, а я написал: "Извини, я не архитектор". Но этот разговор затянул нас с первой же секунды[cite: 7].</p>
+        <p>Затем были волшебные июльские дни: 9 июля твои слова признания, 13 июля моё "люблю", 19 июля твоё взаимное "люблю", и 31 июля, когда мы стали парой. Каждая из этих дат навсегда высечена в моём сердце[cite: 7].</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(2); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
 
@@ -605,16 +769,16 @@
       </div>
       
       <div style="display: flex; gap: 10px; justify-content: center; max-width: 300px; margin: 0 auto;">
-        <button style="background: var(--text-muted); font-size: 13px; padding: 8px 15px;" onclick="resetAnagram()">Сбросить</button>
+        <button style="background: var(--text-muted); font-size: 13px; padding: 8px 15px;" onclick="resetAnagram(); playSound('click');">Сбросить</button>
         <button onclick="checkStage2()">Проверить</button>
       </div>
       <div class="error-msg" id="err2">Слово составлено неверно, попробуй еще раз</div>
 
       <div class="letter-block" id="block2">
         <p><strong>Моя сладока, Масоня, Мюлю:</strong></p>
-        <p>Я обожаю называть тебя этими именами. Для меня ты — куным, айым, моя хорошая девочка, моя жена, невестка и аманатым.</p>
-        <p>Ты даришь мне ту нежность и тепло, которые я не испытывал никогда в жизни.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(3)">Перейти к следующему этапу</button>
+        <p>Я обожаю называть тебя этими именами. Для меня ты — куным, айым, моя хорошая девочка, моя жена, невестка и аманатым[cite: 7].</p>
+        <p>Ты даришь мне ту нежность и тепло, которые я не испытывал никогда в жизни[cite: 7].</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(3); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
 
@@ -630,9 +794,9 @@
 
       <div class="letter-block" id="block3">
         <p><strong>Океан чувств на расстоянии:</strong></p>
-        <p>Когда я пишу тебе это слово, за ним стоит огромное тоскующее сердце. Мне не хватает твоего голоса, смеха и прикосновений.</p>
-        <p>Расстояние лишь доказывает мне каждый день, насколько сильно ты мне необходима.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(4)">Перейти к следующему этапу</button>
+        <p>Когда я пишу тебе это слово, за ним стоит огромное тоскующее сердце. Мне не хватает твоего голоса, смеха и прикосновений[cite: 7].</p>
+        <p>Расстояние лишь доказывает мне каждый день, насколько сильно ты мне необходима[cite: 7].</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(4); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
 
@@ -657,9 +821,9 @@
 
       <div class="letter-block" id="block4">
         <p><strong>И мой дзинь случился именно с тобой:</strong></p>
-        <p>Это не просто совпадение из мультика. Это то самое волшебное чувство, когда понимаешь: вот он, мой единственный человек на всю жизнь.</p>
-        <p>Я обожаю наши внутренние шутки, когда мы угараем с "мы шымкентские детка" или фразочек вроде "ампылда, жерге жатып ынкылла". С тобой я могу быть собой на 100%.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(5)">Перейти к следующему этапу</button>
+        <p>Это не просто совпадение из мультика. Это то самое волшебное чувство, когда понимаешь: вот он, мой единственный человек на всю жизнь[cite: 7].</p>
+        <p>Я обожаю наши внутренние шутки, когда мы угараем с "мы шымкентские детка" или фразочек вроде "ампылда, жерге жатып ынкылла". С тобой я могу быть собой на 100%[cite: 7].</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(5); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
 
@@ -671,7 +835,7 @@
       <div class="cipher-box">
         <div class="cipher-code" id="cipherDisplay">Я ЛЮБЛЮ ТЕБЯ</div>
         <div class="cipher-controls">
-          <input type="range" id="cipherSlider" min="0" max="5" value="3" oninput="updateCipher()">
+          <input type="range" id="cipherSlider" min="0" max="5" value="3" oninput="updateCipher(); playSound('click');">
         </div>
       </div>
 
@@ -680,8 +844,8 @@
 
       <div class="letter-block" id="block5">
         <p><strong>Моя благодарность тебе:</strong></p>
-        <p>Я ценил и ценю в тебе абсолютно всё. Ты показала мне, что такое настоящая любовь, верность и счастье. Ты подарила мне надежду и искреннее желание развиваться и строить наше общее будущее.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(6)">Перейти к следующему этапу</button>
+        <p>Я ценил и ценю в тебе абсолютно всё. Ты показала мне, что такое настоящая любовь, верность и счастье. Ты подарила мне надежду и искреннее желание развиваться и строить наше общее будущее[cite: 7].</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(6); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
 
@@ -691,63 +855,63 @@
       <div class="question">Выбери ровно 11 вариантов, с которыми мы себя ассоциируем:</div>
       
       <div class="cartoons-grid">
-        <div class="cartoon-card" onclick="toggleCartoon(this, 1)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 1); playSound('pop');">
           <img src="morticia_gomez.jpg" alt="1" onerror="this.style.display='none'">
           <span>1</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 2)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 2); playSound('pop');">
           <img src="tom_jerry.jpg" alt="2" onerror="this.style.display='none'">
           <span>2</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 3)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 3); playSound('pop');">
           <img src="toothless_fury.jpg" alt="3" onerror="this.style.display='none'">
           <span>3</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 4)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 4); playSound('pop');">
           <img src="shrek_fiona.jpg" alt="4" onerror="this.style.display='none'">
           <span>4</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 5)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 5); playSound('pop');">
           <img src="dracula_erika.jpg" alt="5" onerror="this.style.display='none'">
           <span>5</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 6)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 6); playSound('pop');">
           <img src="simba_nala.jpg" alt="6" onerror="this.style.display='none'">
           <span>6</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 7)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 7); playSound('pop');">
           <img src="romeo_juliet.jpg" alt="7" onerror="this.style.display='none'">
           <span>7</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 8)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 8); playSound('pop');">
           <img src="aladdin_jasmine.jpg" alt="8" onerror="this.style.display='none'">
           <span>8</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 9)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 9); playSound('pop');">
           <img src="rapunzel_eugene.jpg" alt="9" onerror="this.style.display='none'">
           <span>9</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 10)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 10); playSound('pop');">
           <img src="beauty_beast.jpg" alt="10" onerror="this.style.display='none'">
           <span>10</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 11)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 11); playSound('pop');">
           <img src="naruto_hinata.jpg" alt="11" onerror="this.style.display='none'">
           <span>11</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 12)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 12); playSound('pop');">
           <img src="walle_eve.jpg" alt="12" onerror="this.style.display='none'">
           <span>12</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 13)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 13); playSound('pop');">
           <img src="tarzan_jane.jpg" alt="13" onerror="this.style.display='none'">
           <span>13</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 14)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 14); playSound('pop');">
           <img src="hercules_megara.jpg" alt="14" onerror="this.style.display='none'">
           <span>14</span>
         </div>
-        <div class="cartoon-card" onclick="toggleCartoon(this, 15)">
+        <div class="cartoon-card" onclick="toggleCartoon(this, 15); playSound('pop');">
           <img src="peter_wendy.jpg" alt="15" onerror="this.style.display='none'">
           <span>15</span>
         </div>
@@ -758,9 +922,9 @@
 
       <div class="letter-block" id="block6">
         <p><strong>Наши особенные пары:</strong></p>
-        <p>Мы как Мортиша и Гомез Адамс — безумно, страстно и навсегда преданные друг другу. Мы как Беззубик и Белая Фурия, которые нашли свою пару среди всего мира.</p>
-        <p>Мне невероятно греют душу все ласковые слова, которыми ты меня называешь: малыш, жаным, любимый, алтыным, котеночек, солнышко, папочка, хозяин, любовь, асыл жарым, жалгызым, суйыктым.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(7)">Перейти к следующему этапу</button>
+        <p>Мы как Мортиша и Гомез Адамс — безумно, страстно и навсегда преданные друг другу. Мы как Беззубик и Белая Фурия, которые нашли свою пару среди всего мира[cite: 7].</p>
+        <p>Мне невероятно греют душу все ласковые слова, которыми ты меня называешь: малыш, жаным, любимый, алтыным, котеночек, солнышко, папочка, хозяин, любовь, асыл жарым, жалгызым, суйыктым[cite: 7].</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(7); playSound('click');">Перейти к следующему этапу</button>
       </div>
     </div>
 
@@ -770,344 +934,345 @@
       <div class="question">Отметишь ли ты каждую из наших причин?</div>
 
       <div class="checklist-controls">
-        <button style="background: var(--text-muted); font-size: 13px; padding: 6px 15px;" onclick="selectAllCheckboxes()">Отметить все</button>
+        <button style="background: var(--text-muted); font-size: 13px; padding: 6px 15px;" onclick="selectAllCheckboxes(); playSound('click');">Отметить все</button>
       </div>
       
       <div class="checklist-container" id="checklist">
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты просто есть в моей жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты появилась в моей жизни совершенно неожиданно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно ты стала человеком который настолько сильно запал мне в сердце.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно к тебе у меня появились такие сильные чувства.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала моей первой настоящей любовью.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя именно такой какая ты есть.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя внешность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоё лицо.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои глаза.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их цвет.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их форма.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как они выглядят на фотографиях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой взгляд.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои брови.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их форма.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится как они подходят к твоему лицу.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои ресницы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что они делают твой взгляд ещё красивее.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой нос.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что он подходит к твоему лицу.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои губы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их форма.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как они выглядят.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя улыбка на фотографиях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя улыбка именно потому что она твоя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится форма твоего лица.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои черты лица.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как все твои черты сочетаются между собой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя кожа.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как ты выглядишь на фотографиях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой профиль.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоё лицо с разных ракурсов.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя внешность даже в самых обычных фотографиях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что тебе не нужно специально стараться чтобы я считал тебя красивой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что для меня ты красивая просто потому что ты ты.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои волосы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их цвет.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится их длина.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится как они лежат.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится как они обрамляют твоё лицо.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя причёска.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится когда ты меняешь причёску.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится каждая фотография где я вижу твои волосы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя фигура.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя сексуальная горячая фигура.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя талия.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя грудь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои бёдра.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся твои ноги.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как выглядит твоя фигура целиком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя внешность не только в отдельных деталях а полностью.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что все твои черты вместе создают именно тот образ который я люблю.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня невероятно привлекательная.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня очень красивая.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится смотреть на твои фотографии.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я могу пересматривать твои фотографии и каждый раз замечать что-то красивое.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится видеть тебя даже через экран.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя естественная красота.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что тебе не нужно быть идеальной чтобы я считал тебя самой красивой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что для меня твоя красота особенная.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что для меня стала единственной красивой на всем белом свете.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится каждая маленькая особенность твого лица.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравятся даже те черты которые ты сама можешь считать недостатками.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно эти маленькие особенности делают тебя тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твоё лицо целиком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои глаза.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои брови.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои ресницы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твой нос.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои губы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою улыбку.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю форму твоего лица.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои волосы.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою фигуру.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю каждую видимую мне часть твоей внешности.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится смотреть на тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне никогда не кажется что ты недостаточно красивая.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что в моих глазах ты невероятная.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой характер.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя доброта.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь быть заботливой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь сопереживать.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь чувствовать глубоко.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты искренняя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты настоящая.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты не пытаешься быть кем-то другим.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя есть собственное мнение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя есть собственные взгляды.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь говорить о своих чувствах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты не боишься показывать мне когда тебе что-то не нравится.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть честной со мной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь говорить мне о своих переживаниях.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты позволяешь мне узнавать тебя настоящую.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно узнавать тебя всё глубже.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно слушать твои мысли.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно знать твоё мнение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно что тебе нравится.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно что тебе не нравится.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно что тебя радует.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно что тебя огорчает.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно о чём ты мечтаешь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно чего ты хочешь от жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется знать тебя полностью.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя индивидуальность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты не похожа на других.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя свой характер.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя свой взгляд на многие вещи.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь быть сильной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь быть нежной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что в тебе сочетается сила и мягкость.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя уверенность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя целеустремлённость.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя самостоятельность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя способность принимать решения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя эмоциональность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя глубина.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой ум.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя доброта.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоё большое сердце.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится то как ты относишься к людям.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что тебе не всё равно на чувства других.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь переживать за близких.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь заботиться о тех кто тебе дорог.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь показывать свою любовь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты умеешь говорить о своих чувствах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть очень нежной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть очень сильной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть серьёзной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь быть смешной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что у тебя есть чувство юмора.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твой юмор.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится твоя способность превращать обычный разговор во что-то интересное.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что с тобой мне не скучно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится наше общение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится разговаривать с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется узнавать о тебе больше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется рассказывать тебе о себе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делиться с тобой своим днём.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне интересно как проходит твой день.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё настроение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё самочувствие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно то что происходит в твоей жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется поддерживать тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется заботиться о тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делать тебя счастливее.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется радовать тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть человеком который может поддержать тебя в трудный момент.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть твоей опорой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть человеком которому ты можешь доверять.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что твоё доверие для меня очень дорого.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу заслуживать твоё доверие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу быть честным с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу быть открытым с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу быть внимательнее к тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу лучше понимать тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты заставляешь меня задумываться над собой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты заставляешь меня хотеть становиться лучше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что рядом с мыслями о тебе мне хочется расти.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется становиться человеком которого ты заслуживаешь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется исправлять свои ошибки.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется учиться любить тебя правильно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется показывать тебе любовь не только словами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется доказывать свои чувства поступками.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть для тебя надёжным человеком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты чувствовала себя спокойно со мной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты чувствовала себя любимой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты знала насколько ты для меня ценна.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты никогда не сомневалась в моих чувствах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала частью моих мыслей.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я думаю о тебе каждый день.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты можешь появиться в моих мыслях совершенно неожиданно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делиться с тобой даже самыми маленькими вещами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется рассказывать тебе обо всём.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется знать обо всём что происходит у тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится видеть твоё имя на экране.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что твоё сообщение может сделать мой день лучше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне приятно получать от тебя сообщения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится читать твои слова.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится узнавать тебя через твои сообщения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что твои слова позволяют мне чувствовать тебя ближе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что даже находясь далеко ты стала мне очень близкой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я могу скучать по тебе несмотря на то что мы ещё не виделись вживую.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала мне настолько родной через наше общение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я могу чувствовать такую сильную привязанность к человеку который находится далеко.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты доказала мне насколько сильными могут быть чувства.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала человеком о котором я думаю перед сном.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала человеком о котором я могу думать после пробуждения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала частью моего обычного дня.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала частью моих планов.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты была частью моего будущего.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется строить планы в которых есть ты.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы наша история продолжалась.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я верю в нас.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я верю в наши чувства.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу сохранить то что между нами есть.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу бороться за наши отношения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я не хочу сдаваться из-за трудностей.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется проходить сложные моменты вместе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется становиться лучше ради нас.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды преодолеть расстояние между нами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды встретиться с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется когда-нибудь увидеть тебя вживую.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды услышать твой голос рядом с собой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды посмотреть тебе в глаза вживую.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды провести с тобой время.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды создать с тобой воспоминания которые сейчас существуют только в моих мечтах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что впереди у нас ещё столько всего чего мы никогда не переживали вместе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды узнать тебя ещё глубже уже в реальной жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды узнать твои маленькие привычки которые невозможно узнать через переписку.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды узнать тебя с ещё одной стороны.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится думать что впереди у нас ещё много первого.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы эти первые моменты были именно с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды увидеть твою настоящую реакцию на мои слова не через текст.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды услышать твой смех рядом.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды просто находиться с тобой рядом.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что пока этого ещё не было но мне нравится мечтать об этом.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты даёшь мне повод мечтать о будущем.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется увидеть как ты достигаешь своих целей.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется поддерживать тебя в твоих мечтах.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется радоваться твоим успехам.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется поддерживать тебя после неудач.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется говорить тебе что ты справишься.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется напоминать тебе насколько ты сильная.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть человеком который верит в тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть на твоей стороне.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть рядом с тобой в важных моментах твоей жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется видеть как ты развиваешься.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется развиваться вместе с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы мы оба становились лучше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится мысль о нашем будущем.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится представлять что однажды расстояние останется позади.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне нравится думать что когда-нибудь всё это будет не через экран.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы у нас было много совместных воспоминаний.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды смотреть назад и понимать сколько всего мы прошли вместе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы наши отношения становились крепче.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется беречь тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется беречь твое сердце.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется относиться к тебе бережно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть внимательнее к твоим чувствам.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется никогда не воспринимать тебя как что-то само собой разумеющееся.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты слишком ценна для меня чтобы относиться к тебе небрежно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё спокойствие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё счастье.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно твоё доверие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно чтобы ты чувствовала себя любимой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне важно чтобы ты знала что я выбираю тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу выбирать тебя каждый день.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя не только когда всё идеально.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу оставаться рядом когда сложно.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу решать проблемы а не убегать от них.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу становиться лучше после каждой своей ошибки.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть человеком которому ты сможешь доверить своё сердце.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть твоей поддержкой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть твоей опорой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется защищать тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется заботиться о тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делать тебя счастливой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется радовать тебя маленькими вещами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется делать для тебя что-то просто потому что люблю тебя.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется видеть тебя счастливой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется знать что ты улыбаешься благодаря мне.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется быть причиной твоего хорошего настроения.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется давать тебе любовь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется давать тебе тепло.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется давать тебе спокойствие.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы рядом со мной ты чувствовала себя важной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы ты никогда не сомневалась в том что ты нужна мне.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня не временное увлечение.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня не просто красивая девушка.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты для меня намного больше чем внешность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я сначала могу любоваться твоей красотой но ещё сильнее я люблю человека которого узнаю за этой внешностью.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою личность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твой характер.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твои мысли.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою доброту.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою нежность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою силу.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою искренность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою эмоциональность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою индивидуальность.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твою способность любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю твоё отношение ко мне.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю то что ты позволяешь мне быть частью твоей жизни.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала для меня особенным человеком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала для меня самым дорогим человеком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты стала для меня самым ценным человеком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется знать о тебе всё больше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется узнавать тебя годами.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется каждый год находить в тебе новые причины для любви.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется чтобы список причин никогда не закончился.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я уверен что чем больше буду тебя узнавать тем больше буду тебя любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что впереди у нас ещё тысячи вещей которые я смогу полюбить в тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что впереди у нас ещё тысячи моментов которые мы можем пережить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что впереди у нас ещё тысячи воспоминаний которые мы можем создать.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу прожить их именно с тобой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что мне хочется однажды добавить к этому списку ещё больше причин.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя дальше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу выбирать тебя дальше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу поддерживать тебя дальше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу быть рядом с тобой дальше.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы наше «мы» продолжалось.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы Всевышний направлял нас друг к другу.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы Всевышний хранил нашу любовь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу чтобы наша любовь становилась только сильнее.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я пройти с тобой через всё что нам приготовит жизнь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу однажды посмотреть на всё это спустя много лет и понять что мы смогли.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу однажды сказать тебе что любил тебя тогда и люблю тебя сейчас.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя несмотря на расстояние.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя несмотря на трудности.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя независимо от обстоятельств.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя не только за то что в тебе легко любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу любить тебя целиком.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю каждую твою особенность которую уже знаю.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу узнать каждую твою особенность которую пока ещё не знаю.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя за тысячи маленьких причин.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя за всё что уже знаю о тебе.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я хочу полюбить ещё больше всего того что узнаю о тебе в будущем.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что невозможно уместить мою любовь к тебе в один список.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что сколько бы причин я ни написал мне всё равно будет мало.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что каждый новый день может стать ещё одной причиной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что каждая новая вещь которую я узнаю о тебе может стать ещё одной причиной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что каждый новый момент нашей истории может стать ещё одной причиной.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя не за одну конкретную вещь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что я люблю тебя за всё то из чего складывается именно ты.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты Мария.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно ты стала моей любимой.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу любить.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу выбирать.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу беречь.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу видеть в своём будущем.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что именно тебя я хочу любить до последнего вздоха.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> За то что ты просто ты.</label>
-        <label class="check-item"><input type="checkbox" class="chk-item"> И за это я люблю тебя больше чем способен объяснить словами.</label>
+        <!-- Список причин полностью сохранен -->
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты просто есть в моей жизни.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты появилась в моей жизни совершенно неожиданно.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно ты стала человеком который настолько сильно запал мне в сердце.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно к тебе у меня появились такие сильные чувства.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала моей первой настоящей любовью.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю тебя именно такой какая ты есть.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя внешность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоё лицо.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравятся твои глаза.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится их цвет.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится их форма.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится то как они выглядят на фотографиях.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твой взгляд.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравятся твои брови.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится их форма.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится как они подходят к твоему лицу.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравятся твои ресницы.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что они делают твой взгляд ещё красивее.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твой нос.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что он подходит к твоему лицу.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравятся твои губы.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится их форма.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится то как они выглядят.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя улыбка на фотографиях.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя улыбка именно потому что она твоя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится форма твоего лица.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравятся твои черты лица.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится то как все твои черты сочетаются между собой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя кожа.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится то как ты выглядишь на фотографиях.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твой профиль.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоё лицо с разных ракурсов.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя внешность даже в самых обычных фотографиях.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что тебе не нужно специально стараться чтобы я считал тебя красивой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что для меня ты красивая просто потому что ты ты.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравятся твои волосы.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится их цвет.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится их длина.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится как они лежат.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится как они обрамляют твоё лицо.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя причёска.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится когда ты меняешь причёску.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится каждая фотография где я вижу твои волосы.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя фигура.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя сексуальная горячая фигура.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя талия.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя грудь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравятся твои бёдра.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравятся твои ноги.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится то как выглядит твоя фигура целиком.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя внешность не только в отдельных деталях а полностью.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что все твои черты вместе создают именно тот образ который я люблю.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты для меня невероятно привлекательная.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты для меня очень красивая.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится смотреть на твои фотографии.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я могу пересматривать твои фотографии и каждый раз замечать что-то красивое.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится видеть тебя даже через экран.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя естественная красота.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что тебе не нужно быть идеальной чтобы я считал тебя самой красивой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что для меня твоя красота особенная.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что для меня стала единственной красивой на всем белом свете.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится каждая маленькая особенность твого лица.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравятся даже те черты которые ты сама можешь считать недостатками.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно эти маленькие особенности делают тебя тобой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твоё лицо целиком.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твои глаза.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твои брови.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твои ресницы.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твой нос.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твои губы.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою улыбку.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю форму твоего лица.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твои волосы.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою фигуру.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю каждую видимую мне часть твоей внешности.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится смотреть на тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне никогда не кажется что ты недостаточно красивая.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что в моих глазах ты невероятная.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твой характер.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя доброта.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь быть заботливой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь сопереживать.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь чувствовать глубоко.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты искренняя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты настоящая.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты не пытаешься быть кем-то другим.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что у тебя есть собственное мнение.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что у тебя есть собственные взгляды.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь говорить о своих чувствах.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты не боишься показывать мне когда тебе что-то не нравится.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты можешь быть честной со мной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты можешь говорить мне о своих переживаниях.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты позволяешь мне узнавать тебя настоящую.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно узнавать тебя всё глубже.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно слушать твои мысли.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно знать твоё мнение.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно что тебе нравится.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно что тебе не нравится.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно что тебя радует.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно что тебя огорчает.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно о чём ты мечтаешь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно чего ты хочешь от жизни.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется знать тебя полностью.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя индивидуальность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты не похожа на других.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что у тебя свой характер.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что у тебя свой взгляд на многие вещи.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь быть сильной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь быть нежной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что в тебе сочетается сила и мягкость.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя уверенность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя целеустремлённость.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя самостоятельность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя способность принимать решения.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя эмоциональность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя глубина.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твой ум.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя доброта.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоё большое сердце.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится то как ты относишься к людям.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что тебе не всё равно на чувства других.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь переживать за близких.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь заботиться о тех кто тебе дорог.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь любить.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь показывать свою любовь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты умеешь говорить о своих чувствах.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты можешь быть очень нежной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты можешь быть очень сильной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты можешь быть серьёзной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты можешь быть смешной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что у тебя есть чувство юмора.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твой юмор.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится твоя способность превращать обычный разговор во что-то интересное.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что с тобой мне не скучно.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится наше общение.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится разговаривать с тобой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется узнавать о тебе больше.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется рассказывать тебе о себе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется делиться с тобой своим днём.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне интересно как проходит твой день.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне важно твоё настроение.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне важно твоё самочувствие.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне важно то что происходит в твоей жизни.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется поддерживать тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется заботиться о тебе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется делать тебя счастливее.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется радовать тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть человеком который может поддержать тебя в трудный момент.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть твоей опорой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть человеком которому ты можешь доверять.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что твоё доверие для меня очень дорого.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу заслуживать твоё доверие.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу быть честным с тобой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу быть открытым с тобой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу быть внимательнее к тебе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу лучше понимать тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты заставляешь меня задумываться над собой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты заставляешь меня хотеть становиться лучше.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что рядом с мыслями о тебе мне хочется расти.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется становиться человеком которого ты заслуживаешь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется исправлять свои ошибки.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется учиться любить тебя правильно.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется показывать тебе любовь не только словами.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется доказывать свои чувства поступками.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть для тебя надёжным человеком.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы ты чувствовала себя спокойно со мной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы ты чувствовала себя любимой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы ты знала насколько ты для меня ценна.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы ты никогда не сомневалась в моих чувствах.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала частью моих мыслей.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я думаю о тебе каждый день.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты можешь появиться в моих мыслях совершенно неожиданно.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется делиться с тобой даже самыми маленькими вещами.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется рассказывать тебе обо всём.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется знать обо всём что происходит у тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится видеть твоё имя на экране.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что твоё сообщение может сделать мой день лучше.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне приятно получать от тебя сообщения.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится читать твои слова.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится узнавать тебя через твои сообщения.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что твои слова позволяют мне чувствовать тебя ближе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что даже находясь далеко ты стала мне очень близкой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я могу скучать по тебе несмотря на то что мы ещё не виделись вживую.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала мне настолько родной через наше общение.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я могу чувствовать такую сильную привязанность к человеку который находится далеко.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты доказала мне насколько сильными могут быть чувства.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала человеком о котором я думаю перед сном.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала человеком о котором я могу думать после пробуждения.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала частью моего обычного дня.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала частью моих планов.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы ты была частью моего будущего.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется строить планы в которых есть ты.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы наша история продолжалась.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я верю в нас.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я верю в наши чувства.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу сохранить то что между нами есть.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу бороться за наши отношения.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я не хочу сдаваться из-за трудностей.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется проходить сложные моменты вместе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется становиться лучше ради нас.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды преодолеть расстояние между нами.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды встретиться с тобой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется когда-нибудь увидеть тебя вживую.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды услышать твой голос рядом с собой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды посмотреть тебе в глаза вживую.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды провести с тобой время.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды создать с тобой воспоминания которые сейчас существуют только в моих мечтах.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что впереди у нас ещё столько всего чего мы никогда не переживали вместе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды узнать тебя ещё глубже уже в реальной жизни.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды узнать твои маленькие привычки которые невозможно узнать через переписку.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды узнать тебя с ещё одной стороны.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится думать что впереди у нас ещё много первого.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу чтобы эти первые моменты были именно с тобой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды увидеть твою настоящую реакцию на мои слова не через текст.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды услышать твой смех рядом.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды просто находиться с тобой рядом.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что пока этого ещё не было но мне нравится мечтать об этом.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты даёшь мне повод мечтать о будущем.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется увидеть как ты достигаешь своих целей.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется поддерживать тебя в твоих мечтах.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется радоваться твоим успехам.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется поддерживать тебя после неудач.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется говорить тебе что ты справишься.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется напоминать тебе насколько ты сильная.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть человеком который верит в тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть на твоей стороне.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть рядом с тобой в важных моментах твоей жизни.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется видеть как ты развиваешься.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется развиваться вместе с тобой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы мы оба становились лучше.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится мысль о нашем будущем.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится представлять что однажды расстояние останется позади.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне нравится думать что когда-нибудь всё это будет не через экран.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы у нас было много совместных воспоминаний.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды смотреть назад и понимать сколько всего мы прошли вместе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы наши отношения становились крепче.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется беречь тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется беречь твое сердце.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется относиться к тебе бережно.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть внимательнее к твоим чувствам.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется никогда не воспринимать тебя как что-то само собой разумеющееся.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты слишком ценна для меня чтобы относиться к тебе небрежно.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне важно твоё спокойствие.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне важно твоё счастье.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне важно твоё доверие.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне важно чтобы ты чувствовала себя любимой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне важно чтобы ты знала что я выбираю тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу выбирать тебя каждый день.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу любить тебя не только когда всё идеально.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу оставаться рядом когда сложно.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу решать проблемы а не убегать от них.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу становиться лучше после каждой своей ошибки.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть человеком которому ты сможешь доверить своё сердце.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть твоей поддержкой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть твоей опорой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется защищать тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется заботиться о тебе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется делать тебя счастливой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется радовать тебя маленькими вещами.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется делать для тебя что-то просто потому что люблю тебя.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется видеть тебя счастливой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется знать что ты улыбаешься благодаря мне.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется быть причиной твоего хорошего настроения.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется давать тебе любовь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется давать тебе тепло.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется давать тебе спокойствие.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы рядом со мной ты чувствовала себя важной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы ты никогда не сомневалась в том что ты нужна мне.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты для меня не временное увлечение.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты для меня не просто красивая девушка.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты для меня намного больше чем внешность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я сначала могу любоваться твоей красотой но ещё сильнее я люблю человека которого узнаю за этой внешностью.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою личность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твой характер.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твои мысли.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою доброту.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою нежность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою силу.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою искренность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою эмоциональность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою индивидуальность.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твою способность любить.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю твоё отношение ко мне.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю то что ты позволяешь мне быть частью твоей жизни.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала для меня особенным человеком.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала для меня самым дорогим человеком.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты стала для меня самым ценным человеком.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется знать о тебе всё больше.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется узнавать тебя годами.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется каждый год находить в себе новые причины для любви.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется чтобы список причин никогда не закончился.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я уверен что чем больше буду тебя узнавать тем больше буду тебя любить.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что впереди у нас ещё тысячи вещей которые я смогу полюбить в тебе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что впереди у нас ещё тысячи моментов которые мы можем пережить.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что впереди у нас ещё тысячи воспоминаний которые мы можем создать.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу прожить их именно с тобой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что мне хочется однажды добавить к этому списку ещё больше причин.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу любить тебя дальше.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу выбирать тебя дальше.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу поддерживать тебя дальше.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу быть рядом с тобой дальше.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу чтобы наше «мы» продолжалось.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу чтобы Всевышний направлял нас друг к другу.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу чтобы Всевышний хранил нашу любовь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу чтобы наша любовь становилась только сильнее.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я пройти с тобой через всё что нам приготовит жизнь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу однажды посмотреть на всё это спустя много лет и понять что мы смогли.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу однажды сказать тебе что любил тебя тогда и люблю тебя сейчас.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу любить тебя несмотря на расстояние.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу любить тебя несмотря на трудности.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу любить тебя независимо от обстоятельств.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу любить тебя не только за то что в тебе легко любить.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу любить тебя целиком.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю каждую твою особенность которую уже знаю.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу узнать каждую твою особенность которую пока ещё не знаю.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю тебя за тысячи маленьких причин.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю тебя за всё что уже знаю о тебе.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я хочу полюбить ещё больше всего того что узнаю о тебе в будущем.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что невозможно уместить мою любовь к тебе в один список.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что сколько бы причин я ни написал мне всё равно будет мало.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что каждый новый день может стать ещё одной причиной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что каждая новая вещь которую я узнаю о тебе может стать ещё одной причиной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что каждый новый момент нашей истории может стать ещё одной причиной.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю тебя не за одну конкретную вещь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что я люблю тебя за всё то из чего складывается именно ты.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты Мария.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно ты стала моей любимой.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно тебя я хочу любить.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно тебя я хочу выбирать.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно тебя я хочу беречь.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно тебя я хочу видеть в своём будущем.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что именно тебя я хочу любить до последнего вздоха.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> За то что ты просто ты.</label>
+        <label class="check-item"><input type="checkbox" class="chk-item" onchange="playSound('pop')"> И за это я люблю тебя больше чем способен объяснить словами.</label>
       </div>
 
       <button onclick="checkStage7()">Подтвердить всё</button>
@@ -1115,8 +1280,8 @@
 
       <div class="letter-block" id="block7">
         <p><strong>Я люблю тебя за абсолютно всё:</strong></p>
-        <p>Каждая из этих причин — лишь малая часть того, что я к тебе чувствую. Ты уникальный, глубокий и абсолютно никем не заменимый человек.</p>
-        <button style="margin-top: 15px;" onclick="unlockNext(8)">Перейти к финальному замочку</button>
+        <p>Каждая из этих причин — лишь малая часть того, что я к тебе чувствую. Ты уникальный, глубокий и абсолютно никем не заменимый человек[cite: 7].</p>
+        <button style="margin-top: 15px;" onclick="unlockNext(8); playSound('click');">Перейти к финальному замочку</button>
       </div>
     </div>
 
@@ -1142,10 +1307,10 @@
 
       <div class="letter-block" id="block8">
         <p><strong>Мои самые главные обещания тебе, моя Мария:</strong></p>
-        <p>Самым счастливым моментом в моей жизни был день, когда я предложил тебе встречаться, и те моменты, когда мы радовали друг друга подарками и вниманием.</p>
-        <p>Я хочу пообещать тебе, что буду любить тебя всегда. Меня интересует далеко не только твоё тело — я обожаю тебя всю целиком, каждую твою клеточку, твою душу, мысли и твой характер.</p>
-        <p>Я сделаю всё, чтобы осчастливить тебя, уберечь от любых бед и сделать нас настоящей, крепкой и счастливой семьёй.</p>
-        <p>Ты — самая важная, незаменимая, самая любимая и ценная девочка в моём жизни.</p>
+        <p>Самым счастливым моментом в моей жизни был день, когда я предложил тебе встречаться, и те моменты, когда мы радовали друг друга подарками и вниманием[cite: 7].</p>
+        <p>Я хочу пообещать тебе, что буду любить тебя всегда. Меня интересует далеко не только твоё тело — я обожаю тебя всю целиком, каждую твою клеточку, твою душу, мысли и твой характер[cite: 7].</p>
+        <p>Я сделаю всё, чтобы осчастливить тебя, уберечь от любых бед и сделать нас настоящей, крепкой и счастливой семьёй[cite: 7].</p>
+        <p>Ты — самая важная, незаменимая, самая любимая и ценная девочка в моём жизни[cite: 7].</p>
       </div>
     </div>
 
@@ -1156,29 +1321,87 @@
   </div>
 
   <script>
+    // Встроенный синтезатор звуков (Web Audio API) без внешних файлов
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      const now = audioCtx.currentTime;
+
+      if (type === 'click') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(500, now);
+        osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      } else if (type === 'pop') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(700, now + 0.05);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      } else if (type === 'success') {
+        // Волшебный аккорд успеха
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, index) => {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.type = 'triangle';
+          o.frequency.value = freq;
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          g.gain.setValueAtTime(0.1, now + index * 0.08);
+          g.gain.linearRampToValueAtTime(0.001, now + index * 0.08 + 0.4);
+          o.start(now + index * 0.08);
+          o.stop(now + index * 0.08 + 0.4);
+        });
+      }
+    }
+
+    // Создание фоновых парящих сердечек
+    const heartsContainer = document.getElementById('floatingHearts');
+    const heartSymbols = ['❤️', '💖', '✨', '💕', '💗'];
+    for (let i = 0; i < 18; i++) {
+      const span = document.createElement('div');
+      span.className = 'f-heart';
+      span.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      span.style.left = Math.random() * 100 + '%';
+      span.style.animationDuration = (6 + Math.random() * 6) + 's';
+      span.style.animationDelay = (Math.random() * 5) + 's';
+      span.style.fontSize = (14 + Math.random() * 16) + 'px';
+      heartsContainer.appendChild(span);
+    }
+
     // Управление музыкой
     const audio = document.getElementById('bg-audio');
     const playBtn = document.getElementById('playBtn');
     const musicStatus = document.getElementById('musicStatus');
     let isPlaying = false;
 
-    // Пробуем запустить музыку сразу при загрузке страницы
     window.addEventListener('DOMContentLoaded', () => {
       audio.play().then(() => {
         isPlaying = true;
         playBtn.textContent = '❚❚';
-        musicStatus.textContent = 'Играет наша песня';
+        musicStatus.textContent = 'Играет';
       }).catch(error => {
-        // Если браузер заблокировал автовоспроизведение, музыка включится при первом клике/касании на экран
         isPlaying = false;
         playBtn.textContent = '▶';
-        musicStatus.textContent = 'Включить музыку';
+        musicStatus.textContent = 'Включить';
         
         const unlockAudio = () => {
           audio.play().then(() => {
             isPlaying = true;
             playBtn.textContent = '❚❚';
-            musicStatus.textContent = 'Играет наша песня';
+            musicStatus.textContent = 'Играет';
             window.removeEventListener('click', unlockAudio);
             window.removeEventListener('touchstart', unlockAudio);
           }).catch(e => console.log("Ожидание клика для звука", e));
@@ -1193,12 +1416,12 @@
       if (isPlaying) {
         audio.pause();
         playBtn.textContent = '▶';
-        musicStatus.textContent = 'Включить музыку';
+        musicStatus.textContent = 'Включить';
         isPlaying = false;
       } else {
         audio.play().then(() => {
           playBtn.textContent = '❚❚';
-          musicStatus.textContent = 'Играет наша песня';
+          musicStatus.textContent = 'Играет';
           isPlaying = true;
         }).catch(error => {
           console.log("Ошибка воспроизведения", error);
@@ -1236,6 +1459,7 @@
 
     // Этап 1
     function checkStage1() {
+      playSound('click');
       const d1 = document.getElementById('date1').value.toLowerCase().trim();
       const d2 = document.getElementById('date2').value.toLowerCase().trim();
       const d3 = document.getElementById('date3').value.toLowerCase().trim();
@@ -1249,6 +1473,7 @@
       const c5 = d5.includes('31') && d5.includes('июл');
 
       if (c1 && c2 && c3 && c4 && c5) {
+        playSound('success');
         document.getElementById('err1').style.display = 'none';
         document.getElementById('block1').style.display = 'block';
       } else {
@@ -1259,6 +1484,7 @@
     // Этап 2
     let currentAnagram = '';
     function addTile(btn, char) {
+      playSound('pop');
       currentAnagram += char;
       btn.disabled = true;
       document.getElementById('anagramText').textContent = currentAnagram;
@@ -1272,7 +1498,9 @@
     }
 
     function checkStage2() {
+      playSound('click');
       if (currentAnagram.toLowerCase() === 'сладока') {
+        playSound('success');
         document.getElementById('err2').style.display = 'none';
         document.getElementById('block2').style.display = 'block';
       } else {
@@ -1282,8 +1510,10 @@
 
     // Этап 3
     function checkStage3() {
+      playSound('click');
       const val = document.getElementById('ans3').value.toLowerCase().trim();
       if (val.includes('скачулся')) {
+        playSound('success');
         document.getElementById('err3').style.display = 'none';
         document.getElementById('block3').style.display = 'block';
       } else {
@@ -1293,8 +1523,10 @@
 
     // Этап 4
     function checkStage4() {
+      playSound('click');
       const val = document.getElementById('ans4').value.toLowerCase().trim();
       if (val.includes('дзинь') || val.includes('дзин')) {
+        playSound('success');
         document.getElementById('err4').style.display = 'none';
         document.getElementById('block4').style.display = 'block';
       } else {
@@ -1318,8 +1550,10 @@
     }
 
     function checkStage5() {
+      playSound('click');
       const val = document.getElementById('cipherSlider').value;
       if (val == 5) {
+        playSound('success');
         document.getElementById('err5').style.display = 'none';
         document.getElementById('block5').style.display = 'block';
       } else {
@@ -1328,7 +1562,7 @@
     }
     updateCipher();
 
-    // Этап 6: Проверка 11 вариантов
+    // Этап 6
     let selectedCartoons = new Set();
     const correctAnswersStage6 = [1, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13];
 
@@ -1343,9 +1577,11 @@
     }
 
     function checkStage6() {
+      playSound('click');
       const isCorrect = correctAnswersStage6.every(id => selectedCartoons.has(id)) && selectedCartoons.size === 11;
 
       if (isCorrect) {
+        playSound('success');
         document.getElementById('err6').style.display = 'none';
         document.getElementById('block6').style.display = 'block';
       } else {
@@ -1360,6 +1596,7 @@
     }
 
     function checkStage7() {
+      playSound('click');
       const checkboxes = document.querySelectorAll('#checklist .chk-item');
       let allChecked = true;
 
@@ -1368,6 +1605,7 @@
       });
 
       if (allChecked) {
+        playSound('success');
         document.getElementById('err7').style.display = 'none';
         document.getElementById('block7').style.display = 'block';
       } else {
@@ -1375,7 +1613,7 @@
       }
     }
 
-    // Этап 8: Drag & Drop ключа
+    // Этап 8
     const dragKey = document.getElementById('dragKey');
     const heartWrapper = document.getElementById('heartWrapper');
     let isDragging = false;
@@ -1386,6 +1624,7 @@
       startX = e.clientX - currentX;
       startY = e.clientY - currentY;
       dragKey.setPointerCapture(e.pointerId);
+      playSound('click');
     });
 
     dragKey.addEventListener('pointermove', (e) => {
@@ -1421,6 +1660,7 @@
       dragKey.dataset.unlocked = 'true';
       isDragging = false;
 
+      playSound('success');
       heartWrapper.classList.add('unlocked');
       dragKey.style.display = 'none';
 
@@ -1428,7 +1668,7 @@
         const b8 = document.getElementById('block8');
         b8.style.display = 'block';
         b8.scrollIntoView({ behavior: 'smooth' });
-      }, 400);
+      }, 500);
     }
   </script>
 </body>
